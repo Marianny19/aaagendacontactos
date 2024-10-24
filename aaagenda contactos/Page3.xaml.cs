@@ -30,10 +30,26 @@ namespace Contactos
             Window.GetWindow(this)?.Close();
         }
         private void MinimizarVentana_Click(object sender, RoutedEventArgs e)
-        {
             {
                 Window.GetWindow(this)?.Close();
             }
+        private void ModificarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this)?.Close();
+        }
+        private void GuardarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this)?.Close();
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this)?.Close();
+        }
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+   
+            var dataGrid = sender as DataGrid;
+            var selectedItem = dataGrid.SelectedItem;
         }
     }
 }
