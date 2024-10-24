@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Border Padding="20" Background="#E0E0E0" CornerRadius="25 25 25 25" Margin="-95,-100,-89,-105" Grid.ColumnSpan="3" Grid.RowSpan="2">
+        <Border Padding="20" Background="#eff2f7" CornerRadius="25 25 25 25" Margin="-95,-100,38,-105" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <Grid Margin="0,0,134,-83">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

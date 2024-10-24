@@ -181,6 +181,8 @@ namespace aaagenda_contactos
             }
         }
 
+        
+
         // Arrastrar la ventana
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -232,7 +234,7 @@ namespace aaagenda_contactos
                 if (frame != null)
                 {
                     frame.Visibility = Visibility.Visible;
-                    frame.Navigate(new Page2());
+                    frame.Navigate(new Page3());
 
                 }
             }

@@ -117,7 +117,7 @@
                                            Margin="0,6,30,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328"/>
                 </Grid>
 
-                <!-- DataGrid -->
+
                 <DataGrid x:Name="ContactosDataGrid" Grid.Row="4" 
           AutoGenerateColumns="False"
           ItemsSource="{Binding Contactos}" 
@@ -178,8 +178,8 @@
                     </StackPanel>
                 </Button>
             </Grid>
-            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="10,10,10,10" Navigated="MainFrame_Navigated" />
-            <Frame x:Name="Frame2" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="10,10,10,10" Navigated="MainFrame_Navigated"/>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="0,0,0,10" Navigated="MainFrame_Navigated" />
+            <Frame x:Name="Frame2" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated" Grid.Column="1" Margin="10,77,-10,0"/>
         </Grid>
     </Border>
 </Window>
