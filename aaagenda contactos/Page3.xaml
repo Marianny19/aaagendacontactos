@@ -20,8 +20,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Border Padding="20" Background="#E0E0E0" CornerRadius="25 25 25 25" Margin="-95,-100,-89,-105" Grid.ColumnSpan="3" Grid.RowSpan="2">
-            <Grid Margin="0,0,134,-83">
+        <Border Padding="20" Background="#E0E0E0" CornerRadius="25 25 25 25" Margin="-95,-100,-85,-105" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <Grid Margin="0,0,103,-83">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -30,7 +30,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Botón Modificar -->
+
                 <!-- Search bar -->
                 <Grid Width="300" HorizontalAlignment="Left"/>
 
@@ -48,8 +48,7 @@
 
                 <Grid Width="300" HorizontalAlignment="Right" Grid.Row="3" Margin="0 20 0 0">
                     <TextBlock Margin="132,66,-92,0" VerticalAlignment="Top" Foreground="#b0b9c6" IsHitTestVisible="False"
-                        Panel.ZIndex="1" Text="Buscar contactos ..."
-                        Visibility="{Binding Text.IsEmpty, Converter={StaticResource BoolToVis}, ElementName=txtSearch2}" Height="15" RenderTransformOrigin="0.992,0.772"/>
+                        Panel.ZIndex="1" Text="Buscar contactos ..."></TextBlock>
                     <TextBox x:Name="txtSearch2" Style="{StaticResource textboxSearch}" VerticalAlignment="Top" Height="42" Margin="112,54,-112,0"/>
                     <iconPacks:PackIconMaterial Kind="Magnify" Width="15" Height="14"
             Margin="0,67,-92,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328"/>

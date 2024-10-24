@@ -1,12 +1,12 @@
 ﻿<Page x:Class="Contactos.Page2"
        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Contactos"
-      xmlns:fa="http://schemas.fontawesome.io/icons/"
-      mc:Ignorable="d" Height="650" Width="1000" Background="Transparent">
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+       xmlns:local="clr-namespace:Contactos"
+       xmlns:fa="http://schemas.fontawesome.io/icons/"
+       mc:Ignorable="d" Height="650" Width="1000" Background="Transparent">
 
 
 
@@ -67,7 +67,7 @@
                     <TextBox Width="200" Height="30" Margin="50,142,120,15" Grid.ColumnSpan="2"/>
 
                     <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="52,177,168,0" VerticalAlignment="Top" Grid.RowSpan="7"/>
-                    <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,24,0,0" Grid.ColumnSpan="2" Width="260" Grid.Row="6"/>
+                    <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,16,0,0" Grid.ColumnSpan="2" Width="260" Grid.Row="6"/>
                     <TextBlock Grid.Row="6" Text="Hora agenda" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="52,197,168,0" VerticalAlignment="Top"/>
 
 
@@ -76,7 +76,7 @@
                 <TextBox
                 TextChanged="TextBox_TextChanged" Width="200" Margin="274,457,208,120" Height="30"/>
                 <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Right" 
-        Margin="0,524,208,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
+        Margin="0,524,198,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
         Click="Registrar_contacto_Click" RenderTransformOrigin="0.5,0.5" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>

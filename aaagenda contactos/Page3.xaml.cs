@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Contactos
 {
@@ -24,15 +15,19 @@ namespace Contactos
         {
             InitializeComponent();
 
+            // Registrar el convertidor como recurso de la página
+            this.Resources.Add("BoolToVis", new BoolToVisConverter());
         }
+
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
         }
+
         private void MinimizarVentana_Click(object sender, RoutedEventArgs e)
-            {
-                Window.GetWindow(this)?.Close();
-            }
+        {
+            Window.GetWindow(this)?.Close();
+        }
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
@@ -47,9 +42,13 @@ namespace Contactos
         }
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-   
+
             var dataGrid = sender as DataGrid;
             var selectedItem = dataGrid.SelectedItem;
+
+            {
+                Window.GetWindow(this)?.Close();
+            }
         }
     }
 }
