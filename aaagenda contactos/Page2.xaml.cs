@@ -38,8 +38,16 @@ namespace Contactos
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
 
         {
+
+            var ventana = Window.GetWindow(this);
+            if (ventana != null)
             {
-                Window.GetWindow(this)?.Close();
+
+                var frame = ventana.FindName("Frame2") as Frame;
+                if (frame != null)
+                {
+                    frame.Visibility = Visibility.Collapsed;
+                }
             }
         }
     }

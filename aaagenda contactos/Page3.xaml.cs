@@ -15,8 +15,7 @@ namespace Contactos
         {
             InitializeComponent();
 
-            // Registrar el convertidor como recurso de la página
-            this.Resources.Add("BoolToVis", new BoolToVisConverter());
+    
         }
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
@@ -26,7 +25,11 @@ namespace Contactos
 
         private void MinimizarVentana_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this)?.Close();
+            Window ventana = Window.GetWindow(this);
+            if (ventana != null)
+            {
+                ventana.WindowState = WindowState.Minimized;
+            }
         }
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {

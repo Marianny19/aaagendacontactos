@@ -180,6 +180,21 @@ namespace aaagenda_contactos
                 }
             }
         }
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            // Obtener la ventana principal
+            var ventana = Window.GetWindow(this);
+            if (ventana != null)
+            {
+                // Encontrar el Frame en la ventana principal
+                var frame = ventana.FindName("Frame2") as Frame;
+                if (frame != null)
+                {
+                    frame.Visibility = Visibility.Visible; 
+                    frame.Navigate(new Page2()); 
+                }
+            }
+        }
 
         // Arrastrar la ventana
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -220,22 +235,8 @@ namespace aaagenda_contactos
 
         private void MainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-
-        }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            var ventana = Window.GetWindow(this);
-            if (ventana != null)
-            {
-
-                var frame = ventana.FindName("Frame2") as Frame;
-                if (frame != null)
-                {
-                    frame.Visibility = Visibility.Visible;
-                    frame.Navigate(new Page2());
-
-                }
-            }
+           
+                
         }
         // Clase Contacto
         public class Contacto
