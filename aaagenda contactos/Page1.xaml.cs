@@ -49,11 +49,11 @@ namespace Contactos
         }
         private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
         {
-            Tipo_contacto.Items.Add(txttipocontacto.Text);
+            cmbtipocontacto.Items.Add(txttipocontacto.Text);
         }
         private void Agregar_tipo_red_social(object sender, RoutedEventArgs e)
         {
-            Tipo_red_social.Items.Add(txttiporedsocial.Text);
+            cmbredsocial.Items.Add(txttiporedsocial.Text);
         }
 
 
