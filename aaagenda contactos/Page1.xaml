@@ -72,10 +72,10 @@
                         <ComboBoxItem Content="Amigo"/>
                     </ComboBox>
                     <Button Content="Agregar tipo de contacto" HorizontalAlignment="Right"
-        Grid.Column="1" Margin="0,193,-159,-91" Grid.Row="6" Background="#6F50FF"
-        FontSize="12" FontWeight="SemiBold" Foreground="White" Width="157">
-                        
-                        
+        Grid.Column="1" Margin="0,193,-158,-87" Grid.Row="6" Background="#6F50FF"
+        FontSize="12" FontWeight="SemiBold" Foreground="White" Width="156">
+
+
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -114,7 +114,7 @@
                         <ComboBoxItem Content="Instagram"/>
                     </ComboBox>
                     <Button x:Name="agregar_tipo_red_social" Content="Agregar tipo de red social"
-        HorizontalAlignment="Right" Grid.Column="1" Margin="0,243,-159,-139" Grid.Row="6" Background="#6F50FF"
+        HorizontalAlignment="Right" Grid.Column="1" Margin="0,230,-159,-126" Grid.Row="6" Background="#6F50FF"
         FontSize="12" FontWeight="SemiBold" Foreground="White" Width="158">
                         <Button.RenderTransform>
                             <TransformGroup>
@@ -144,11 +144,11 @@
                     </Button>
 
 
-                    <TextBlock Grid.Row="6" Text="Nombre de usuario" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="132,69,96,0" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="6" Text="Nombre de usuario" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="82,80,146,37" VerticalAlignment="Stretch"/>
                 </Grid>
-                <TextBox Width="200" Height="30" Margin="274,481,208,96"/>
-                <Button x:Name="Registrar_contacto" Content="Registrar contacto" HorizontalAlignment="Right" 
-        Margin="0,524,208,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
+                <TextBox Width="200" Height="30" Margin="276,514,276,137"/>
+                <Button x:Name="Registrar_contacto" Content="Registrar contacto" HorizontalAlignment="Center" 
+        Margin="0,570,0,54" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
         Click="Registrar_contacto_Click" RenderTransformOrigin="0.5,0.5" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>
