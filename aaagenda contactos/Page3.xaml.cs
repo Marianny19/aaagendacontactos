@@ -23,11 +23,11 @@ namespace Contactos
             {
                 Frame3.Visibility = Visibility.Visible;
                 Frame3.Navigate(new Page2());
-                MessageBox.Show("Page2 debería estar visible ahora.");
+               
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al navegar a Page2: {ex.Message}");
+                
             }
         }
 

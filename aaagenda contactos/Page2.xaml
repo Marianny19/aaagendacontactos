@@ -6,7 +6,7 @@
        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
        xmlns:local="clr-namespace:Contactos"
        xmlns:fa="http://schemas.fontawesome.io/icons/"
-       mc:Ignorable="d" Height="650" Width="1000" Background="Transparent">
+       mc:Ignorable="d" Height="628" Width="998" Background="Transparent">
 
 
 
@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Panel Izquierdo (Fondo turquesa) -->
-        <Border Background="#623ed0" Padding="30" CornerRadius="25 0 0 25" Margin="-101,-99,72,-98">
+        <Border Background="#623ed0" Padding="30" CornerRadius="25 0 0 25" Margin="-101,-102,72,-90">
             <StackPanel VerticalAlignment="Center">
                 <fa:ImageAwesome Icon="CalendarPlusOutline" Width="166" Height="166" Foreground="White"/>
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White"><Run Language="es-419" Text="Agenda"/></TextBlock>
@@ -33,7 +33,7 @@
         </Border>
 
         <!-- Panel Derecho (Formulario) -->
-        <Border Padding="20" Background="#E0E0E0" CornerRadius="0,25,25,0" Margin="278,-99,-103,-98" Grid.ColumnSpan="4">
+        <Border Padding="20" Background="#E0E0E0" CornerRadius="0,25,25,0" Margin="278,-102,-101,-90" Grid.ColumnSpan="4">
             <Grid Margin="-91,0,0,0">
                 <!-- Íconos de cerrar y minimizar -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0">
@@ -76,9 +76,9 @@
 
                 </Grid>
                 <TextBox
-                TextChanged="TextBox_TextChanged" Width="200" Margin="274,466,198,111" Height="30"/>
+                TextChanged="TextBox_TextChanged" Width="200" Margin="274,461,200,94" Height="30"/>
                 <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Right" 
-        Margin="0,524,200,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
+        Margin="0,504,200,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
         Click="Registrar_contacto_Click" RenderTransformOrigin="0.5,0.5" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>
