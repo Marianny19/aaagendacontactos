@@ -113,7 +113,7 @@
             </Grid>
 
         </Border>
-        <Frame x:Name="Frame3" NavigationUIVisibility="Hidden" Margin="-95,-111,38,-85" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+        
 
 
     </Grid>

@@ -36,10 +36,17 @@ namespace Contactos
         }
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
-
         {
+            // Obtener la ventana principal
+            var ventana = Window.GetWindow(this);
+            if (ventana != null)
             {
-                Window.GetWindow(this)?.Close();
+                // Encontrar el Frame en la ventana principal
+                var frame = ventana.FindName("Frame3") as Frame;
+                if (frame != null)
+                {
+                    frame.Visibility = Visibility.Collapsed; // Cambiar la visibilidad del Frame a Collapsed
+                }
             }
         }
     }

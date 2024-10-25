@@ -6,7 +6,7 @@
        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
        xmlns:local="clr-namespace:Contactos"
        xmlns:fa="http://schemas.fontawesome.io/icons/"
-       mc:Ignorable="d" Height="628" Width="998" Background="Transparent">
+       mc:Ignorable="d" Height="720" Width="1080" Background="Transparent">
 
 
 
@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Panel Izquierdo (Fondo turquesa) -->
-        <Border Background="#623ed0" Padding="30" CornerRadius="25 0 0 25" Margin="-101,-102,72,-90">
+        <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-105,72,-95">
             <StackPanel VerticalAlignment="Center">
                 <fa:ImageAwesome Icon="CalendarPlusOutline" Width="166" Height="166" Foreground="White"/>
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White"><Run Language="es-419" Text="Agenda"/></TextBlock>
@@ -33,7 +33,7 @@
         </Border>
 
         <!-- Panel Derecho (Formulario) -->
-        <Border Padding="20" Background="#E0E0E0" CornerRadius="0,25,25,0" Margin="278,-102,-101,-90" Grid.ColumnSpan="4">
+        <Border Padding="20" Background="#E0E0E0" CornerRadius="0,30,30,0" Margin="278,-105,-101,-95" Grid.ColumnSpan="4">
             <Grid Margin="-91,0,0,0">
                 <!-- Íconos de cerrar y minimizar -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0">
@@ -60,26 +60,26 @@
                     </Grid.RowDefinitions>
 
                     <!-- Campos de entrada de datos -->
-                    <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre agenda" Style="{StaticResource Text}" Margin="52,0,168,146" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="0" Width="200" Height="30" Margin="54,46,116,111" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre agenda" Style="{StaticResource Text}" Margin="141,0,125,144" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+                    <TextBox Grid.Row="0" Width="200" Height="30" Margin="100,48,84,109" Grid.ColumnSpan="2"/>
 
-                    <TextBlock Text="Descripción" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="54,146,166,0" VerticalAlignment="Top"/>
-                    <TextBox Width="200" Height="30" Margin="52,172,118,224" Grid.ColumnSpan="2" Grid.RowSpan="7"/>
+                    <TextBlock Text="Descripción" Style="{StaticResource Text}" Margin="8,154,143,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <TextBox Width="200" Height="30" Margin="100,180,84,232" Grid.ColumnSpan="2" Grid.RowSpan="7"/>
 
-                    <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="52,22,168,0" VerticalAlignment="Top" Grid.Row="6"/>
-                    <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48,0,0" Grid.ColumnSpan="2" Width="265" Grid.Row="6"/>
-                    <TextBlock Grid.Row="6" Text="Hora agenda" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="52,218,168,0" VerticalAlignment="Top"/>
-                    <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="54,109,0,0" VerticalAlignment="Top" Width="196" Height="32"/>
-                    <TextBlock Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="54,0,166,0"><Run Text="Contacto"/><Run Language="es-419" Text=" a agendar"/></TextBlock>
+                    <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Margin="1,38,121,0" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1"/>
+                    <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,61,0,0" Grid.ColumnSpan="2" Width="265" Grid.Row="6"/>
+                    <TextBlock Grid.Row="6" Text="Hora agenda" Style="{StaticResource Text}" Margin="3,234,137,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="100,109,0,0" VerticalAlignment="Top" Width="200" Height="32"/>
+                    <TextBlock Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="129,0,113,0"><Run Text="Contacto"/><Run Language="es-419" Text=" a agendar"/></TextBlock>
 
 
 
                 </Grid>
                 <TextBox
-                TextChanged="TextBox_TextChanged" Width="200" Margin="274,461,200,94" Height="30"/>
-                <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Right" 
-        Margin="0,504,200,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
-        Click="Registrar_contacto_Click" RenderTransformOrigin="0.5,0.5" Foreground="White">
+                TextChanged="TextBox_TextChanged" Width="200" Margin="322,513,232,129" Height="30"/>
+                <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Left" 
+        Margin="322,555,0,68" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
+        Click="Registrar_contacto_Click" RenderTransformOrigin="-0.133,0.179" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using aaagenda_contactos;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,15 +22,23 @@ namespace Contactos
         {
             try
             {
-                Frame3.Visibility = Visibility.Visible;
-                Frame3.Navigate(new Page2());
-               
+                // Obtener la ventana principal (MainWindow)
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                if (mainWindow != null)
+                {
+                    // Asegurarse de que el Frame en MainWindow sea visible
+                    mainWindow.Frame3.Visibility = Visibility.Visible;
+
+                    // Navegar a Page2 en el Frame de MainWindow
+                    mainWindow.Frame3.Navigate(new Page2());
+                }
             }
             catch (Exception ex)
             {
-                
+                MessageBox.Show($"Error al navegar a Page2: {ex.Message}");
             }
         }
+
 
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
