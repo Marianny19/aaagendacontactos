@@ -33,7 +33,7 @@
         </Border>
 
         <!-- Panel Derecho (Formulario) -->
-        <Border Padding="20" Background="#E0E0E0" CornerRadius="0,25,25,0" Margin="278,-99,-99,-98" Grid.ColumnSpan="4">
+        <Border Padding="20" Background="#E0E0E0" CornerRadius="0,25,25,0" Margin="278,-99,-103,-98" Grid.ColumnSpan="4">
             <Grid Margin="-91,0,0,0">
                 <!-- Íconos de cerrar y minimizar -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0">
@@ -67,7 +67,7 @@
                     <TextBox Width="200" Height="30" Margin="52,172,118,224" Grid.ColumnSpan="2" Grid.RowSpan="7"/>
 
                     <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="52,22,168,0" VerticalAlignment="Top" Grid.Row="6"/>
-                    <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48,0,0" Grid.ColumnSpan="2" Width="264" Grid.Row="6"/>
+                    <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48,0,0" Grid.ColumnSpan="2" Width="265" Grid.Row="6"/>
                     <TextBlock Grid.Row="6" Text="Hora agenda" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="52,218,168,0" VerticalAlignment="Top"/>
                     <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="54,109,0,0" VerticalAlignment="Top" Width="196" Height="32"/>
                     <TextBlock Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="54,0,166,0"><Run Text="Contacto"/><Run Language="es-419" Text=" a agendar"/></TextBlock>
@@ -78,7 +78,7 @@
                 <TextBox
                 TextChanged="TextBox_TextChanged" Width="200" Margin="274,466,198,111" Height="30"/>
                 <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Right" 
-        Margin="0,524,198,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
+        Margin="0,524,200,36" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
         Click="Registrar_contacto_Click" RenderTransformOrigin="0.5,0.5" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>

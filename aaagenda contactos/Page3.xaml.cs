@@ -16,6 +16,22 @@ namespace Contactos
             InitializeComponent();
 
         }
+
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Frame3.Visibility = Visibility.Visible;
+                Frame3.Navigate(new Page2());
+                MessageBox.Show("Page2 debería estar visible ahora.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al navegar a Page2: {ex.Message}");
+            }
+        }
+
+
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();

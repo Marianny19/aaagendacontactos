@@ -172,7 +172,7 @@ namespace aaagenda_contactos
             if (ventana != null)
             {
                 // Encontrar el Frame en la ventana principal
-                var frame = ventana.FindName("MainFrame") as Frame;
+                var frame = MainFrame;
                 if (frame != null)
                 {
                     frame.Visibility = Visibility.Visible; // Asegurarse de que el Frame sea visible
@@ -239,6 +239,19 @@ namespace aaagenda_contactos
                 }
             }
         }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            var ventana = Window.GetWindow(this);
+            if (ventana != null)
+            {
+                var frame = ventana.FindName("Frame2") as Frame;
+                if (frame != null)
+                {
+                    frame.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+        
         // Clase Contacto
         public class Contacto
         {
