@@ -15,9 +15,22 @@ namespace Contactos
         {
             InitializeComponent();
 
-            // Registrar el convertidor como recurso de la página
-            this.Resources.Add("BoolToVis", new BoolToVisConverter());
         }
+
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Frame3.Visibility = Visibility.Visible;
+                Frame3.Navigate(new Page2());
+                MessageBox.Show("Page2 debería estar visible ahora.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al navegar a Page2: {ex.Message}");
+            }
+        }
+
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
@@ -26,7 +39,33 @@ namespace Contactos
 
         private void MinimizarVentana_Click(object sender, RoutedEventArgs e)
         {
+            Window ventana = Window.GetWindow(this);
+            if (ventana != null)
+            {
+                ventana.WindowState = WindowState.Minimized;
+            }
+        }
+        private void ModificarButton_Click(object sender, RoutedEventArgs e)
+        {
             Window.GetWindow(this)?.Close();
+        }
+        private void GuardarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this)?.Close();
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this)?.Close();
+        }
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            var dataGrid = sender as DataGrid;
+            var selectedItem = dataGrid.SelectedItem;
+
+            {
+                Window.GetWindow(this)?.Close();
+            }
         }
     }
 
@@ -47,4 +86,5 @@ namespace Contactos
             throw new NotImplementedException();
         }
     }
+
 }
