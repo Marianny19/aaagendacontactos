@@ -76,5 +76,15 @@ namespace Contactos
 
 
         }
+
+        private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Agregar_tipo_red_social(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

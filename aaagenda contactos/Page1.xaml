@@ -8,7 +8,6 @@
       mc:Ignorable="d" Height="720" Width="1080" Background="Transparent">
 
 
-
     <Grid Margin="100">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350" />
