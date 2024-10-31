@@ -207,7 +207,7 @@
             </Grid>
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Navigated="MainFrame_Navigated" Margin="0,-2,0,0" />
             <Frame x:Name="Frame2" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated" Grid.Column="1" Margin="10,77,-10,10"/>
-            <Frame x:Name="Frame3" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="0,-30,0,-40" Navigated="Frame3_Navigated"/>
+            <Frame x:Name="Frame3" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="0,-30,0,-40" />
         </Grid>
     </Border>
 </Window>
