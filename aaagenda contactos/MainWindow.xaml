@@ -9,6 +9,10 @@
                Height="720" Width="1080" WindowStartupLocation="CenterScreen" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
 
+    <Window.Clip>
+        <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,1080,720"/>
+    </Window.Clip>
+
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <!-- Estilo personalizado para DataGrid -->
@@ -54,8 +58,10 @@
 
                 <!-- Menú lateral que se expande con animación -->
                 <Border x:Name="SideMenu" Background="White" CornerRadius="30" Width="200" Margin="0,0,0,-2" Grid.RowSpan="2" Visibility="Collapsed">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="SideMenuTransform" X="-200"/>
+                    </Border.RenderTransform>
                     <DockPanel>
-
                         <StackPanel Margin="20,70,20,20">
                             <Button Style="{StaticResource menuButton2}">
                                 <StackPanel Orientation="Horizontal">
@@ -72,6 +78,7 @@
                         </StackPanel>
                     </DockPanel>
                 </Border>
+
 
 
 
@@ -208,6 +215,7 @@
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Navigated="MainFrame_Navigated" Margin="0,-2,0,0" />
             <Frame x:Name="Frame2" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated" Grid.Column="1" Margin="10,77,-10,10"/>
             <Frame x:Name="Frame3" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="0,-30,0,-40" />
+            <Frame x:Name="Frame4" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" />
         </Grid>
     </Border>
 </Window>

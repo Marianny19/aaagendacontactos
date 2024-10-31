@@ -1,4 +1,5 @@
-﻿using System;
+﻿using aaagenda_contactos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -34,10 +36,26 @@ namespace Contactos
                 var frame = ventana.FindName("MainFrame") as Frame;
                 if (frame != null)
                 {
-                    frame.Visibility = Visibility.Collapsed; // Cambiar la visibilidad del Frame a Collapsed
+                    // Crear animación de desvanecimiento
+                    var fadeOutAnimation = new DoubleAnimation
+                    {
+                        To = 0, // Cambiar a opacidad 0
+                        Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de easing
+                    };
+
+                    fadeOutAnimation.Completed += (s, args) =>
+                    {
+                        // Cambiar la visibilidad del Frame a Collapsed después de que la animación se complete
+                        frame.Visibility = Visibility.Collapsed;
+                    };
+
+                    // Iniciar la animación de desvanecimiento
+                    frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
                 }
             }
         }
+
         private void minimizar(object sender, RoutedEventArgs e)
         {
 
@@ -84,7 +102,58 @@ namespace Contactos
 
         private void Agregar_tipo_red_social(object sender, RoutedEventArgs e)
         {
+            // Obtener la ventana principal
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+                // Encontrar el Frame en la ventana principal
+                var mainFrame = mainWindow.MainFrame; // Este es el Frame que contiene Page1
+                var frame4 = mainWindow.Frame4; // Este es el Frame que contiene Page4
+                if (mainFrame != null && frame4 != null)
+                {
+                    // Crear animación de desvanecimiento para ocultar el MainFrame
+                    var fadeOutAnimation = new DoubleAnimation
+                    {
+                        To = 0, // Reducir la opacidad a 0 (invisible)
+                        Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                    };
 
+                    fadeOutAnimation.Completed += (s, args) =>
+                    {
+                        // Colapsar el MainFrame al finalizar el desvanecimiento
+                        mainFrame.Visibility = Visibility.Collapsed;
+
+                        // Hacer que Frame4 sea visible antes de navegar
+                        frame4.Visibility = Visibility.Visible;
+                        frame4.Opacity = 0; // Asegurarse de que Frame4 comience invisible
+
+                        // Navegar a Page4 en Frame4
+                        frame4.Navigate(new Page4());
+
+                        // Crear animación de aparición para Frame4
+                        var fadeInAnimation = new DoubleAnimation
+                        {
+                            To = 1, // Aumentar la opacidad a 1 (completamente visible)
+                            Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                        };
+
+                        // Iniciar la animación de aparición
+                        fadeInAnimation.Completed += (s, args) =>
+                        {
+                            // Asegurarse de que la opacidad sea 1 después de la animación
+                            frame4.Opacity = 1;
+                        };
+
+                        frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    };
+
+                    // Iniciar la animación de desvanecimiento
+                    mainFrame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                }
+            }
         }
+
     }
 }

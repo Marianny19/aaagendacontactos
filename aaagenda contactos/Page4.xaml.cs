@@ -14,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Contactos
+namespace aaagenda_contactos
 {
     /// <summary>
-    /// Lógica de interacción para Page2.xaml
+    /// Lógica de interacción para Page4.xaml
     /// </summary>
-    public partial class Page2 : Page
+    public partial class Page4 : Page
     {
-        public Page2()
+        public Page4()
         {
             InitializeComponent();
         }
@@ -45,7 +45,7 @@ namespace Contactos
             if (ventana != null)
             {
                 // Encontrar el Frame en la ventana principal
-                var frame = ventana.FindName("Frame3") as Frame;
+                var frame = ventana.FindName("Frame4") as Frame;
                 if (frame != null)
                 {
                     // Crear animación de desvanecimiento para ocultar el Frame

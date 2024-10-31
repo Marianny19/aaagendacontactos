@@ -47,30 +47,31 @@ namespace aaagenda_contactos
             // Cambia el estado del menú
             isMenuOpen = !isMenuOpen;
 
-            // Cambia la visibilidad del SideMenu
-            SideMenu.Visibility = Visibility.Visible; // Asegúrate de que sea visible antes de aplicar la animación
+            // Asegúrate de que el SideMenu sea visible mientras está en animación
+            SideMenu.Visibility = Visibility.Visible;
 
-            // Animación de desvanecimiento para ocultar o mostrar el SideMenu
-            var menuOpacityAnimation = new DoubleAnimation
+            // Define el objetivo de desplazamiento en el eje X
+            double targetOffset = isMenuOpen ? 0 : -200;
+
+            // Animación de desplazamiento para el SideMenu
+            var slideAnimation = new DoubleAnimation
             {
-                To = isMenuOpen ? 1 : 0,
+                To = targetOffset,
                 Duration = TimeSpan.FromMilliseconds(300),
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
             };
 
-            // Inicia la animación
-            SideMenu.BeginAnimation(OpacityProperty, menuOpacityAnimation);
+            // Aplicar animación en el eje X del SideMenuTransform
+            SideMenuTransform.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
 
-            // Cambia la visibilidad a Collapsed después de la animación si se está cerrando
-            if (!isMenuOpen)
+            // Ocultar el SideMenu después de la animación si se está cerrando
+            slideAnimation.Completed += (s, e) =>
             {
-                menuOpacityAnimation.Completed += (s, args) =>
-                {
-                    SideMenu.Visibility = Visibility.Collapsed; // Oculta el menú después de que la animación de desvanecimiento termina
-                };
-            }
+                if (!isMenuOpen)
+                    SideMenu.Visibility = Visibility.Collapsed;
+            };
 
-            // Animación de desvanecimiento para ocultar o mostrar el contenido
+            // Animación de opacidad para ContentBorder
             var contentOpacityAnimation = new DoubleAnimation
             {
                 To = isMenuOpen ? 0 : 1,
@@ -78,8 +79,14 @@ namespace aaagenda_contactos
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
             };
 
+            // Inicia la animación de opacidad para ContentBorder
             ContentBorder.BeginAnimation(OpacityProperty, contentOpacityAnimation);
+
+            // Desactiva la interacción del usuario en ContentBorder mientras SideMenu está abierto
+            ContentBorder.IsHitTestVisible = !isMenuOpen;
         }
+
+
 
 
 
@@ -211,6 +218,7 @@ namespace aaagenda_contactos
             return null;
         }
 
+
         // Evento para navegar a Page1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -222,13 +230,42 @@ namespace aaagenda_contactos
                 var frame = MainFrame;
                 if (frame != null)
                 {
-                    frame.Visibility = Visibility.Visible; // Asegurarse de que el Frame sea visible
-                    frame.Navigate(new Page1()); // Navegar a Page1
+                    // Crear animación de desvanecimiento para ocultar el Frame
+                    var fadeOutAnimation = new DoubleAnimation
+                    {
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(0),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                    };
+
+                    fadeOutAnimation.Completed += (s, args) =>
+                    {
+                        // Navegar a la nueva página al finalizar el desvanecimiento
+                        frame.Navigate(new Page1());
+
+                        // Hacer que el Frame sea visible para la animación de aparición
+                        frame.Visibility = Visibility.Visible;
+
+                        // Crear animación de aparición
+                        var fadeInAnimation = new DoubleAnimation
+                        {
+                            To = 1,
+                            Duration = TimeSpan.FromMilliseconds(300),
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                        };
+
+                        // Iniciar la animación de aparición
+                        frame.BeginAnimation(OpacityProperty, fadeInAnimation);
+                    };
+
+                    // Iniciar la animación de desvanecimiento
+                    frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
                 }
             }
         }
 
-        
+
+
 
         // Arrastrar la ventana
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

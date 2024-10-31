@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Animation;
+using System.Windows.Media;
 
 namespace Contactos
 {
@@ -23,43 +25,56 @@ namespace Contactos
 
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
-            try
+            // Obtener la ventana principal
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
             {
-                // Obtener la ventana principal (MainWindow)
-                var mainWindow = Application.Current.MainWindow as MainWindow;
-                if (mainWindow != null)
+                // Encontrar el Frame en la ventana principal
+                var frame = mainWindow.Frame3;
+                if (frame != null)
                 {
-                    // Asegurarse de que el Frame en MainWindow sea visible
-                    mainWindow.Frame3.Visibility = Visibility.Visible;
+                    // Crear animación de desvanecimiento para ocultar el Frame
+                    var fadeOutAnimation = new DoubleAnimation
+                    {
+                        To = 0, // Reducir la opacidad a 0 (invisible)
+                        Duration = TimeSpan.FromMilliseconds(0), // Duración de la animación
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                    };
 
-                    // Navegar a Page2 en el Frame de MainWindow
-                    mainWindow.Frame3.Navigate(new Page2());
+                    fadeOutAnimation.Completed += (s, args) =>
+                    {
+                        // Navegar a la nueva página al finalizar el desvanecimiento
+                        frame.Navigate(new Page2());
+
+                        // Hacer que el Frame sea visible para la animación de aparición
+                        frame.Visibility = Visibility.Visible;
+
+                        // Crear animación de aparición
+                        var fadeInAnimation = new DoubleAnimation
+                        {
+                            To = 1, // Aumentar la opacidad a 1 (completamente visible)
+                            Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                        };
+
+                        // Iniciar la animación de aparición
+                        frame.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    };
+
+                    // Iniciar la animación de desvanecimiento
+                    frame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    {
+
+                    }
+
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al navegar a Page2: {ex.Message}");
-            }
         }
 
 
 
-        private void CerrarVentana_Click(object sender, RoutedEventArgs e)
-        {
-            Window.GetWindow(this)?.Close();
-        }
 
-        private void MinimizarVentana_Click(object sender, RoutedEventArgs e)
-        {
-
-            Window.GetWindow(this)?.Close();
-
-            Window ventana = Window.GetWindow(this);
-            if (ventana != null)
-            {
-                ventana.WindowState = WindowState.Minimized;
-            }
-        }
+        
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
