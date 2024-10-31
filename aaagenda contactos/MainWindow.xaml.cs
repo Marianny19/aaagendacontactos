@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -38,6 +39,52 @@ namespace aaagenda_contactos
             // Asignar el ItemsSource del DataGrid a la lista de contactos
             ContactosDataGrid.ItemsSource = Contactos;
         }
+
+        private bool isMenuOpen = false;
+
+        private void ToggleMenu(object sender, RoutedEventArgs e)
+        {
+            // Cambia el estado del menú
+            isMenuOpen = !isMenuOpen;
+
+            // Cambia la visibilidad del SideMenu
+            SideMenu.Visibility = Visibility.Visible; // Asegúrate de que sea visible antes de aplicar la animación
+
+            // Animación de desvanecimiento para ocultar o mostrar el SideMenu
+            var menuOpacityAnimation = new DoubleAnimation
+            {
+                To = isMenuOpen ? 1 : 0,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
+
+            // Inicia la animación
+            SideMenu.BeginAnimation(OpacityProperty, menuOpacityAnimation);
+
+            // Cambia la visibilidad a Collapsed después de la animación si se está cerrando
+            if (!isMenuOpen)
+            {
+                menuOpacityAnimation.Completed += (s, args) =>
+                {
+                    SideMenu.Visibility = Visibility.Collapsed; // Oculta el menú después de que la animación de desvanecimiento termina
+                };
+            }
+
+            // Animación de desvanecimiento para ocultar o mostrar el contenido
+            var contentOpacityAnimation = new DoubleAnimation
+            {
+                To = isMenuOpen ? 0 : 1,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
+
+            ContentBorder.BeginAnimation(OpacityProperty, contentOpacityAnimation);
+        }
+
+
+
+
+
 
         // Evento para el botón Modificar en la columna de acciones
         private void ModificarButton_Click(object sender, RoutedEventArgs e)

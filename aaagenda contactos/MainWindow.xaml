@@ -50,13 +50,30 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button Margin="20 28 0 35" Style="{StaticResource topButton}">
+
+
+                <!-- Menú lateral que se expande con animación -->
+                <Border x:Name="SideMenu" Background="White" CornerRadius="30" Width="200" Margin="0,2,0,-2" Grid.RowSpan="2" Visibility="Collapsed">
+                    <StackPanel Margin="20,100,20,20">
+                        <!-- Ajusta el margen superior según sea necesario -->
+
+                        <TextBlock Text="Menú" FontSize="16" Margin="10"/>
+                        <Button Content="Opción 1" Margin="10"/>
+                        <Button Content="Opción 2" Margin="10"/>
+                    </StackPanel>
+                </Border>
+
+
+
+                <!-- Botón de menú que activa el despliegue -->
+                <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
                     <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
                 </Button>
 
-                <Border Grid.Row="1" Background="#623ed0" CornerRadius="0 50 0 30">
+                <!-- Contenido principal que se contrae cuando el menú está desplegado -->
+                <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,119,0,0" Grid.RowSpan="2">
                     <DockPanel>
-                        <Separator Margin="25" DockPanel.Dock="Top" Height="0.8" Background="#7e5fdc"/>
+                        <Separator Margin="30" DockPanel.Dock="Top" Height="0.8" Background="#7e5fdc"/>
                         <StackPanel DockPanel.Dock="Top">
                             <Button Style="{StaticResource menuButton}" Click="Button_Click_2">
                                 <StackPanel Orientation="Horizontal">
@@ -64,7 +81,6 @@
                                     <TextBlock Text="Contactos"/>
                                 </StackPanel>
                             </Button>
-
                             <Button Style="{StaticResource menuButton}" Click="Button_Click_1">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="CalendarClock" Style="{StaticResource menuButtonIcon}"/>
@@ -75,6 +91,7 @@
                     </DockPanel>
                 </Border>
             </Grid>
+
 
             <!-- Main content -->
             <Grid Grid.Column="1" Margin="30,20,20,10">
