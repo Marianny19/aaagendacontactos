@@ -17,52 +17,20 @@ using System.Windows.Shapes;
 namespace aaagenda_contactos
 {
     /// <summary>
-    /// Lógica de interacción para Page4.xaml
+    /// Lógica de interacción para Page5.xaml
     /// </summary>
-    public partial class Page4 : Page
+    public partial class Page5 : Page
     {
-        public Page4()
+        public Page5()
         {
             InitializeComponent();
         }
 
-        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
-        {
-            using (var dbContext = new MiDbContext())
-            {
-                try
-                {
-                   
-                    var nuevared_social = new red_social
-                    {
-                        Nombre_de_usuario = ""
-                    };
-
-               
-                    dbContext.RedesSociales.Add(nuevared_social);
- 
-                    dbContext.SaveChanges();
-
-                    
-                    MessageBox.Show("Red social guardada exitosamente.");
-                }
-                catch (Exception ex)
-                {
-                    
-                    MessageBox.Show($"Error al guardar red social: {ex.Message}");
-                }
-            }
-
-            
-            
-
-        }
-            private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Registrar_contacto_Click(object sender
+           , RoutedEventArgs e)
         {
 
         }
-
-
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
@@ -71,7 +39,7 @@ namespace aaagenda_contactos
             if (ventana != null)
             {
                 // Encontrar el Frame en la ventana principal
-                var frame = ventana.FindName("Frame4") as Frame;
+                var frame = ventana.FindName("Frame5") as Frame;
                 if (frame != null)
                 {
                     // Llamar al método ToggleMenu para cerrar el menú
@@ -96,6 +64,5 @@ namespace aaagenda_contactos
                 }
             }
         }
-
     }
 }

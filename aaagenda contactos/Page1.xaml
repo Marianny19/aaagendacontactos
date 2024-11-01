@@ -62,7 +62,7 @@
                     <TextBlock Text="Apellido" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="117,80,103,0" VerticalAlignment="Top"/>
                     <TextBox Width="200" Height="30" Margin="50,96,120,57" Grid.ColumnSpan="2"/>
 
-                    <TextBlock Text="Email" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="127,147,93,0" VerticalAlignment="Top"/>
+                   <TextBlock Text="Email" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="127,147,93,0" VerticalAlignment="Top"/>
                     <TextBox Width="200" Height="30" Margin="50,168,120,35" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
 
                     <TextBlock Grid.Row="2" Text="Tipo de contacto" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="87,0,133,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
@@ -72,7 +72,7 @@
                     </ComboBox>
                     <Button Content="Agregar tipo de contacto" HorizontalAlignment="Right"
         Grid.Column="1" Margin="0,193,-158,-87" Grid.Row="6" Background="#6F50FF"
-        FontSize="12" FontWeight="SemiBold" Foreground="White" Width="156" >
+        FontSize="12" FontWeight="SemiBold" Foreground="White" Width="156" Click="Agregar_tipo_contacto">
 
 
                         <Button.RenderTransform>

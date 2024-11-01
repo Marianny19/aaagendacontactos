@@ -89,21 +89,7 @@ namespace aaagenda_contactos
 
 
 
-        public void ShowOverlay()
-        {
-            // Hacer visible el overlay
-            Overlay.Visibility = Visibility.Visible;
-
-            // Establecer el tamaño del overlay para cubrir toda la ventana
-            Overlay.Width = this.ActualWidth;
-            Overlay.Height = this.ActualHeight;
-
-            // Hacer que el overlay cubra toda la ventana
-            Canvas.SetLeft(Overlay, 0);
-            Canvas.SetTop(Overlay, 0);
-        }
-
-
+        
 
 
         // Evento para el botón Modificar en la columna de acciones
