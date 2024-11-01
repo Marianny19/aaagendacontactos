@@ -61,21 +61,21 @@
 
                     <!-- Campos de entrada de datos -->
                     <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre agenda" Style="{StaticResource Text}" Margin="141,0,125,144" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="0" Width="200" Height="30" Margin="100,48,84,109" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="txtnombre" Grid.Row="0" Width="200" Height="30" Margin="100,48,84,109" Grid.ColumnSpan="2"/>
 
                     <TextBlock Text="Descripción" Style="{StaticResource Text}" Margin="8,154,143,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <TextBox Width="200" Height="30" Margin="100,180,84,232" Grid.ColumnSpan="2" Grid.RowSpan="7"/>
+                    <TextBox x:Name="txtdescripcion" Width="200" Height="30" Margin="100,180,84,232" Grid.ColumnSpan="2" Grid.RowSpan="7"/>
 
                     <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Margin="1,38,121,0" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1"/>
                     <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,61,0,0" Grid.ColumnSpan="2" Width="265" Grid.Row="6"/>
                     <TextBlock Grid.Row="6" Text="Hora agenda" Style="{StaticResource Text}" Margin="3,234,137,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="100,109,0,0" VerticalAlignment="Top" Width="200" Height="32"/>
+                    <ComboBox x:Name="cmbcontactoaagendar" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="100,109,0,0" VerticalAlignment="Top" Width="200" Height="32"/>
                     <TextBlock Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="129,0,113,0"><Run Text="Contacto"/><Run Language="es-419" Text=" a agendar"/></TextBlock>
 
 
 
                 </Grid>
-                <TextBox
+                <TextBox x:Name="txthoraagenda"
                 TextChanged="TextBox_TextChanged" Width="200" Margin="322,513,232,129" Height="30"/>
                 <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Left" 
         Margin="322,555,0,68" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 

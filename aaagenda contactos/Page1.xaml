@@ -66,9 +66,8 @@
                     <TextBox Width="200" Height="30" Margin="50,168,120,35" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
 
                     <TextBlock Grid.Row="2" Text="Tipo de contacto" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="87,0,133,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-                    <ComboBox x:Name="Tipo_contacto" Grid.Row="3" Width="200" Height="30" Margin="50,8,120,62" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                        <ComboBoxItem Content="Familiar"/>
-                        <ComboBoxItem Content="Amigo"/>
+                    <ComboBox x:Name="cmbTipo_contacto" Grid.Row="3" Width="200" Height="30" Margin="50,8,120,62" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                        
                     </ComboBox>
                     <Button Content="Agregar tipo de contacto" HorizontalAlignment="Right"
         Grid.Column="1" Margin="0,193,-158,-87" Grid.Row="6" Background="#6F50FF"
