@@ -174,6 +174,11 @@ namespace aaagenda_contactos
             }
         }
 
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(); // Cierra la ventana
+        }
+
         // Función para obtener el hijo visual de un tipo específico
         private T GetVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
@@ -216,6 +221,7 @@ namespace aaagenda_contactos
             }
             return null;
         }
+
 
 
         // Evento para navegar a Page1
