@@ -11,7 +11,10 @@
 
     <Window.Clip>
         <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,1080,720"/>
+        
     </Window.Clip>
+
+    
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
@@ -79,7 +82,12 @@
                     </DockPanel>
                 </Border>
 
+                <Grid>
+                    <!-- Tu contenido existente aquí -->
 
+                    <!-- Overlay para bloquear la interacción -->
+                    <Rectangle x:Name="Overlay" Fill="Transparent" Visibility="Collapsed" Margin="0,0,-881,-593" />
+                </Grid>
 
 
                 <!-- Botón de menú que activa el despliegue -->
