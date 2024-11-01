@@ -22,6 +22,7 @@ namespace Contactos
     /// </summary>
     public partial class Page1 : Page
     {
+        private const int MaxPhoneNumbers = 14;
         public Page1()
         {
             InitializeComponent();
@@ -207,7 +208,7 @@ namespace Contactos
                             frame4.Opacity = 1;
 
                             // Mostrar overlay para bloquear la interacción
-                           
+
                         };
 
                         frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
@@ -221,6 +222,129 @@ namespace Contactos
 
 
 
+        private void AddPhoneNumber_Click(object sender, RoutedEventArgs e)
+        {
+            // Verificar si ya se alcanzó el límite de 14 TextBox
+            if (PhoneNumbersCanvas.Children.Count >= MaxPhoneNumbers)
+            {
+                MessageBox.Show("Se ha alcanzado el límite de 14 números de teléfono.", "Límite alcanzado", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            // Mostrar el label "Otros números telefónicos" si es el primer número
+            if (PhoneNumbersCanvas.Children.Count == 0)
+            {
+                AdditionalNumbersLabel.Visibility = Visibility.Visible;
+
+                // Crear animación de opacidad para el label
+                var labelFadeInAnimation = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromMilliseconds(300),
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                };
+                AdditionalNumbersLabel.BeginAnimation(UIElement.OpacityProperty, labelFadeInAnimation);
+            }
+
+            // Crear un StackPanel para contener el TextBox y el botón de eliminación
+            StackPanel phoneNumberPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Opacity = 0 // Inicialmente invisible para la animación
+            };
+
+            // Crear el TextBox
+            TextBox newTextBox = new TextBox
+            {
+                Width = 190,
+                Height = 30,
+                Margin = new Thickness(0, 0, 5, 0) // Separación con el botón de eliminación
+            };
+
+            // Crear el botón de eliminación
+            Button removeButton = new Button
+            {
+                Content = "-",
+                Width = 20,
+                Height = 20
+
+            };
+            removeButton.Click += (s, args) => RemovePhoneNumber(phoneNumberPanel); // Asociar evento de clic
+
+            // Agregar el TextBox y el botón al StackPanel
+            phoneNumberPanel.Children.Add(newTextBox);
+            phoneNumberPanel.Children.Add(removeButton);
+
+            // Posicionar el StackPanel en el Canvas
+            double topPosition = PhoneNumbersCanvas.Children.Count * 35 - 10;
+            Canvas.SetLeft(phoneNumberPanel, 0);
+            Canvas.SetTop(phoneNumberPanel, topPosition + 11);
+
+            // Agregar el StackPanel al Canvas
+            PhoneNumbersCanvas.Children.Add(phoneNumberPanel);
+
+            // Animación de opacidad para mostrar el StackPanel gradualmente
+            var fadeInAnimation = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
+            phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        }
+
+        private void RemovePhoneNumber(StackPanel phoneNumberPanel)
+        {
+            // Crear la animación de opacidad para desvanecer el StackPanel
+            var fadeOutAnimation = new DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
+
+            fadeOutAnimation.Completed += (s, args) =>
+            {
+                // Eliminar el StackPanel del Canvas después de la animación
+                PhoneNumbersCanvas.Children.Remove(phoneNumberPanel);
+
+                // Reposicionar los elementos restantes
+                for (int i = 0; i < PhoneNumbersCanvas.Children.Count; i++)
+                {
+                    var childPanel = PhoneNumbersCanvas.Children[i] as StackPanel;
+                    if (childPanel != null)
+                    {
+                        Canvas.SetTop(childPanel, i * 35 - 10 + 11);
+                    }
+                }
+
+                // Verificar si no quedan más números de teléfono
+                if (PhoneNumbersCanvas.Children.Count == 0)
+                {
+                    // Crear la animación para desvanecer el TextBlock
+                    var labelFadeOutAnimation = new DoubleAnimation
+                    {
+                        From = 1,
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                    };
+
+                    labelFadeOutAnimation.Completed += (s, labelArgs) =>
+                    {
+                        AdditionalNumbersLabel.Visibility = Visibility.Collapsed; // Ocultar el label después de la animación
+                    };
+
+                    // Iniciar la animación de desvanecimiento del TextBlock
+                    AdditionalNumbersLabel.BeginAnimation(UIElement.OpacityProperty, labelFadeOutAnimation);
+                }
+            };
+
+            // Iniciar la animación de desvanecimiento del StackPanel
+            phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+        }
     }
 }

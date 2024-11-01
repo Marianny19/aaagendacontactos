@@ -174,10 +174,15 @@ namespace aaagenda_contactos
              }
          }
 
-         // Función para obtener el hijo visual de un tipo específico
-         private T GetVisualChild<T>(DependencyObject parent) where T : DependencyObject
-         {
-             if (parent == null) return null;
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(); // Cierra la ventana
+        }
+
+        // Función para obtener el hijo visual de un tipo específico
+        private T GetVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null) return null;
 
              for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
              {
@@ -218,24 +223,25 @@ namespace aaagenda_contactos
          }
 
 
-         // Evento para navegar a Page1
-         private void Button_Click(object sender, RoutedEventArgs e)
-         {
-             // Obtener la ventana principal
-             var ventana = Window.GetWindow(this);
-             if (ventana != null)
-             {
-                 // Encontrar el Frame en la ventana principal
-                 var frame = MainFrame;
-                 if (frame != null)
-                 {
-                     // Crear animación de desvanecimiento para ocultar el Frame
-                     var fadeOutAnimation = new DoubleAnimation
-                     {
-                         To = 0,
-                         Duration = TimeSpan.FromMilliseconds(0),
-                         EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-                     };
+
+        // Evento para navegar a Page1
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Obtener la ventana principal
+            var ventana = Window.GetWindow(this);
+            if (ventana != null)
+            {
+                // Encontrar el Frame en la ventana principal
+                var frame = MainFrame;
+                if (frame != null)
+                {
+                    // Crear animación de desvanecimiento para ocultar el Frame
+                    var fadeOutAnimation = new DoubleAnimation
+                    {
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(0),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                    };
 
                      fadeOutAnimation.Completed += (s, args) =>
                      {
