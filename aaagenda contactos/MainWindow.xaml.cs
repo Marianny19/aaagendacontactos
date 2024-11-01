@@ -304,7 +304,7 @@ namespace aaagenda_contactos
             // Lógica para manejar el cambio de selección
         }
 
-        private void MainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
 
         }

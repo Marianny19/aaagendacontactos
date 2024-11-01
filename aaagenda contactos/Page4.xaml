@@ -66,7 +66,7 @@
 
                     <!-- Campos de entrada de datos -->
                     <TextBlock x:Name="Nombre" Grid.Row="6" Style="{StaticResource Text}" Margin="108,0,10,-393" VerticalAlignment="Bottom" Grid.Column="1"><Run Language="es-419" Text="Nombre de la red social"/></TextBlock>
-                    <TextBox Grid.Row="6" Height="30" Margin="98,398,0,-428" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+                    <TextBox x:Name="txtnombre" Grid.Row="6" Height="30" Margin="98,398,0,-428" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
 
 
 
@@ -74,7 +74,7 @@
                 </Grid>
                 <Button x:Name="Registrar_contacto" Content="Registrar red social" HorizontalAlignment="Left" 
         Margin="469,382,0,0" Background="#6F50FF" FontSize="22" Width="199" FontWeight="SemiBold" 
-        Click="Registrar_contacto_Click" RenderTransformOrigin="-0.133,0.179" Foreground="White">
+        Click="Registrar_contacto_Click" RenderTransformOrigin="-0.133,0.179" Foreground="White" Height="48" VerticalAlignment="Top">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
