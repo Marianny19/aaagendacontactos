@@ -82,12 +82,7 @@
                     </DockPanel>
                 </Border>
 
-                <Grid>
-                    <!-- Tu contenido existente aquí -->
-
-                    <!-- Overlay para bloquear la interacción -->
-                    <Rectangle x:Name="Overlay" Fill="Transparent" Visibility="Collapsed" Margin="0,0,-881,-593" />
-                </Grid>
+                
 
 
                 <!-- Botón de menú que activa el despliegue -->
@@ -224,6 +219,7 @@
             <Frame x:Name="Frame2" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated" Grid.Column="1" Margin="10,77,-10,10"/>
             <Frame x:Name="Frame3" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="0,-30,0,-40" />
             <Frame x:Name="Frame4" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" />
+            <Frame x:Name="Frame5" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" />
         </Grid>
     </Border>
 </Window>
