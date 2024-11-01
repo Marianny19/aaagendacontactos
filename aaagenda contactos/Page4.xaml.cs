@@ -28,10 +28,33 @@ namespace aaagenda_contactos
 
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
+            using (var dbContext = new MiDbContext())
+            {
+                try
+                {
+                   
+                    var nuevared_social = new red_social
+                    {
+                        Nombre_de_usuario = txtnombre.Text
+                    };
+
+               
+                    dbContext.RedesSociales.Add(nuevared_social);
+ 
+                    dbContext.SaveChanges();
+
+                    
+                    MessageBox.Show("Red social guardada exitosamente.");
+                }
+                catch (Exception ex)
+                {
+                    
+                    MessageBox.Show($"Error al guardar red social: {ex.Message}");
+                }
+            }
 
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+            private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

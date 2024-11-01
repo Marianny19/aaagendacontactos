@@ -20,36 +20,23 @@ public class MiDbContext : DbContext
 
 public class contacto
 {
-    [Key]
     public int ID_contacto { get; set; }
 
-    [Required, MaxLength(50)]
     public string Nombre { get; set; }
 
-    [Required, MaxLength(50)]
     public string Apellido { get; set; }
 
-    [EmailAddress]
     public string Email { get; set; }
 
-    public int ID_Tipo_Contacto { get; set; }
+    public int Tipo_Contacto { get; set; }
 
-    public int ID_Tipo_red_social { get; set; }
+    public int Tipo_red_social { get; set; }
 
-
-    [ForeignKey(nameof(ID_Tipo_Contacto))]
-    public tipo_contacto TipoContacto { get; set; }
-
-    [ForeignKey(nameof(ID_Tipo_red_social))]
-    public tipo_red_social TipoRedSocial { get; set; }
 }
 
 public class agenda
 {
-    [Key]
     public int ID_agenda { get; set; }
-
-    [Required, MaxLength(100)]
     public string Nombre_agenda { get; set; }
 
     public string Descripcion_agenda { get; set; }
@@ -60,22 +47,16 @@ public class agenda
 
 public class red_social
 {
-    [Key]
     public int Id_red_social { get; set; }
 
-    [Required, MaxLength(50)]
     public string Nombre_de_usuario { get; set; }
 
     public int ID_contacto { get; set; }
 
-   
-    [ForeignKey(nameof(ID_contacto))]
-    public contacto Contacto { get; set; }
 }
 
 public class tipo_contacto
 {
-    [Key]
     public int ID_tipo_contacto { get; set; }
 
     public string Nombre_tipo_contacto { get; set; }
@@ -83,26 +64,19 @@ public class tipo_contacto
 
 public class teléfono
 {
-    [Key]
     public int Id_telefono { get; set; }
 
-    [Required, MaxLength(15)]
     public string Número_de_teléfono { get; set; }
 
-    [MaxLength(20)]
     public string Tipo_teléfono { get; set; }
 
     public int Id_contacto { get; set; }
 
-    [ForeignKey(nameof(Id_contacto))]
-    public contacto Contacto { get; set; }
 }
 
 public class tipo_red_social
 {
-    [Key]
     public int Id_tipo_red_social { get; set; }
 
-    [Required, MaxLength(50)]
     public string Nombre_red_social { get; set; }
 }
