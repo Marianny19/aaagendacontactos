@@ -109,8 +109,12 @@ namespace Contactos
                 // Encontrar el Frame en la ventana principal
                 var mainFrame = mainWindow.MainFrame; // Este es el Frame que contiene Page1
                 var frame4 = mainWindow.Frame4; // Este es el Frame que contiene Page4
+
                 if (mainFrame != null && frame4 != null)
                 {
+                    // Desplegar el menú antes de ocultar el MainFrame
+                    mainWindow.ToggleMenu(sender, e); // Llamada al método ToggleMenu en MainWindow
+
                     // Crear animación de desvanecimiento para ocultar el MainFrame
                     var fadeOutAnimation = new DoubleAnimation
                     {
@@ -124,12 +128,12 @@ namespace Contactos
                         // Colapsar el MainFrame al finalizar el desvanecimiento
                         mainFrame.Visibility = Visibility.Collapsed;
 
-                        // Hacer que Frame4 sea visible antes de navegar
-                        frame4.Visibility = Visibility.Visible;
-                        frame4.Opacity = 0; // Asegurarse de que Frame4 comience invisible
-
-                        // Navegar a Page4 en Frame4
+                        // Navegar a Page4 en Frame4 antes de ajustar su opacidad y visibilidad
                         frame4.Navigate(new Page4());
+
+                        // Ajustar la opacidad de Frame4 a 0 antes de hacerlo visible
+                        frame4.Opacity = 0;
+                        frame4.Visibility = Visibility.Visible;
 
                         // Crear animación de aparición para Frame4
                         var fadeInAnimation = new DoubleAnimation
@@ -144,6 +148,9 @@ namespace Contactos
                         {
                             // Asegurarse de que la opacidad sea 1 después de la animación
                             frame4.Opacity = 1;
+
+                            // Mostrar overlay para bloquear la interacción
+                            mainWindow.ShowOverlay();
                         };
 
                         frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
@@ -154,6 +161,9 @@ namespace Contactos
                 }
             }
         }
+
+
+
 
     }
 }

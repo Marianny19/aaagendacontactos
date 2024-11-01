@@ -40,9 +40,9 @@ namespace aaagenda_contactos
             ContactosDataGrid.ItemsSource = Contactos;
         }
 
-        private bool isMenuOpen = false;
+        public bool isMenuOpen = false;
 
-        private void ToggleMenu(object sender, RoutedEventArgs e)
+        public void ToggleMenu(object sender, RoutedEventArgs e)
         {
             // Cambia el estado del menú
             isMenuOpen = !isMenuOpen;
@@ -89,6 +89,19 @@ namespace aaagenda_contactos
 
 
 
+        public void ShowOverlay()
+        {
+            // Hacer visible el overlay
+            Overlay.Visibility = Visibility.Visible;
+
+            // Establecer el tamaño del overlay para cubrir toda la ventana
+            Overlay.Width = this.ActualWidth;
+            Overlay.Height = this.ActualHeight;
+
+            // Hacer que el overlay cubra toda la ventana
+            Canvas.SetLeft(Overlay, 0);
+            Canvas.SetTop(Overlay, 0);
+        }
 
 
 

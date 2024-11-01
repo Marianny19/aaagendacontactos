@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Panel Izquierdo (Fondo turquesa) -->
-        <Border Background="#623ef9" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-91,72,141">
+        <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-91,72,141">
             <StackPanel VerticalAlignment="Center">
                 <fa:ImageAwesome Icon="Users" Width="166" Height="166" Foreground="White"/>
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White"><Run Language="es-419" Text="Red social"/></TextBlock>
