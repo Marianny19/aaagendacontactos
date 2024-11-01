@@ -21,19 +21,19 @@ namespace aaagenda_contactos
     public partial class MainWindow : Window
     {
         // ObservableCollection para almacenar los contactos
-        public ObservableCollection<Contacto> Contactos { get; set; }
+        public ObservableCollection<contacto> Contactos { get; set; }
         private bool _isEditing = false; // Variable para saber si se está editando un contacto
-        private Contacto _currentEditingContact; // Variable para almacenar el contacto que se está editando
+        private contacto _currentEditingContact; // Variable para almacenar el contacto que se está editando
 
         public MainWindow()
         {
             InitializeComponent();
 
             // Inicializar la lista de contactos
-            Contactos = new ObservableCollection<Contacto>
+            Contactos = new ObservableCollection<contacto>
             {
-                new Contacto { Nombre = "Juan", Telefono = "123456789" },
-                new Contacto { Nombre = "María", Telefono = "987654321" }
+                new contacto { Nombre = "Juan", Apellido = "123456789" },
+                new contacto { Nombre = "María", Apellido = "987654321" }
             };
 
             // Asignar el ItemsSource del DataGrid a la lista de contactos
@@ -117,7 +117,7 @@ namespace aaagenda_contactos
 
             // Obtener el contacto del parámetro del comando
             var button = sender as Button;
-            var contacto = button.CommandParameter as Contacto;
+            var contacto = button.CommandParameter as contacto;
 
             if (contacto != null)
             {
@@ -157,7 +157,7 @@ namespace aaagenda_contactos
             if (_currentEditingContact != null)
             {
                 // Aquí puedes agregar la lógica para guardar los cambios del contacto
-                MessageBox.Show($"Guardado: {_currentEditingContact.Nombre}, {_currentEditingContact.Telefono}");
+                MessageBox.Show($"Guardado: {_currentEditingContact.Nombre}, {_currentEditingContact.Apellido}");
 
                 // Ocultar el botón Guardar después de guardar
                 guardar.Visibility = Visibility.Collapsed;
@@ -349,11 +349,6 @@ namespace aaagenda_contactos
             }
         }
         
-        // Clase Contacto
-        public class Contacto
-        {
-            public string Nombre { get; set; }
-            public string Telefono { get; set; }
-        }
+  
     }
 }
