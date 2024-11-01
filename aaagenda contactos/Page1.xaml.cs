@@ -63,10 +63,10 @@ namespace Contactos
         }
 
 
- 
 
 
-        
+
+
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -300,13 +300,25 @@ namespace Contactos
                 // Eliminar el StackPanel del Canvas después de la animación
                 PhoneNumbersCanvas.Children.Remove(phoneNumberPanel);
 
-                // Reposicionar los elementos restantes
+                // Reposicionar y animar los elementos restantes hacia arriba
                 for (int i = 0; i < PhoneNumbersCanvas.Children.Count; i++)
                 {
                     var childPanel = PhoneNumbersCanvas.Children[i] as StackPanel;
                     if (childPanel != null)
                     {
-                        Canvas.SetTop(childPanel, i * 35 - 10 + 11);
+                        // Calcular la nueva posición de cada StackPanel
+                        double targetTop = i * 35 - 10 + 11;
+
+                        // Crear la animación de desplazamiento
+                        var moveUpAnimation = new DoubleAnimation
+                        {
+                            To = targetTop,
+                            Duration = TimeSpan.FromMilliseconds(150),
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                        };
+
+                        // Aplicar la animación de desplazamiento al Canvas.Top del StackPanel
+                        childPanel.BeginAnimation(Canvas.TopProperty, moveUpAnimation);
                     }
                 }
 
