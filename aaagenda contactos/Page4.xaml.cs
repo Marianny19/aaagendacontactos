@@ -35,7 +35,7 @@ namespace aaagenda_contactos
                    
                     var nuevared_social = new red_social
                     {
-                        Nombre_de_usuario = txtnombre.Text
+                        Nombre_de_usuario = ""
                     };
 
                
