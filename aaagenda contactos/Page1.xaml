@@ -122,12 +122,14 @@
 
                     </Border>
 
-                    <TextBlock Grid.Row="6" Text="Tipo de red social" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="87,3,133,0" VerticalAlignment="Top"/>
-                    <ComboBox Name="Tipo_red_social" Grid.Row="6" Width="200" Height="30" Margin="50,27,120,82" Grid.ColumnSpan="2">
-                        <ComboBoxItem Content="Facebook"/>
-                        <ComboBoxItem Content="Twitter"/>
-                        <ComboBoxItem Content="Instagram"/>
-                    </ComboBox>
+
+
+                    <TextBlock Grid.Row="6" Text="Tipo de red social" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="87,3,133,0" VerticalAlignment="Top">
+                    <local:MultiSelectComboBox x:Name="TipoRedSocial" 
+                           ItemsSource="{Binding Path=RedSocialItems}" 
+                           Width="200" Height="30" Grid.Row="6" Grid.Column="0" Margin="50,27,120,82" Grid.ColumnSpan="2"/>
+                    </TextBlock>
+
                     <Button x:Name="agregar_tipo_red_social" Content="Agregar tipo de red social"
         HorizontalAlignment="Right" Grid.Column="1" Margin="0,230,-159,-126" Grid.Row="6" Background="#6F50FF"
         FontSize="12" FontWeight="SemiBold" Foreground="White" Width="158" Click="Agregar_tipo_red_social">
