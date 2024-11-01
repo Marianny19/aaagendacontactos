@@ -4,15 +4,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Contactos"
-      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:customControl="clr-namespace:aaagenda_contactos.CustomUserControl"
+      
+      xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:local1="clr-namespace:aaagenda_contactos"
       mc:Ignorable="d" Height="720" Width="1080" Background="Transparent">
-
 
     <Grid Margin="100">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+
+
 
         <!-- Panel Izquierdo (Fondo turquesa) -->
         <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-99,72,-102">
@@ -26,6 +30,12 @@
                 </Button>
             </StackPanel>
         </Border>
+
+        <Grid Grid.ColumnSpan="2" Margin="0,0,10,0">
+            <customControl:MultiSelectComboBox x:Name="TipoRedSocial" 
+ItemsSource="{Binding Path=RedSocialItems}" Grid.Column="0" Margin="484,375,188,115"/>
+        </Grid>
+
         <!-- Panel Derecho (Formulario) -->
         <Border Padding="20" Background="#E0E0E0" CornerRadius="0 30 30 0" Margin="278,-99,-99,-102" Grid.ColumnSpan="2">
             <Grid Margin="-91,0,0,0">
@@ -103,6 +113,7 @@
                     </Button>
 
 
+
                     <TextBlock Grid.Row="4" Text="Número de teléfono" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="78,21,142,0" VerticalAlignment="Top" Height="25"/>
                     <TextBox Grid.Row="4" Width="200" Height="30" Margin="50,43,120,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
@@ -121,14 +132,13 @@
 
 
 
+
                     </Border>
 
 
 
                     <TextBlock Grid.Row="6" Text="Tipo de red social" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="87,3,133,0" VerticalAlignment="Top">
-                    <local:MultiSelectComboBox x:Name="TipoRedSocial" 
-                           ItemsSource="{Binding Path=RedSocialItems}" 
-                           Width="200" Height="30" Grid.Row="6" Grid.Column="0" Margin="50,27,120,82" Grid.ColumnSpan="2"/>
+
                     </TextBlock>
 
                     <Button x:Name="agregar_tipo_red_social" Content="Agregar tipo de red social"
