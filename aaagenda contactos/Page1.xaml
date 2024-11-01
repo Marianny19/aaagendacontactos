@@ -125,7 +125,7 @@
 
 
                     <TextBlock Grid.Row="6" Text="Tipo de red social" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="87,3,133,0" VerticalAlignment="Top">
-                    <local:MultiSelectComboBox x:Name="TipoRedSocial" 
+                     <local:MultiSelectComboBox x:Name="TipoRedSocial" 
                            ItemsSource="{Binding Path=RedSocialItems}" 
                            Width="200" Height="30" Grid.Row="6" Grid.Column="0" Margin="50,27,120,82" Grid.ColumnSpan="2"/>
                     </TextBlock>
