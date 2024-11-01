@@ -66,7 +66,7 @@
 
                     <!-- Campos de entrada de datos -->
                     <TextBlock x:Name="Nombre" Grid.Row="6" Style="{StaticResource Text}" Margin="28,0,241,-438" VerticalAlignment="Bottom" Grid.ColumnSpan="2"><Run Language="es-419" Text="Nombre de la red social"/></TextBlock>
-                    <TextBox Grid.Row="6" Height="30" Margin="28,438,221,-468" TextChanged="TextBox_TextChanged" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="txtnombre" Grid.Row="6" Height="30" Margin="28,438,221,-468" TextChanged="TextBox_TextChanged" Grid.ColumnSpan="2"/>
 
 
 

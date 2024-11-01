@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static MiDbContext;
 
 namespace aaagenda_contactos
 {
@@ -26,10 +28,41 @@ namespace aaagenda_contactos
             InitializeComponent();
         }
 
-        private void Registrar_contacto_Click(object sender
-           , RoutedEventArgs e)
+        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
+            var tipocontacto = txttipocontacto.Text;
 
+            if (string.IsNullOrWhiteSpace(tipocontacto))
+            {
+                MessageBox.Show("El tipo de contacto no puede estar vacío.");
+                return;
+            }
+
+            var nuevotipo_contacto = new tipo_contacto
+            {
+                Nombre_tipo_contacto = tipocontacto
+            };
+
+            using (var dbContext = new MiDbContext())
+            {
+                try
+                {
+                    dbContext.tipos_contacto.Add(nuevotipo_contacto);
+                    dbContext.SaveChanges();
+                    txttipocontacto.Clear();
+                    
+
+                    MessageBox.Show("Tipo de contacto guardado exitosamente.");
+                }
+                catch (DbUpdateException dbEx)
+                {
+                    MessageBox.Show($"Error al guardar tipo contacto: {dbEx.InnerException?.Message ?? dbEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error inesperado: {ex.Message}");
+                }
+            }
         }
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)

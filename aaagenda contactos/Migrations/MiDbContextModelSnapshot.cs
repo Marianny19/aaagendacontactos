@@ -21,7 +21,7 @@ namespace aaagenda_contactos.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("agendaa", b =>
+            modelBuilder.Entity("MiDbContext+agenda", b =>
                 {
                     b.Property<int>("ID_agenda")
                         .ValueGeneratedOnAdd()
@@ -48,12 +48,10 @@ namespace aaagenda_contactos.Migrations
 
                     b.HasKey("ID_agenda");
 
-                    b.HasIndex("ID_contacto");
-
                     b.ToTable("agendas");
                 });
 
-            modelBuilder.Entity("contacto", b =>
+            modelBuilder.Entity("MiDbContext+contacto", b =>
                 {
                     b.Property<int>("ID_contacto")
                         .ValueGeneratedOnAdd()
@@ -84,7 +82,7 @@ namespace aaagenda_contactos.Migrations
                     b.ToTable("contactos");
                 });
 
-            modelBuilder.Entity("red_social", b =>
+            modelBuilder.Entity("MiDbContext+red_social", b =>
                 {
                     b.Property<int>("Id_red_social")
                         .ValueGeneratedOnAdd()
@@ -101,12 +99,10 @@ namespace aaagenda_contactos.Migrations
 
                     b.HasKey("Id_red_social");
 
-                    b.HasIndex("ID_contacto");
-
-                    b.ToTable("red_social");
+                    b.ToTable("red_sociall");
                 });
 
-            modelBuilder.Entity("teléfono", b =>
+            modelBuilder.Entity("MiDbContext+teléfono", b =>
                 {
                     b.Property<int>("Id_telefono")
                         .ValueGeneratedOnAdd()
@@ -127,12 +123,10 @@ namespace aaagenda_contactos.Migrations
 
                     b.HasKey("Id_telefono");
 
-                    b.HasIndex("Id_contacto");
-
                     b.ToTable("telefono");
                 });
 
-            modelBuilder.Entity("tipo_contacto", b =>
+            modelBuilder.Entity("MiDbContext+tipo_contacto", b =>
                 {
                     b.Property<int>("ID_tipo_contacto")
                         .ValueGeneratedOnAdd()
@@ -149,7 +143,7 @@ namespace aaagenda_contactos.Migrations
                     b.ToTable("tipos_contacto");
                 });
 
-            modelBuilder.Entity("tipo_red_social", b =>
+            modelBuilder.Entity("MiDbContext+tipo_red_social", b =>
                 {
                     b.Property<int>("Id_tipo_red_social")
                         .ValueGeneratedOnAdd()
@@ -164,48 +158,6 @@ namespace aaagenda_contactos.Migrations
                     b.HasKey("Id_tipo_red_social");
 
                     b.ToTable("tipos_red_social");
-                });
-
-            modelBuilder.Entity("agendaa", b =>
-                {
-                    b.HasOne("contacto", "Contacto")
-                        .WithMany("Agendas")
-                        .HasForeignKey("ID_contacto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contacto");
-                });
-
-            modelBuilder.Entity("red_social", b =>
-                {
-                    b.HasOne("contacto", "Contacto")
-                        .WithMany("RedesSociales")
-                        .HasForeignKey("ID_contacto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contacto");
-                });
-
-            modelBuilder.Entity("teléfono", b =>
-                {
-                    b.HasOne("contacto", "Contacto")
-                        .WithMany("Telefonos")
-                        .HasForeignKey("Id_contacto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contacto");
-                });
-
-            modelBuilder.Entity("contacto", b =>
-                {
-                    b.Navigation("Agendas");
-
-                    b.Navigation("RedesSociales");
-
-                    b.Navigation("Telefonos");
                 });
 #pragma warning restore 612, 618
         }
