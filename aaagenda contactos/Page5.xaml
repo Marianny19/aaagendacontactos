@@ -66,7 +66,7 @@
 
                     <!-- Campos de entrada de datos -->
                     <TextBlock x:Name="Nombre" Grid.Row="6" Style="{StaticResource Text}" Margin="0,0,28,-430" VerticalAlignment="Bottom"><Run Language="es-419" Text="T"/><Run Text="ipo de contacto"/></TextBlock>
-                    <TextBox Grid.Row="6" Height="30" Margin="0,435,225,-465"  Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="193"/>
+                    <TextBox x:Name="txttipocontacto" Grid.Row="6" Height="30" Margin="0,435,225,-465"  Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="193"/>
 
 
 
