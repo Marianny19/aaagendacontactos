@@ -22,10 +22,15 @@ namespace Contactos
     /// </summary>
     public partial class Page1 : Page
     {
+        public List<string> RedSocialItems { get; set; }
+
         private const int MaxPhoneNumbers = 14;
         public Page1()
         {
             InitializeComponent();
+            RedSocialItems = new List<string> { "Facebook", "Twitter", "Instagram" };
+            DataContext = this;
+
         }
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
@@ -57,15 +62,10 @@ namespace Contactos
             }
         }
 
-        private void minimizar(object sender, RoutedEventArgs e)
-        {
 
-            Window ventana = Window.GetWindow(this);
-            if (ventana != null)
-            {
-                ventana.WindowState = WindowState.Minimized;
-            }
-        }
+ 
+
+
         /* private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
          {
              Tipo_contacto.Items.Add(txttipocontacto.Text);
@@ -157,6 +157,7 @@ namespace Contactos
 
             }
         }
+
 
         private void Agregar_tipo_red_social(object sender, RoutedEventArgs e)
         {

@@ -161,7 +161,7 @@
           SelectionChanged="DataGrid_SelectionChanged"
           Style="{StaticResource CustomDataGridStyle}" 
           CanUserAddRows="False" 
-          IsReadOnly="False" Margin="0,10,0,84">
+          IsReadOnly="False" Margin="0,10,10,84">
 
                     <!-- Definición de columnas -->
                     <DataGrid.Columns>
