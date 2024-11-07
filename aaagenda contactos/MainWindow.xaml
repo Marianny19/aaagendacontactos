@@ -18,7 +18,6 @@
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-        <!-- Estilo personalizado para DataGrid -->
         <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="Gray"/>
@@ -50,7 +49,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Sidebar -->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -59,7 +57,6 @@
 
 
 
-                <!-- Menú lateral que se expande con animación -->
                 <Border x:Name="SideMenu" Background="White" CornerRadius="30" Width="200" Margin="0,0,0,-2" Grid.RowSpan="2" Visibility="Collapsed">
                     <Border.RenderTransform>
                         <TranslateTransform x:Name="SideMenuTransform" X="-200"/>
@@ -85,12 +82,10 @@
 
 
 
-                <!-- Botón de menú que activa el despliegue -->
                 <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
                     <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
                 </Button>
 
-                <!-- Contenido principal que se contrae cuando el menú está desplegado -->
                 <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,119,0,0" Grid.RowSpan="2">
                     <DockPanel>
                         <Separator Margin="30" DockPanel.Dock="Top" Height="0.8" Background="#7e5fdc"/>
@@ -113,7 +108,6 @@
             </Grid>
 
 
-            <!-- Main content -->
             <Grid Grid.Column="1" Margin="30,20,20,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -123,20 +117,17 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Search bar -->
                 <Grid Width="300" HorizontalAlignment="Left">
                     <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                               Panel.ZIndex="1" Text="Buscar aquí ..." Visibility="{Binding Text.IsEmpty, Converter={StaticResource BoolToVis}, ElementName=txtSearch}"/>
+                               Panel.ZIndex="1" Text="Buscar aquí ..." />
                     <TextBox x:Name="txtSearch" Style="{StaticResource textboxSearch}"/>
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center"
                                            Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
                 </Grid>
 
-                <!-- Main title -->
                 <TextBlock Text="Contactos" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
 
-                <!-- Add Contact Button -->
                 <Button Style="{StaticResource addButton}" Grid.Row="1" Margin="0,20,10,54" Grid.RowSpan="3" Width="192" Click="Button_Click">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
@@ -144,11 +135,10 @@
                     </StackPanel>
                 </Button>
 
-                <!-- Segunda barra de búsqueda alineada a la derecha debajo del botón Añadir Contacto -->
                 <Grid Width="300" HorizontalAlignment="Right" Grid.Row="3" Margin="0 20 0 0">
                     <TextBlock Margin="10,5,30,0" VerticalAlignment="Top" Foreground="#b0b9c6" IsHitTestVisible="False"
                                Panel.ZIndex="1" Text="Buscar contactos ..."
-                               Visibility="{Binding Text.IsEmpty, Converter={StaticResource BoolToVis}, ElementName=txtSearch2}" Height="15"/>
+                                Height="15"/>
                     <TextBox x:Name="txtSearch2" Style="{StaticResource textboxSearch}" VerticalAlignment="Top" Height="42" Margin="-10,-8,10,0"/>
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
                                            Margin="0,6,30,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328"/>
@@ -163,16 +153,12 @@
           CanUserAddRows="False" 
           IsReadOnly="False" Margin="0,10,10,84">
 
-                    <!-- Definición de columnas -->
                     <DataGrid.Columns>
 
-                        <!-- Columna de Nombre (editable) -->
                         <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" IsReadOnly="False"/>
 
-                        <!-- Columna de Teléfono (editable) -->
                         <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" IsReadOnly="False"/>
 
-                        <!-- Columna de Botón Guardar -->
                         <DataGridTemplateColumn Header="Acciones">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -196,8 +182,6 @@
                 </DataGrid>
 
                 <ComboBox HorizontalAlignment="Left" Margin="167,31,0,0" Grid.Row="1" VerticalAlignment="Top" Width="176" Height="28"/>
-                <!-- Botón Modificar -->
-                <!-- Botón Guardar (oculto inicialmente) -->
                 <Button x:Name="guardar" Style="{StaticResource addButton}" Grid.Row="4" Margin="0,465,150,15" Width="114" Visibility="Collapsed" Click="GuardarButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Height="19" Text="Guardar"/>
@@ -214,7 +198,6 @@
                 </StackPanel>
 
 
-                <!-- Botón Eliminar -->
                 <Button Style="{StaticResource addButton}" Grid.Row="4" Margin="0,460,20,10" Width="114">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Height="19">
