@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -14,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static MiDbContext;
 
 namespace Contactos
 {
@@ -30,7 +33,53 @@ namespace Contactos
 
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
+            var nombreAgenda = txtnombre.Text;
+            var ID_contacto = cmbcontactoaagendar;
+            var Descripcion_agenda = txtdescripcion;
+            var Fecha_agendada = txtfecha;
+            var Hora_agendada = txthoraagenda;
+            DateTime value;
+              
+                if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
+                    string.IsNullOrWhiteSpace(txthoraagenda.Text) ||
+                    string.IsNullOrWhiteSpace(txtdescripcion.Text) ||
+                   cmbcontactoaagendar.SelectedItem == null) 
+                {
+                    MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
+
+            var nuevaAgenda = new agenda
+            {
+                 Nombre_agenda = nombreAgenda
+
+            };
+
+            using (var dbContext = new MiDbContext())
+            {
+                try
+                {
+                    dbContext.agendas.Add(nuevaAgenda);
+                    dbContext.SaveChanges();
+                    txtnombre.Clear();
+                    txthoraagenda.Clear();
+                    txtfecha.ClearValue(Selector.SelectedItemProperty);
+                    txtfecha.ClearValue(Selector.SelectedIndexProperty);
+                    txtdescripcion.Clear();
+                    cmbcontactoaagendar.ClearValue(Selector.SelectedItemProperty);
+
+                    MessageBox.Show("Agenda guardada exitosamente.");
+                }
+                catch (DbUpdateException dbEx)
+                {
+                    MessageBox.Show($"Error al guardar : {dbEx.InnerException?.Message ?? dbEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error inesperado: {ex.Message}");
+                }
+            }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

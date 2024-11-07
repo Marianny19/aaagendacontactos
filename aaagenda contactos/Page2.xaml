@@ -67,7 +67,7 @@
                     <TextBox x:Name="txtdescripcion" Width="200" Height="30" Margin="100,180,84,232" Grid.ColumnSpan="2" Grid.RowSpan="7"/>
 
                     <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Margin="1,38,121,0" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1"/>
-                    <Calendar x:Name="ContactDateCalendar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,61,0,0" Grid.ColumnSpan="2" Width="265" Grid.Row="6"/>
+                    <Calendar x:Name="txtfecha" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,61,0,0" Grid.ColumnSpan="2" Width="265" Grid.Row="6"/>
                     <TextBlock Grid.Row="6" Text="Hora agenda" Style="{StaticResource Text}" Margin="3,234,137,0" VerticalAlignment="Top" Grid.Column="1"/>
                     <ComboBox x:Name="cmbcontactoaagendar" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="100,109,0,0" VerticalAlignment="Top" Width="200" Height="32"/>
                     <TextBlock Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="129,0,113,0"><Run Text="Contacto"/><Run Language="es-419" Text=" a agendar"/></TextBlock>
