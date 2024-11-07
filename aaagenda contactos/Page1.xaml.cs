@@ -28,6 +28,7 @@ namespace Contactos
         public Page1()
         {
             InitializeComponent();
+            CargarTiposContacto();
             RedSocialItems = new List<string> { "Facebook", "Twitter", "Instagram" };
             DataContext = this;
 
@@ -63,7 +64,7 @@ namespace Contactos
         }
 
 
- 
+
 
 
         /* private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
@@ -346,6 +347,17 @@ namespace Contactos
 
             // Iniciar la animación de desvanecimiento del StackPanel
             phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+        }
+        private void CargarTiposContacto()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_contacto = context.tipos_contacto.ToList();
+
+                cmbTipo_contacto.ItemsSource = tipo_contacto;
+                cmbTipo_contacto.DisplayMemberPath = "Nombre_tipo_contacto";
+                cmbTipo_contacto.SelectedValuePath = "ID_tipo_contacto";
+            }
         }
     }
 }

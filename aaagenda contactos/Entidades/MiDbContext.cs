@@ -61,7 +61,7 @@ public partial class MiDbContext : DbContext
     {
         [Key]
         public int ID_tipo_contacto { get; set; }
-        public string Nombre_tipo_contacto { get; set; }
+        public required string Nombre_tipo_contacto { get; set; }
     }
 
     // Entidad teléfono

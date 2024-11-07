@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Contactos
 {
@@ -24,6 +25,7 @@ namespace Contactos
         public Page2()
         {
             InitializeComponent();
+            cargarcontacto();
         }
 
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
@@ -68,5 +70,17 @@ namespace Contactos
             }
         }
 
-    }
-}
+        private void cargarcontacto()
+        {
+
+            using (var context = new MiDbContext())
+            {
+                var contacto = context.contactos.ToList();
+
+                cmbcontactoaagendar.ItemsSource = contacto;
+                cmbcontactoaagendar.DisplayMemberPath = "Nombre"; 
+                cmbcontactoaagendar.SelectedValuePath = "ID_contacto"; 
+            }
+        }
+     }
+  }
