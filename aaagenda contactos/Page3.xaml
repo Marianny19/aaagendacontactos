@@ -30,15 +30,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Botón Modificar -->
-                <!-- Search bar -->
                 <Grid Width="300" HorizontalAlignment="Left"/>
 
-                <!-- Main title -->
                 <TextBlock Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0,11,0,63"
                     HorizontalAlignment="Left" Foreground="#121518" Grid.RowSpan="3"><Run Text="Contact"/><Run Text="os A"/><Run Text="gen"/><Run Text="dados"/></TextBlock>
 
-                <!-- Add Contact Button -->
                 <Button Style="{StaticResource addButton}" Grid.Row="3" Margin="0,16,-133,68" Width="163" Click="Button_Click1">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
@@ -56,7 +52,6 @@
             Margin="0,64,-110,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328"/>
                 </Grid>
 
-                <!-- DataGrid -->
                 <DataGrid x:Name="ContactosDataGrid" Grid.Row="4" 
                     AutoGenerateColumns="False"
                     ItemsSource="{Binding Contactos}" 
@@ -65,16 +60,12 @@
                     CanUserAddRows="False" 
                     IsReadOnly="False" Margin="0,5,-133,152">
 
-                    <!-- Definición de columnas -->
                     <DataGrid.Columns>
 
-                        <!-- Columna de Nombre (editable) -->
                         <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" IsReadOnly="False"/>
 
-                        <!-- Columna de Teléfono (editable) -->
                         <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" IsReadOnly="False"/>
 
-                        <!-- Columna de Botón Guardar -->
                         <DataGridTemplateColumn Header="Acciones">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -96,14 +87,12 @@
                 </DataGrid>
 
                 <ComboBox HorizontalAlignment="Left" Margin="342,20,0,0" Grid.Row="1" VerticalAlignment="Top" Width="226" Height="32" Grid.RowSpan="3"/>
-                <!-- Botón Guardar (oculto inicialmente) -->
                 <Button x:Name="guardar" Style="{StaticResource addButton}" Grid.Row="4" Margin="0,465,150,15" Width="114" Visibility="Collapsed" Click="GuardarButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Height="19" Text="Guardar"/>
                     </StackPanel>
                 </Button>
 
-                <!-- Botón Eliminar -->
                 <Button Style="{StaticResource addButton}" Grid.Row="4" Margin="0,452,-119,83" Width="114">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Height="19"><Run Language="es-419" Text="Eliminar"/><LineBreak/><Run Language="es-419"/></TextBlock>
