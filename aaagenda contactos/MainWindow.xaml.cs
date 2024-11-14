@@ -176,7 +176,7 @@ namespace aaagenda_contactos
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Cierra la ventana
+            this.Close();
         }
 
         // Función para obtener el hijo visual de un tipo específico
@@ -306,7 +306,6 @@ namespace aaagenda_contactos
          // Evento del DataGrid
          private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
          {
-             // Lógica para manejar el cambio de selección
          }
 
          private void MainFrame_Navigated(object sender, NavigationEventArgs e)

@@ -10,7 +10,7 @@
 
     <Grid>
         <ToggleButton x:Name="ToggleButton" Content="{Binding SelectedText, ElementName=MultiSelectComboBoxControl}" 
-                      Width="200" Height="30" Click="ToggleButton_Click" />
+                      Width="200" Height="30" Click="ToggleButton_Click" Checked="ToggleButton_Checked" />
         <Popup x:Name="Popup" Placement="Bottom" IsOpen="{Binding IsChecked, ElementName=ToggleButton}" StaysOpen="False">
             <Border BorderBrush="Gray" BorderThickness="1" Background="White">
                 <ListBox x:Name="ListBoxItems" SelectionMode="Multiple" Height="100" Width="200" 

@@ -61,29 +61,14 @@
                     <Border.RenderTransform>
                         <TranslateTransform x:Name="SideMenuTransform" X="-200"/>
                     </Border.RenderTransform>
-                    <DockPanel>
-                        <StackPanel Margin="20,70,20,20">
-                            <Button Style="{StaticResource menuButton2}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="Openid" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Opcion 1"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Style="{StaticResource menuButton2}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="Close" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Opcion 2"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </DockPanel>
+                    
                 </Border>
 
 
 
 
                 <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
-                    <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
+                    <Icon:PackIconMaterial Kind="EyeSettings" Width="15" Height="15"/>
                 </Button>
 
                 <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,119,0,0" Grid.RowSpan="2">

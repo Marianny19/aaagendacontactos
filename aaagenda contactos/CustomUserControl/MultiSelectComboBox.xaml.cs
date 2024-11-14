@@ -49,5 +49,10 @@ namespace aaagenda_contactos.CustomUserControl
             var selectedItems = ListBoxItems.SelectedItems.Cast<string>().ToList();
             SelectedText = string.Join(", ", selectedItems);
         }
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

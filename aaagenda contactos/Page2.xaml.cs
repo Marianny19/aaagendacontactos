@@ -28,7 +28,7 @@ namespace Contactos
         public Page2()
         {
             InitializeComponent();
-            cargarcontacto();
+            //cargarcontacto();
         }
 
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
@@ -39,20 +39,20 @@ namespace Contactos
             var Fecha_agendada = txtfecha;
             var Hora_agendada = txthoraagenda;
             DateTime value;
-              
-                if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
-                    string.IsNullOrWhiteSpace(txthoraagenda.Text) ||
-                    string.IsNullOrWhiteSpace(txtdescripcion.Text) ||
-                   cmbcontactoaagendar.SelectedItem == null) 
-                {
-                    MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+
+            if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
+                string.IsNullOrWhiteSpace(txthoraagenda.Text) ||
+                string.IsNullOrWhiteSpace(txtdescripcion.Text) ||
+               cmbcontactoaagendar.SelectedItem == null)
+            {
+                MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
 
             var nuevaAgenda = new agenda
             {
-                 Nombre_agenda = nombreAgenda
+                Nombre_agenda = nombreAgenda
 
             };
 
@@ -91,33 +91,29 @@ namespace Contactos
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
-            // Obtener la ventana principal
             var ventana = Window.GetWindow(this);
             if (ventana != null)
             {
-                // Encontrar el Frame en la ventana principal
                 var frame = ventana.FindName("Frame3") as Frame;
                 if (frame != null)
                 {
-                    // Crear animación de desvanecimiento para ocultar el Frame
                     var fadeOutAnimation = new DoubleAnimation
                     {
-                        To = 0, // Reducir la opacidad a 0 (invisible)
-                        Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                        To = 0, 
+                        Duration = TimeSpan.FromMilliseconds(300), 
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } 
                     };
 
                     fadeOutAnimation.Completed += (s, args) =>
                     {
-                        // Cambiar la visibilidad del Frame a Collapsed al finalizar el desvanecimiento
                         frame.Visibility = Visibility.Collapsed;
                     };
 
-                    // Iniciar la animación de desvanecimiento
                     frame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                 }
             }
         }
+
 
         private void cargarcontacto()
         {
@@ -127,9 +123,9 @@ namespace Contactos
                 var contacto = context.contactos.ToList();
 
                 cmbcontactoaagendar.ItemsSource = contacto;
-                cmbcontactoaagendar.DisplayMemberPath = "Nombre"; 
-                cmbcontactoaagendar.SelectedValuePath = "ID_contacto"; 
+                cmbcontactoaagendar.DisplayMemberPath = "Nombre";
+                cmbcontactoaagendar.SelectedValuePath = "ID_contacto";
             }
         }
-     }
-  }
+    }
+}

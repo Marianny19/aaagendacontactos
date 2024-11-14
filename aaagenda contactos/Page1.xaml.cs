@@ -28,36 +28,36 @@ namespace Contactos
         public Page1()
         {
             InitializeComponent();
-            CargarTiposContacto();
+
             RedSocialItems = new List<string> { "Facebook", "Twitter", "Instagram" };
             DataContext = this;
 
         }
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
-            // Obtener la ventana principal
+
             var ventana = Window.GetWindow(this);
             if (ventana != null)
             {
-                // Encontrar el Frame en la ventana principal
+
                 var frame = ventana.FindName("MainFrame") as Frame;
                 if (frame != null)
                 {
-                    // Crear animación de desvanecimiento
+
                     var fadeOutAnimation = new DoubleAnimation
                     {
-                        To = 0, // Cambiar a opacidad 0
-                        Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de easing
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                     };
 
                     fadeOutAnimation.Completed += (s, args) =>
                     {
-                        // Cambiar la visibilidad del Frame a Collapsed después de que la animación se complete
+
                         frame.Visibility = Visibility.Collapsed;
                     };
 
-                    // Iniciar la animación de desvanecimiento
+
                     frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
                 }
             }
@@ -90,57 +90,48 @@ namespace Contactos
             var mainWindow = Application.Current.MainWindow as MainWindow;
             if (mainWindow != null)
             {
-                // Encontrar el Frame en la ventana principal
-                var mainFrame = mainWindow.MainFrame; // Este es el Frame que contiene Page1
-                var frame4 = mainWindow.Frame5; // Este es el Frame que contiene Page4
+
+                var mainFrame = mainWindow.MainFrame;
+                var frame4 = mainWindow.Frame5;
 
                 if (mainFrame != null && frame4 != null)
                 {
-                    // Desplegar el menú antes de ocultar el MainFrame
-                    mainWindow.ToggleMenu(sender, e); // Llamada al método ToggleMenu en MainWindow
 
-                    // Crear animación de desvanecimiento para ocultar el MainFrame
+                    mainWindow.ToggleMenu(sender, e);
+
                     var fadeOutAnimation = new DoubleAnimation
                     {
-                        To = 0, // Reducir la opacidad a 0 (invisible)
-                        Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                     };
 
                     fadeOutAnimation.Completed += (s, args) =>
                     {
-                        // Colapsar el MainFrame al finalizar el desvanecimiento
                         mainFrame.Visibility = Visibility.Collapsed;
 
-                        // Navegar a Page4 en Frame4 antes de ajustar su opacidad y visibilidad
                         frame4.Navigate(new Page5());
 
-                        // Ajustar la opacidad de Frame4 a 0 antes de hacerlo visible
                         frame4.Opacity = 0;
                         frame4.Visibility = Visibility.Visible;
 
-                        // Crear animación de aparición para Frame4
                         var fadeInAnimation = new DoubleAnimation
                         {
-                            To = 1, // Aumentar la opacidad a 1 (completamente visible)
-                            Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                            To = 1,
+                            Duration = TimeSpan.FromMilliseconds(300),
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                         };
 
-                        // Iniciar la animación de aparición
                         fadeInAnimation.Completed += (s, args) =>
                         {
-                            // Asegurarse de que la opacidad sea 1 después de la animación
                             frame4.Opacity = 1;
 
-                            // Mostrar overlay para bloquear la interacción
 
                         };
 
                         frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                     };
 
-                    // Iniciar la animación de desvanecimiento
                     mainFrame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                 }
 
@@ -150,61 +141,49 @@ namespace Contactos
 
         private void Agregar_tipo_red_social(object sender, RoutedEventArgs e)
         {
-            // Obtener la ventana principal
             var mainWindow = Application.Current.MainWindow as MainWindow;
             if (mainWindow != null)
             {
-                // Encontrar el Frame en la ventana principal
-                var mainFrame = mainWindow.MainFrame; // Este es el Frame que contiene Page1
-                var frame4 = mainWindow.Frame4; // Este es el Frame que contiene Page4
+                var mainFrame = mainWindow.MainFrame;
+                var frame4 = mainWindow.Frame4;
 
                 if (mainFrame != null && frame4 != null)
                 {
-                    // Desplegar el menú antes de ocultar el MainFrame
-                    mainWindow.ToggleMenu(sender, e); // Llamada al método ToggleMenu en MainWindow
+                    mainWindow.ToggleMenu(sender, e);
 
-                    // Crear animación de desvanecimiento para ocultar el MainFrame
                     var fadeOutAnimation = new DoubleAnimation
                     {
-                        To = 0, // Reducir la opacidad a 0 (invisible)
-                        Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                     };
 
                     fadeOutAnimation.Completed += (s, args) =>
                     {
-                        // Colapsar el MainFrame al finalizar el desvanecimiento
                         mainFrame.Visibility = Visibility.Collapsed;
 
-                        // Navegar a Page4 en Frame4 antes de ajustar su opacidad y visibilidad
                         frame4.Navigate(new Page4());
 
-                        // Ajustar la opacidad de Frame4 a 0 antes de hacerlo visible
                         frame4.Opacity = 0;
                         frame4.Visibility = Visibility.Visible;
 
-                        // Crear animación de aparición para Frame4
                         var fadeInAnimation = new DoubleAnimation
                         {
-                            To = 1, // Aumentar la opacidad a 1 (completamente visible)
-                            Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                            To = 1,
+                            Duration = TimeSpan.FromMilliseconds(300),
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                         };
 
-                        // Iniciar la animación de aparición
                         fadeInAnimation.Completed += (s, args) =>
                         {
-                            // Asegurarse de que la opacidad sea 1 después de la animación
                             frame4.Opacity = 1;
 
-                            // Mostrar overlay para bloquear la interacción
 
                         };
 
                         frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                     };
 
-                    // Iniciar la animación de desvanecimiento
                     mainFrame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                 }
             }
@@ -214,19 +193,16 @@ namespace Contactos
 
         private void AddPhoneNumber_Click(object sender, RoutedEventArgs e)
         {
-            // Verificar si ya se alcanzó el límite de 14 TextBox
             if (PhoneNumbersCanvas.Children.Count >= MaxPhoneNumbers)
             {
                 MessageBox.Show("Se ha alcanzado el límite de 14 números de teléfono.", "Límite alcanzado", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Mostrar el label "Otros números telefónicos" si es el primer número
             if (PhoneNumbersCanvas.Children.Count == 0)
             {
                 AdditionalNumbersLabel.Visibility = Visibility.Visible;
 
-                // Crear animación de opacidad para el label
                 var labelFadeInAnimation = new DoubleAnimation
                 {
                     From = 0,
@@ -237,22 +213,19 @@ namespace Contactos
                 AdditionalNumbersLabel.BeginAnimation(UIElement.OpacityProperty, labelFadeInAnimation);
             }
 
-            // Crear un StackPanel para contener el TextBox y el botón de eliminación
             StackPanel phoneNumberPanel = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
-                Opacity = 0 // Inicialmente invisible para la animación
+                Opacity = 0
             };
 
-            // Crear el TextBox
             TextBox newTextBox = new TextBox
             {
                 Width = 190,
                 Height = 30,
-                Margin = new Thickness(0, 0, 5, 0) // Separación con el botón de eliminación
+                Margin = new Thickness(0, 0, 5, 0)
             };
 
-            // Crear el botón de eliminación
             Button removeButton = new Button
             {
                 Content = "-",
@@ -260,21 +233,17 @@ namespace Contactos
                 Height = 20
 
             };
-            removeButton.Click += (s, args) => RemovePhoneNumber(phoneNumberPanel); // Asociar evento de clic
+            removeButton.Click += (s, args) => RemovePhoneNumber(phoneNumberPanel);
 
-            // Agregar el TextBox y el botón al StackPanel
             phoneNumberPanel.Children.Add(newTextBox);
             phoneNumberPanel.Children.Add(removeButton);
 
-            // Posicionar el StackPanel en el Canvas
             double topPosition = PhoneNumbersCanvas.Children.Count * 35 - 10;
             Canvas.SetLeft(phoneNumberPanel, 0);
             Canvas.SetTop(phoneNumberPanel, topPosition + 11);
 
-            // Agregar el StackPanel al Canvas
             PhoneNumbersCanvas.Children.Add(phoneNumberPanel);
 
-            // Animación de opacidad para mostrar el StackPanel gradualmente
             var fadeInAnimation = new DoubleAnimation
             {
                 From = 0,
@@ -287,7 +256,6 @@ namespace Contactos
 
         private void RemovePhoneNumber(StackPanel phoneNumberPanel)
         {
-            // Crear la animación de opacidad para desvanecer el StackPanel
             var fadeOutAnimation = new DoubleAnimation
             {
                 From = 1,
@@ -298,19 +266,15 @@ namespace Contactos
 
             fadeOutAnimation.Completed += (s, args) =>
             {
-                // Eliminar el StackPanel del Canvas después de la animación
                 PhoneNumbersCanvas.Children.Remove(phoneNumberPanel);
 
-                // Reposicionar y animar los elementos restantes hacia arriba
                 for (int i = 0; i < PhoneNumbersCanvas.Children.Count; i++)
                 {
                     var childPanel = PhoneNumbersCanvas.Children[i] as StackPanel;
                     if (childPanel != null)
                     {
-                        // Calcular la nueva posición de cada StackPanel
                         double targetTop = i * 35 - 10 + 11;
 
-                        // Crear la animación de desplazamiento
                         var moveUpAnimation = new DoubleAnimation
                         {
                             To = targetTop,
@@ -318,15 +282,12 @@ namespace Contactos
                             EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                         };
 
-                        // Aplicar la animación de desplazamiento al Canvas.Top del StackPanel
                         childPanel.BeginAnimation(Canvas.TopProperty, moveUpAnimation);
                     }
                 }
 
-                // Verificar si no quedan más números de teléfono
                 if (PhoneNumbersCanvas.Children.Count == 0)
                 {
-                    // Crear la animación para desvanecer el TextBlock
                     var labelFadeOutAnimation = new DoubleAnimation
                     {
                         From = 1,
@@ -337,27 +298,28 @@ namespace Contactos
 
                     labelFadeOutAnimation.Completed += (s, labelArgs) =>
                     {
-                        AdditionalNumbersLabel.Visibility = Visibility.Collapsed; // Ocultar el label después de la animación
+                        AdditionalNumbersLabel.Visibility = Visibility.Collapsed;
                     };
 
-                    // Iniciar la animación de desvanecimiento del TextBlock
                     AdditionalNumbersLabel.BeginAnimation(UIElement.OpacityProperty, labelFadeOutAnimation);
                 }
             };
 
-            // Iniciar la animación de desvanecimiento del StackPanel
             phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-        }
-        private void CargarTiposContacto()
-        {
-            using (var context = new MiDbContext())
-            {
-                var tipo_contacto = context.tipos_contacto.ToList();
-
-                cmbTipo_contacto.ItemsSource = tipo_contacto;
-                cmbTipo_contacto.DisplayMemberPath = "Nombre_tipo_contacto";
-                cmbTipo_contacto.SelectedValuePath = "ID_tipo_contacto";
-            }
         }
     }
 }
+
+//        private void CargarTiposContacto()
+//        {
+//            using (var context = new MiDbContext())
+//            {
+//                var tipo_contacto = context.tipos_contacto.ToList();
+
+//                cmbTipo_contacto.ItemsSource = tipo_contacto;
+//                cmbTipo_contacto.DisplayMemberPath = "Nombre_tipo_contacto";
+//                cmbTipo_contacto.SelectedValuePath = "ID_tipo_contacto";
+//            }
+//        }
+//    }
+//}
