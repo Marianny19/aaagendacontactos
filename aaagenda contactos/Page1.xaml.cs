@@ -1,4 +1,5 @@
 ﻿using aaagenda_contactos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using static MiDbContext;
 
 namespace Contactos
 {
@@ -30,6 +33,11 @@ namespace Contactos
             InitializeComponent();
             RedSocialItems = new List<string> { "Facebook", "Twitter", "Instagram" };
             DataContext = this;
+            CargarTiposContacto();
+            CargarRedesSociales();
+
+
+
 
         }
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
@@ -63,7 +71,7 @@ namespace Contactos
         }
 
 
- 
+
 
 
         /* private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
@@ -87,12 +95,6 @@ namespace Contactos
 
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
-
-        }
-
-        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
-        {
-
 
         }
 
@@ -346,6 +348,100 @@ namespace Contactos
 
             // Iniciar la animación de desvanecimiento del StackPanel
             phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+        }
+        private void CargarTiposContacto()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_contacto = context.tipos_contacto.ToList();
+
+                cmbTipo_contacto.ItemsSource = tipo_contacto;
+                cmbTipo_contacto.DisplayMemberPath = "Nombre_tipo_contacto";
+                cmbTipo_contacto.SelectedValuePath = "ID_tipo_contacto";
+            }
+        }
+
+        private void CargarRedesSociales()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_red_social = context.tipos_red_social.ToList();
+                cmbTipo_red_social.ItemsSource = tipo_red_social;
+                cmbTipo_red_social.DisplayMemberPath = "Nombre_red_social";
+                cmbTipo_red_social.SelectedValuePath = "ID_tipo_red_social";
+                cmbTipo_red_social.SelectionMode = SelectionMode.Multiple;
+            }
+        }
+
+        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
+        {
+            var Nombre = txtnombre.Text;
+            var Apellido = txtapellido.Text;
+            var Email = txtemail.Text;
+            var Tipo_Contacto = (int?)cmbTipo_contacto.SelectedValue;
+            var numeroTelefono = numerotelefono.ToString();
+            var Tipo_telefono = (cmbTipo_telefono.SelectedItem as teléfono)?.Tipo_teléfono;
+            var Tipo_red_social = (cmbTipo_red_social.SelectedItem as tipo_red_social)?.Id_tipo_red_social;
+            var Nombre_de_usuario = txtnombreusuario.Text;
+            if (string.IsNullOrWhiteSpace(Nombre) ||
+                string.IsNullOrWhiteSpace(Apellido) ||
+                string.IsNullOrWhiteSpace(numeroTelefono) ||
+                string.IsNullOrWhiteSpace(Nombre_de_usuario)||
+                (string.IsNullOrWhiteSpace(Tipo_telefono))
+                )
+            {
+                MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var nuevocontacto = new contacto
+            {
+                Nombre = Nombre,
+                Apellido = Apellido,
+                Email = Email,
+                Tipo_Contacto = Tipo_Contacto ?? throw new InvalidOperationException("Tipo_Contacto no puede ser nulo"),
+                Tipo_red_social = Tipo_red_social ?? throw new InvalidOperationException("Tipo_red_social no puede ser nulo")
+            };
+
+            var nuevotelefono = new teléfono
+            {
+                Número_de_teléfono = numeroTelefono,
+                Tipo_teléfono = Tipo_telefono ?? throw new InvalidOperationException("Tipo_telefono no puede ser nulo"),
+                Id_contacto = nuevocontacto.ID_contacto
+            };
+            var nuevaRedsocial = new red_social
+            {
+                Nombre_de_usuario = Nombre_de_usuario,
+                ID_contacto = nuevocontacto.ID_contacto
+            };
+            
+            using (var dbContext = new MiDbContext())
+            {
+                try
+                {
+                    dbContext.contactos.Add(nuevocontacto);
+                    dbContext.telefono.Add(nuevotelefono);
+                    dbContext.SaveChanges();
+                    txtnombre.Clear();
+                    txtapellido.Clear();
+                    txtemail.Clear();
+                    cmbTipo_contacto.SelectedItem = null;
+                    numerotelefono = null;
+                    cmbTipo_telefono.SelectedItem = null;
+                    cmbTipo_red_social.SelectedItem = null;
+                    txtnombreusuario.Clear();
+
+                    MessageBox.Show("Contacto guardado exitosamente.");
+                }
+                catch (DbUpdateException dbEx)
+                {
+                    MessageBox.Show($"Error al guardar : {dbEx.InnerException?.Message ?? dbEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error inesperado: {ex.Message}");
+                }
+            }
         }
     }
 }

@@ -57,7 +57,7 @@
                 </Grid>
 
                 <!-- DataGrid -->
-                <DataGrid x:Name="ContactosDataGrid" Grid.Row="4" 
+                <DataGrid x:Name="CDataGrid" Grid.Row="4" 
                     AutoGenerateColumns="False"
                     ItemsSource="{Binding Contactos}" 
                     SelectionChanged="DataGrid_SelectionChanged"
@@ -69,10 +69,22 @@
                     <DataGrid.Columns>
 
                         <!-- Columna de Nombre (editable) -->
-                        <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Id_agenda" Binding="{Binding ID_agenda}" IsReadOnly="False"/>
 
-                        <!-- Columna de Teléfono (editable) -->
-                        <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" IsReadOnly="False"/>
+                        <!-- Columna de Nombre (editable) -->
+                        <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre_agenda}" IsReadOnly="False"/>
+
+                        <!-- Columna de Descriocion (editable) -->
+                        <DataGridTextColumn Header="Descripcion" Binding="{Binding Descripcion_agenda}" IsReadOnly="False"/>
+
+                        <!-- Columna de Fecha (editable) -->
+                        <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha_agendada}" IsReadOnly="False"/>
+
+                        <!-- Columna de Hora (editable) -->
+                        <DataGridTextColumn Header="Hora" Binding="{Binding Hora_agendada}" IsReadOnly="False"/>
+
+                        <!-- Columna de IdContacto (editable) -->
+                        <DataGridTextColumn Header="Id_contacto" Binding="{Binding ID_contacto}" IsReadOnly="False"/>
 
                         <!-- Columna de Botón Guardar -->
                         <DataGridTemplateColumn Header="Acciones">

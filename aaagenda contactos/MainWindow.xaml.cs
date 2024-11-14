@@ -1,4 +1,5 @@
 ﻿using Contactos;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static MiDbContext;
 
 namespace aaagenda_contactos
 {
@@ -25,22 +27,34 @@ namespace aaagenda_contactos
          private bool _isEditing = false; // Variable para saber si se está editando un contacto
          private contacto _currentEditingContact; // Variable para almacenar el contacto que se está editando
 
-         public MainWindow()
-         {
-             InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+            cargarcontacto();
 
-             // Inicializar la lista de contactos
-             Contactos = new ObservableCollection<contacto>
-             {
-                 new contacto { Nombre = "Juan", Apellido = "123456789" },
-                 new contacto { Nombre = "María", Apellido = "987654321" }
-             };
+            // Inicializar la lista de contactos
+        }
+        private void cargarcontacto()
+        {
+            using (var context = new MiDbContext())
+            {
+                var contactos = context.contactos
+                    .Select(c => new
+                    {
+                        c.ID_contacto,
+                        c.Nombre,
+                        c.Apellido,
+                        c.Email,
+                        c.Tipo_Contacto,
+                        c.Tipo_red_social
+                    })
+                    .ToList();
 
-             // Asignar el ItemsSource del DataGrid a la lista de contactos
-             ContactosDataGrid.ItemsSource = Contactos;
-         }
+                ContactosDataGrid.ItemsSource = contactos;
+            }
+        }
 
-         public bool isMenuOpen = false;
+        public bool isMenuOpen = false;
 
          public void ToggleMenu(object sender, RoutedEventArgs e)
          {
@@ -85,12 +99,6 @@ namespace aaagenda_contactos
              // Desactiva la interacción del usuario en ContentBorder mientras SideMenu está abierto
              ContentBorder.IsHitTestVisible = !isMenuOpen;
          }
-
-
-
-
-
-
 
          // Evento para el botón Modificar en la columna de acciones
          private void ModificarButton_Click(object sender, RoutedEventArgs e)
@@ -303,13 +311,13 @@ namespace aaagenda_contactos
              }
          }
 
-         // Evento del DataGrid
-         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-         {
-             // Lógica para manejar el cambio de selección
-         }
+        // Evento del DataGrid
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
 
-         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+            private void MainFrame_Navigated(object sender, NavigationEventArgs e)
          {
 
          }
@@ -347,6 +355,9 @@ namespace aaagenda_contactos
             public string Apellido { get; set; }
         }
 
+        private void Frame5_Navigated(object sender, NavigationEventArgs e)
+        {
 
+        }
     }
 }

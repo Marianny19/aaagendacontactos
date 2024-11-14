@@ -165,12 +165,23 @@
 
                     <!-- Definición de columnas -->
                     <DataGrid.Columns>
+                        <!-- Columna de Nombre (editable) -->
+                        <DataGridTextColumn Header="ID " Binding="{Binding ID_contacto}" IsReadOnly="True"/>
+                        
+                        <!-- Columna de Nombre (editable) -->
+                        <DataGridTextColumn Header="Nombre " Binding="{Binding Nombre}" IsReadOnly="False"/>
 
                         <!-- Columna de Nombre (editable) -->
-                        <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Apellido " Binding="{Binding Apellido}" IsReadOnly="False"/>
+                        
+                        <!-- Columna de Teléfono (editable) -->
+                        <DataGridTextColumn Header="Email " Binding="{Binding Email}" IsReadOnly="False"/>
 
                         <!-- Columna de Teléfono (editable) -->
-                        <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Tipo Contacto" Binding="{Binding Tipo_Contacto}" IsReadOnly="False"/>
+                        
+                        <!-- Columna de Teléfono (editable) -->
+                        <DataGridTextColumn Header="Tipo Red social " Binding="{Binding Tipo_red_social}" IsReadOnly="False"/>
 
                         <!-- Columna de Botón Guardar -->
                         <DataGridTemplateColumn Header="Acciones">
@@ -229,7 +240,7 @@
             <Frame x:Name="Frame2" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated" Grid.Column="1" Margin="10,77,-10,10"/>
             <Frame x:Name="Frame3" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="0,-30,0,-40" />
             <Frame x:Name="Frame4" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" />
-            <Frame x:Name="Frame5" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" />
+            <Frame x:Name="Frame5" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" Navigated="Frame5_Navigated" />
         </Grid>
     </Border>
 </Window>

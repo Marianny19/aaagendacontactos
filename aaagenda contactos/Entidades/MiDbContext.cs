@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.Contracts;
-using System.Security.Cryptography.X509Certificates;
+using static MiDbContext;
 
 
 public partial class MiDbContext : DbContext
@@ -32,7 +30,7 @@ public partial class MiDbContext : DbContext
 
     }
 
-   
+
     public class agenda
     {
         [Key]
@@ -42,7 +40,6 @@ public partial class MiDbContext : DbContext
         public DateTime Fecha_agendada { get; set; }
         public DateTime Hora_agendada { get; set; }
         public int ID_contacto { get; set; }
-
     }
 
     // Entidad red_social
@@ -82,7 +79,6 @@ public partial class MiDbContext : DbContext
         [Key]
         public int Id_tipo_red_social { get; set; }
         public string Nombre_red_social { get; set; }
-
-        }
     }
-    
+}
+

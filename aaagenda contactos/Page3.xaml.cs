@@ -17,10 +17,33 @@ namespace Contactos
         public Page3()
         {
             InitializeComponent();
+            Cargarcontactosagendado();
 
             // Registrar el convertidor como recurso de la página
             this.Resources.Add("BoolToVis", new BoolToVisConverter());
+            
         }
+        private void Cargarcontactosagendado()
+        {
+            using (var context = new MiDbContext())
+            {
+                var agenda = context.agendas
+                    .Select(c => new
+                    
+                    {
+                        c.ID_agenda,
+                        c.Nombre_agenda,
+                        c.Descripcion_agenda,
+                        c.Fecha_agendada, 
+                        
+                        c.ID_contacto
+                    })
+                    .ToList();
+
+                CDataGrid.ItemsSource = agenda;
+            }
+        }
+
 
 
         private void Button_Click1(object sender, RoutedEventArgs e)
@@ -74,7 +97,7 @@ namespace Contactos
 
 
 
-        
+
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
@@ -89,33 +112,48 @@ namespace Contactos
         }
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            using (var context = new MiDbContext())
+            {
+                var agenda = context.agendas
+                    .Select(c => new
 
-            var dataGrid = sender as DataGrid;
+                    {
+                        c.ID_agenda,
+                        c.Nombre_agenda,
+                        c.Descripcion_agenda,
+                        c.Fecha_agendada,
+
+                        c.ID_contacto
+                    })
+                    .ToList();
+
+                CDataGrid.ItemsSource = agenda;
+            }
+
+        var dataGrid = sender as DataGrid;
             var selectedItem = dataGrid.SelectedItem;
 
             {
                 Window.GetWindow(this)?.Close();
             }
-
         }
-    }
 
-    
-    public class BoolToVisConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+
+        public class BoolToVisConverter : IValueConverter
         {
-            if (value is bool boolValue)
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             {
-                return boolValue ? Visibility.Visible : Visibility.Collapsed;
+                if (value is bool boolValue)
+                {
+                    return boolValue ? Visibility.Visible : Visibility.Collapsed;
+                }
+                return Visibility.Collapsed;
             }
-            return Visibility.Collapsed;
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
-
 }
