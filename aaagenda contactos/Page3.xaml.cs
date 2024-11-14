@@ -18,50 +18,41 @@ namespace Contactos
         {
             InitializeComponent();
 
-            // Registrar el convertidor como recurso de la página
             this.Resources.Add("BoolToVis", new BoolToVisConverter());
         }
 
 
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
-            // Obtener la ventana principal
             var mainWindow = Application.Current.MainWindow as MainWindow;
             if (mainWindow != null)
             {
-                // Encontrar el Frame en la ventana principal
                 var frame = mainWindow.Frame3;
                 if (frame != null)
                 {
-                    // Crear animación de desvanecimiento para ocultar el Frame
                     var fadeOutAnimation = new DoubleAnimation
                     {
-                        To = 0, // Reducir la opacidad a 0 (invisible)
-                        Duration = TimeSpan.FromMilliseconds(0), // Duración de la animación
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                        To = 0, 
+                        Duration = TimeSpan.FromMilliseconds(0), 
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } 
                     };
 
                     fadeOutAnimation.Completed += (s, args) =>
                     {
-                        // Navegar a la nueva página al finalizar el desvanecimiento
                         frame.Navigate(new Page2());
 
-                        // Hacer que el Frame sea visible para la animación de aparición
                         frame.Visibility = Visibility.Visible;
 
-                        // Crear animación de aparición
                         var fadeInAnimation = new DoubleAnimation
                         {
-                            To = 1, // Aumentar la opacidad a 1 (completamente visible)
-                            Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                            To = 1, 
+                            Duration = TimeSpan.FromMilliseconds(300), 
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } 
                         };
 
-                        // Iniciar la animación de aparición
                         frame.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                     };
 
-                    // Iniciar la animación de desvanecimiento
                     frame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                     {
 

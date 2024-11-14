@@ -73,32 +73,28 @@ namespace aaagenda_contactos
 
                 private void CerrarVentana_Click(object sender, RoutedEventArgs e)
                 {
-                    // Obtener la ventana principal
-                    var ventana = Window.GetWindow(this) as MainWindow; // Asegúrate de que sea MainWindow
+                    var ventana = Window.GetWindow(this) as MainWindow; 
                     if (ventana != null)
                     {
-                        // Encontrar el Frame en la ventana principal
                         var frame = ventana.FindName("Frame4") as Frame;
                         if (frame != null)
                         {
-                            // Llamar al método ToggleMenu para cerrar el menú
-                            ventana.ToggleMenu(sender, e); // Cerrar el menú
+                            ventana.ToggleMenu(sender, e); 
 
-                            // Crear animación de desvanecimiento para ocultar el Frame
                             var fadeOutAnimation = new DoubleAnimation
                             {
-                                To = 0, // Reducir la opacidad a 0 (invisible)
-                                Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                                To = 0, 
+                                Duration = TimeSpan.FromMilliseconds(300), 
+                                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } 
                             };
 
                             fadeOutAnimation.Completed += (s, args) =>
                             {
-                                // Cambiar la visibilidad del Frame a Collapsed al finalizar el desvanecimiento
+                                
                                 frame.Visibility = Visibility.Collapsed;
                             };
 
-                            // Iniciar la animación de desvanecimiento
+                   
                             frame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                         }
                     }
