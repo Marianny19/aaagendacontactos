@@ -71,7 +71,7 @@
                     <Icon:PackIconMaterial Kind="EyeSettings" Width="15" Height="15"/>
                 </Button>
 
-                <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,119,0,0" Grid.RowSpan="2">
+                <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,80,0,0" Grid.RowSpan="2">
                     <DockPanel>
                         <Separator Margin="30" DockPanel.Dock="Top" Height="0.8" Background="#7e5fdc"/>
                         <StackPanel DockPanel.Dock="Top">
