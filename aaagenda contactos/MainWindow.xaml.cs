@@ -18,69 +18,68 @@ namespace aaagenda_contactos
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-     public partial class MainWindow : Window
-     {
-         public ObservableCollection<contacto> Contactos { get; set; }
-         private bool _isEditing = false; 
-         private contacto _currentEditingContact; 
+    public partial class MainWindow : Window
+    {
+        public ObservableCollection<contacto> Contactos { get; set; }
+        private bool _isEditing = false;
+        private contacto _currentEditingContact;
 
-         public MainWindow()
-         {
-             InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
 
-             Contactos = new ObservableCollection<contacto>
+            Contactos = new ObservableCollection<contacto>
              {
                  new contacto { Nombre = "Juan", Apellido = "123456789" },
                  new contacto { Nombre = "María", Apellido = "987654321" }
              };
 
-             ContactosDataGrid.ItemsSource = Contactos;
-         }
+            ContactosDataGrid.ItemsSource = Contactos;
+        }
 
-         public bool isMenuOpen = false;
+        public bool isMenuOpen = false;
 
-         public void ToggleMenu(object sender, RoutedEventArgs e)
-         {
-             isMenuOpen = !isMenuOpen;
+        public void ToggleMenu(object sender, RoutedEventArgs e)
+        {
+            isMenuOpen = !isMenuOpen;
 
-             SideMenu.Visibility = Visibility.Visible;
+            SideMenu.Visibility = Visibility.Visible;
 
-             double targetOffset = isMenuOpen ? 0 : -200;
+            double targetOffset = isMenuOpen ? 0 : -200;
 
-             var slideAnimation = new DoubleAnimation
-             {
-                 To = targetOffset,
-                 Duration = TimeSpan.FromMilliseconds(300),
-                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-             };
+            var slideAnimation = new DoubleAnimation
+            {
+                To = targetOffset,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
 
-             SideMenuTransform.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
+            SideMenuTransform.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
 
-             slideAnimation.Completed += (s, e) =>
-             {
-                 if (!isMenuOpen)
-                     SideMenu.Visibility = Visibility.Collapsed;
-             };
+            slideAnimation.Completed += (s, e) =>
+            {
+                if (!isMenuOpen)
+                    SideMenu.Visibility = Visibility.Collapsed;
+            };
 
-             var contentOpacityAnimation = new DoubleAnimation
-             {
-                 To = isMenuOpen ? 0 : 1,
-                 Duration = TimeSpan.FromMilliseconds(300),
-                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-             };
+            var contentOpacityAnimation = new DoubleAnimation
+            {
+                To = isMenuOpen ? 0 : 1,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
 
-             ContentBorder.BeginAnimation(OpacityProperty, contentOpacityAnimation);
+            ContentBorder.BeginAnimation(OpacityProperty, contentOpacityAnimation);
 
-             ContentBorder.IsHitTestVisible = !isMenuOpen;
-         }
+            ContentBorder.IsHitTestVisible = !isMenuOpen;
+        }
+
+        
+
+     
 
 
-
-
-
-
-
-         private void ModificarButton_Click(object sender, RoutedEventArgs e)
+        private void ModificarButton_Click(object sender, RoutedEventArgs e)
          {
              if (_isEditing)
              {
@@ -306,6 +305,10 @@ namespace aaagenda_contactos
                  }
              }
          }
+
+
+
+
         public class contacto
         {
             public string Nombre { get; set; }

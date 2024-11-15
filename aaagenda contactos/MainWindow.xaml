@@ -91,6 +91,7 @@
                     </DockPanel>
                 </Border>
             </Grid>
+            
 
 
             <Grid Grid.Column="1" Margin="30,20,20,10">
@@ -102,17 +103,14 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Width="300" HorizontalAlignment="Left">
-                    <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                               Panel.ZIndex="1" Text="Buscar aquí ..." />
-                    <TextBox x:Name="txtSearch" Style="{StaticResource textboxSearch}"/>
-                    <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center"
-                                           Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
-                </Grid>
+                
+                
+               
 
                 <TextBlock Text="Contactos" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
 
+                
                 <Button Style="{StaticResource addButton}" Grid.Row="1" Margin="0,20,10,54" Grid.RowSpan="3" Width="192" Click="Button_Click">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
