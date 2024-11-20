@@ -78,7 +78,7 @@
                         <DataGridTextColumn Header="Descripcion" Binding="{Binding Descripcion_agenda}" IsReadOnly="False"/>
 
                         <!-- Columna de Fecha (editable) -->
-                        <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha_agendada}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha_agendada,StringFormat=dd/MM/yyyy}" IsReadOnly="False"/>
 
                         <!-- Columna de Hora (editable) -->
                         <DataGridTextColumn Header="Hora" Binding="{Binding Hora_agendada}" IsReadOnly="False"/>

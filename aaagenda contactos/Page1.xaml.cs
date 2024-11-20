@@ -369,7 +369,7 @@ namespace Contactos
                 cmbTipo_red_social.ItemsSource = tipo_red_social;
                 cmbTipo_red_social.DisplayMemberPath = "Nombre_red_social";
                 cmbTipo_red_social.SelectedValuePath = "ID_tipo_red_social";
-                cmbTipo_red_social.SelectionMode = SelectionMode.Multiple;
+               
             }
         }
 

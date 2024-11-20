@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Emit;
 using static MiDbContext;
 
 
@@ -81,4 +82,6 @@ public partial class MiDbContext : DbContext
         public string Nombre_red_social { get; set; }
     }
 }
+
+
 

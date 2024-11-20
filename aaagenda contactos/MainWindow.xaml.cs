@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static aaagenda_contactos.MainWindow;
 using static MiDbContext;
 
 namespace aaagenda_contactos
@@ -38,16 +39,16 @@ namespace aaagenda_contactos
         {
             using (var context = new MiDbContext())
             {
-                var contactos = context.contactos
-                    .Select(c => new
-                    {
-                        c.ID_contacto,
-                        c.Nombre,
-                        c.Apellido,
-                        c.Email,
-                        c.Tipo_Contacto,
-                        c.Tipo_red_social
-                    })
+                var contactos =  context.contactos
+                    //.Select(c => new 
+                    //{
+                    //    c.ID_contacto,
+                    //    c.Nombre,
+                    //    c.Apellido,
+                    //    c.Email,
+                    //    c.Tipo_Contacto,
+                    //    c.Tipo_red_social
+                    //})
                     .ToList();
 
                 ContactosDataGrid.ItemsSource = contactos;
@@ -100,87 +101,38 @@ namespace aaagenda_contactos
              ContentBorder.IsHitTestVisible = !isMenuOpen;
          }
 
-         // Evento para el botón Modificar en la columna de acciones
-         private void ModificarButton_Click(object sender, RoutedEventArgs e)
-         {
-             if (_isEditing)
-             {
-                 MessageBox.Show("Por favor, guarda los cambios antes de modificar otro contacto.");
-                 return; // Salir si ya se está editando otro contacto
-             }
+        // Evento para el botón Modificar en la columna de acciones
 
-             // Obtener el contacto del parámetro del comando
-             var button = sender as Button;
-             var contacto = button.CommandParameter as contacto;
+        private void GuardarButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var contactoEditado = button?.DataContext as contacto;
 
-             if (contacto != null)
-             {
-                 // Hacer los campos del contacto editables
-                 DataGridRow row = (DataGridRow)ContactosDataGrid.ItemContainerGenerator.ContainerFromItem(contacto);
-                 if (row != null)
-                 {
-                     DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(row);
-                     if (presenter != null)
-                     {
-                         for (int i = 0; i < ContactosDataGrid.Columns.Count; i++)
-                         {
-                             DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(i);
-                             if (cell != null)
-                             {
-                                 TextBox textBox = FindVisualChild<TextBox>(cell);
-                                 if (textBox != null)
-                                 {
-                                     textBox.IsEnabled = true; // Hacer el TextBox editable
-                                     textBox.Focus(); // Opcional: dar foco al TextBox
-                                 }
-                             }
-                         }
-                     }
-                 }
+            if (contactoEditado != null)
+            {
+                using (var context = new MiDbContext())
+                {
+                    var contactoExistente = context.contactos
+                        .FirstOrDefault(c => c.ID_contacto == contactoEditado.ID_contacto);
 
-                 // Mostrar el botón Guardar
-                 guardar.Visibility = Visibility.Visible;
-                 _isEditing = true; // Marcar que se está editando
-                 _currentEditingContact = contacto; // Guardar el contacto que se está editando
-             }
-         }
+                    if (contactoExistente != null)
+                    {
+                        // Actualizar los datos en la base de datos
+                        contactoExistente.Nombre = contactoEditado.Nombre;
+                        contactoExistente.Apellido = contactoEditado.Apellido;
+                        contactoExistente.Email = contactoEditado.Email;
+                        contactoExistente.Tipo_Contacto = contactoEditado.Tipo_Contacto;
+                        contactoExistente.Tipo_red_social = contactoEditado.Tipo_red_social;
 
-         // Evento para el botón Guardar
-         private void GuardarButton_Click(object sender, RoutedEventArgs e)
-         {
-             if (_currentEditingContact != null)
-             {
-                 // Aquí puedes agregar la lógica para guardar los cambios del contacto
-                 MessageBox.Show($"Guardado: {_currentEditingContact.Nombre}, {_currentEditingContact.Apellido}");
+                        context.SaveChanges();
+                        MessageBox.Show("Contacto actualizado correctamente.");
+                    }
+                }
+            }
+        }
 
-                 // Ocultar el botón Guardar después de guardar
-                 guardar.Visibility = Visibility.Collapsed;
-                 _isEditing = false; // Marcar que ya no se está editando
-                 _currentEditingContact = null; // Limpiar la referencia del contacto
 
-                 // Deshabilitar los TextBox después de guardar
-                 DataGridRow row = (DataGridRow)ContactosDataGrid.ItemContainerGenerator.ContainerFromItem(_currentEditingContact);
-                 if (row != null)
-                 {
-                     DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(row);
-                     if (presenter != null)
-                     {
-                         for (int i = 0; i < ContactosDataGrid.Columns.Count; i++)
-                         {
-                             DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(i);
-                             if (cell != null)
-                             {
-                                 TextBox textBox = FindVisualChild<TextBox>(cell);
-                                 if (textBox != null)
-                                 {
-                                     textBox.IsEnabled = false; // Deshabilitar el TextBox después de guardar
-                                 }
-                             }
-                         }
-                     }
-                 }
-             }
-         }
+
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -348,12 +300,7 @@ namespace aaagenda_contactos
                  }
              }
          }
-        public class contacto
-        {
-            public string Nombre { get; set; }
-
-            public string Apellido { get; set; }
-        }
+       
 
         private void Frame5_Navigated(object sender, NavigationEventArgs e)
         {
