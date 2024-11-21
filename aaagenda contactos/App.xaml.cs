@@ -10,5 +10,4 @@ namespace aaagenda_contactos
     public partial class App : Application
     {
     }
-
 }

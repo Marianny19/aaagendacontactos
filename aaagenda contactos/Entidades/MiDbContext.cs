@@ -27,6 +27,7 @@ public partial class MiDbContext : DbContext
         public string Email { get; set; }
         public int Tipo_Contacto { get; set; }
         public int Tipo_red_social { get; set; }
+        
 
 
     }
@@ -80,7 +81,8 @@ public partial class MiDbContext : DbContext
         public int Id_tipo_red_social { get; set; }
         public string Nombre_red_social { get; set; }
     }
-}
+   
 
+}
 
 

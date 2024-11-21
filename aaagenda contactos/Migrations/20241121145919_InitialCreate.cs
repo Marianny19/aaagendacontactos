@@ -21,7 +21,6 @@ namespace aaagenda_contactos.Migrations
                     Nombre_agenda = table.Column<string>(type: "text", nullable: false),
                     Descripcion_agenda = table.Column<string>(type: "text", nullable: false),
                     Fecha_agendada = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Hora_agendada = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ID_contacto = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

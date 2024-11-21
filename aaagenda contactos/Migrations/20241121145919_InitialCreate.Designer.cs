@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace aaagenda_contactos.Migrations
 {
     [DbContext(typeof(MiDbContext))]
-    [Migration("20241120231607_InitialCreate")]
+    [Migration("20241121145919_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -37,9 +37,6 @@ namespace aaagenda_contactos.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Fecha_agendada")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("Hora_agendada")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("ID_contacto")

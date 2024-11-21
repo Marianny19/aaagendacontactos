@@ -91,7 +91,7 @@
                 </Button>
 
                 <!-- Contenido principal que se contrae cuando el menú está desplegado -->
-                <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,119,0,0" Grid.RowSpan="2">
+                <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,80,0,0" Grid.RowSpan="2">
                     <DockPanel>
                         <Separator Margin="30" DockPanel.Dock="Top" Height="0.8" Background="#7e5fdc"/>
                         <StackPanel DockPanel.Dock="Top">
@@ -122,15 +122,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
-                <!-- Search bar -->
-                <Grid Width="300" HorizontalAlignment="Left">
-                    <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                               Panel.ZIndex="1" Text="Buscar aquí ..." Visibility="{Binding Text.IsEmpty, Converter={StaticResource BoolToVis}, ElementName=txtSearch}"/>
-                    <TextBox x:Name="txtSearch" Style="{StaticResource textboxSearch}"/>
-                    <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center"
-                                           Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
-                </Grid>
 
                 <!-- Main title -->
                 <TextBlock Text="Contactos" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
@@ -165,12 +156,12 @@
     Margin="0,10,10,84">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding ID_contacto}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
-                        <DataGridTextColumn Header="Apellido" Binding="{Binding Apellido, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
-                        <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
-                        <DataGridTextColumn Header="Tipo de Contacto" Binding="{Binding Tipo_Contacto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
-                        <DataGridTextColumn Header="Tipo Red Social" Binding="{Binding Tipo_red_social, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="ID Contacto " Binding="{Binding ID_contacto}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Nombre " Binding="{Binding Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Apellido " Binding="{Binding Apellido, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Email " Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Tipo de Contacto " Binding="{Binding Tipo_Contacto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Tipo Red Social " Binding="{Binding Tipo_red_social, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
 
                         <!-- Columna para guardar cambios -->
                         <DataGridTemplateColumn Header="Acciones">
@@ -198,10 +189,10 @@
 
 
                 <!-- Botón Eliminar -->
-                <Button Style="{StaticResource addButton}" Grid.Row="4" Margin="0,460,20,10" Width="114">
+                <Button Style="{StaticResource addButton}" Grid.Row="4" Margin="0,460,20,10" Width="114" Click="Eliminar_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Height="19">
-            <Run Language="es-419" Text="Eliminar"/>
+            <Run Language="es-419" Text="Eliminar" />
             <LineBreak/>
             <Run Language="es-419"/>
                         </TextBlock>

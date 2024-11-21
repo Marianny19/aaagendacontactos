@@ -36,9 +36,6 @@ namespace aaagenda_contactos.Migrations
                     b.Property<DateTime>("Fecha_agendada")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Hora_agendada")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int>("ID_contacto")
                         .HasColumnType("integer");
 

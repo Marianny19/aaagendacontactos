@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
+using static MiDbContext;
+using System.Collections.ObjectModel;
 
 namespace Contactos
 {
@@ -14,11 +16,14 @@ namespace Contactos
     /// </summary>
     public partial class Page3 : Page
     {
+        public ObservableCollection<agenda> Agendas { get; set; }
+        private bool _isEditing = false; // Variable para saber si se está editando un contacto
+        private agenda _currentEditingAgenda;
         public Page3()
         {
             InitializeComponent();
             Cargarcontactosagendado();
-
+    
             // Registrar el convertidor como recurso de la página
             this.Resources.Add("BoolToVis", new BoolToVisConverter());
             
@@ -27,20 +32,10 @@ namespace Contactos
         {
             using (var context = new MiDbContext())
             {
-                var agenda = context.agendas
-                    .Select(c => new
-                    
-                    {
-                        c.ID_agenda,
-                        c.Nombre_agenda,
-                        c.Descripcion_agenda,
-                        c.Fecha_agendada, 
-                        
-                        c.ID_contacto
-                    })
+                var Agendas = context.agendas
                     .ToList();
 
-                CDataGrid.ItemsSource = agenda;
+                CDataGrid.ItemsSource = Agendas;
             }
         }
 
@@ -93,51 +88,19 @@ namespace Contactos
                 }
             }
         }
-
-
-
-
-
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
         }
-        private void GuardarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Window.GetWindow(this)?.Close();
-        }
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
         }
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            using (var context = new MiDbContext())
-            {
-                var agenda = context.agendas
-                    .Select(c => new
-
-                    {
-                        c.ID_agenda,
-                        c.Nombre_agenda,
-                        c.Descripcion_agenda,
-                        c.Fecha_agendada,
-
-                        c.ID_contacto
-                    })
-                    .ToList();
-
-                CDataGrid.ItemsSource = agenda;
-            }
-
-        var dataGrid = sender as DataGrid;
-            var selectedItem = dataGrid.SelectedItem;
-
-            {
-                Window.GetWindow(this)?.Close();
-            }
+            
         }
-
 
         public class BoolToVisConverter : IValueConverter
         {
@@ -153,6 +116,80 @@ namespace Contactos
             public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 throw new NotImplementedException();
+            }
+        }
+        private void GuardarButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var AgendaEditada = button?.DataContext as agenda;
+
+            if (AgendaEditada != null)
+            {
+                using (var context = new MiDbContext())
+                {
+                    var AgendaExistente = context.agendas
+                        .FirstOrDefault(c => c.ID_agenda == AgendaEditada.ID_agenda);
+
+                    if (AgendaExistente != null)
+                    {
+                        // Actualizar los datos en la base de datos
+                        AgendaExistente.Nombre_agenda = AgendaEditada.Nombre_agenda;
+                        AgendaExistente.Descripcion_agenda = AgendaEditada.Descripcion_agenda;
+                        AgendaExistente.Fecha_agendada = AgendaEditada.Fecha_agendada;
+                        AgendaExistente.ID_contacto = AgendaEditada.ID_contacto;
+
+                        context.SaveChanges();
+                        MessageBox.Show("Agenda actualizada correctamente.");
+                    }
+                }
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            {
+                var button = sender as Button;
+                var AgendaSeleccionada = CDataGrid.SelectedItem as agenda;
+
+                if (AgendaSeleccionada != null)
+                {
+                    var result = MessageBox.Show(
+                        $"¿Estás seguro de que deseas eliminar la agenda con ID {AgendaSeleccionada.ID_agenda}?",
+                        "Confirmación de eliminación",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        using (var context = new MiDbContext())
+                        {
+                            var AgendaAEliminar = context.agendas
+                                .FirstOrDefault(c => c.ID_agenda == AgendaSeleccionada.ID_agenda);
+
+                            if (AgendaAEliminar != null)
+                            {
+                                context.agendas.Remove(AgendaAEliminar);
+                                context.SaveChanges();
+
+                                Cargarcontactosagendado();
+
+                                MessageBox.Show("Agenda eliminada correctamente.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("La agenda no se encontró en la base de datos.");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se seleccionó ningúna agenda para eliminar.");
+                }
             }
         }
     }

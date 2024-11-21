@@ -21,12 +21,12 @@ namespace aaagenda_contactos
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-     public partial class MainWindow : Window
-     {
-         // ObservableCollection para almacenar los contactos
-         public ObservableCollection<contacto> Contactos { get; set; }
-         private bool _isEditing = false; // Variable para saber si se está editando un contacto
-         private contacto _currentEditingContact; // Variable para almacenar el contacto que se está editando
+    public partial class MainWindow : Window
+    {
+        // ObservableCollection para almacenar los contactos
+        public ObservableCollection<contacto> Contactos { get; set; }
+        private bool _isEditing = false; // Variable para saber si se está editando un contacto
+        private contacto _currentEditingContact; // Variable para almacenar el contacto que se está editando
 
         public MainWindow()
         {
@@ -39,16 +39,7 @@ namespace aaagenda_contactos
         {
             using (var context = new MiDbContext())
             {
-                var contactos =  context.contactos
-                    //.Select(c => new 
-                    //{
-                    //    c.ID_contacto,
-                    //    c.Nombre,
-                    //    c.Apellido,
-                    //    c.Email,
-                    //    c.Tipo_Contacto,
-                    //    c.Tipo_red_social
-                    //})
+                var contactos = context.contactos
                     .ToList();
 
                 ContactosDataGrid.ItemsSource = contactos;
@@ -57,49 +48,49 @@ namespace aaagenda_contactos
 
         public bool isMenuOpen = false;
 
-         public void ToggleMenu(object sender, RoutedEventArgs e)
-         {
-             // Cambia el estado del menú
-             isMenuOpen = !isMenuOpen;
+        public void ToggleMenu(object sender, RoutedEventArgs e)
+        {
+            // Cambia el estado del menú
+            isMenuOpen = !isMenuOpen;
 
-             // Asegúrate de que el SideMenu sea visible mientras está en animación
-             SideMenu.Visibility = Visibility.Visible;
+            // Asegúrate de que el SideMenu sea visible mientras está en animación
+            SideMenu.Visibility = Visibility.Visible;
 
-             // Define el objetivo de desplazamiento en el eje X
-             double targetOffset = isMenuOpen ? 0 : -200;
+            // Define el objetivo de desplazamiento en el eje X
+            double targetOffset = isMenuOpen ? 0 : -200;
 
-             // Animación de desplazamiento para el SideMenu
-             var slideAnimation = new DoubleAnimation
-             {
-                 To = targetOffset,
-                 Duration = TimeSpan.FromMilliseconds(300),
-                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-             };
+            // Animación de desplazamiento para el SideMenu
+            var slideAnimation = new DoubleAnimation
+            {
+                To = targetOffset,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
 
-             // Aplicar animación en el eje X del SideMenuTransform
-             SideMenuTransform.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
+            // Aplicar animación en el eje X del SideMenuTransform
+            SideMenuTransform.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
 
-             // Ocultar el SideMenu después de la animación si se está cerrando
-             slideAnimation.Completed += (s, e) =>
-             {
-                 if (!isMenuOpen)
-                     SideMenu.Visibility = Visibility.Collapsed;
-             };
+            // Ocultar el SideMenu después de la animación si se está cerrando
+            slideAnimation.Completed += (s, e) =>
+            {
+                if (!isMenuOpen)
+                    SideMenu.Visibility = Visibility.Collapsed;
+            };
 
-             // Animación de opacidad para ContentBorder
-             var contentOpacityAnimation = new DoubleAnimation
-             {
-                 To = isMenuOpen ? 0 : 1,
-                 Duration = TimeSpan.FromMilliseconds(300),
-                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-             };
+            // Animación de opacidad para ContentBorder
+            var contentOpacityAnimation = new DoubleAnimation
+            {
+                To = isMenuOpen ? 0 : 1,
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            };
 
-             // Inicia la animación de opacidad para ContentBorder
-             ContentBorder.BeginAnimation(OpacityProperty, contentOpacityAnimation);
+            // Inicia la animación de opacidad para ContentBorder
+            ContentBorder.BeginAnimation(OpacityProperty, contentOpacityAnimation);
 
-             // Desactiva la interacción del usuario en ContentBorder mientras SideMenu está abierto
-             ContentBorder.IsHitTestVisible = !isMenuOpen;
-         }
+            // Desactiva la interacción del usuario en ContentBorder mientras SideMenu está abierto
+            ContentBorder.IsHitTestVisible = !isMenuOpen;
+        }
 
         // Evento para el botón Modificar en la columna de acciones
 
@@ -144,43 +135,43 @@ namespace aaagenda_contactos
         {
             if (parent == null) return null;
 
-             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-             {
-                 var child = VisualTreeHelper.GetChild(parent, i);
-                 if (child is T tChild)
-                 {
-                     return tChild;
-                 }
-                 T childOfChild = GetVisualChild<T>(child);
-                 if (childOfChild != null)
-                 {
-                     return childOfChild;
-                 }
-             }
-             return null;
-         }
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T tChild)
+                {
+                    return tChild;
+                }
+                T childOfChild = GetVisualChild<T>(child);
+                if (childOfChild != null)
+                {
+                    return childOfChild;
+                }
+            }
+            return null;
+        }
 
-         // Función para encontrar un TextBox en una celda
-         private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
-         {
-             if (parent == null) return null;
+        // Función para encontrar un TextBox en una celda
+        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null) return null;
 
-             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-             {
-                 var child = VisualTreeHelper.GetChild(parent, i);
-                 if (child is T tChild)
-                 {
-                     return tChild;
-                 }
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T tChild)
+                {
+                    return tChild;
+                }
 
-                 T childOfChild = FindVisualChild<T>(child);
-                 if (childOfChild != null)
-                 {
-                     return childOfChild;
-                 }
-             }
-             return null;
-         }
+                T childOfChild = FindVisualChild<T>(child);
+                if (childOfChild != null)
+                {
+                    return childOfChild;
+                }
+            }
+            return null;
+        }
 
 
 
@@ -203,108 +194,151 @@ namespace aaagenda_contactos
                         EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                     };
 
-                     fadeOutAnimation.Completed += (s, args) =>
-                     {
-                         // Navegar a la nueva página al finalizar el desvanecimiento
-                         frame.Navigate(new Page1());
+                    fadeOutAnimation.Completed += (s, args) =>
+                    {
+                        // Navegar a la nueva página al finalizar el desvanecimiento
+                        frame.Navigate(new Page1());
 
-                         // Hacer que el Frame sea visible para la animación de aparición
-                         frame.Visibility = Visibility.Visible;
+                        // Hacer que el Frame sea visible para la animación de aparición
+                        frame.Visibility = Visibility.Visible;
 
-                         // Crear animación de aparición
-                         var fadeInAnimation = new DoubleAnimation
-                         {
-                             To = 1,
-                             Duration = TimeSpan.FromMilliseconds(300),
-                             EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-                         };
+                        // Crear animación de aparición
+                        var fadeInAnimation = new DoubleAnimation
+                        {
+                            To = 1,
+                            Duration = TimeSpan.FromMilliseconds(300),
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                        };
 
-                         // Iniciar la animación de aparición
-                         frame.BeginAnimation(OpacityProperty, fadeInAnimation);
-                     };
+                        // Iniciar la animación de aparición
+                        frame.BeginAnimation(OpacityProperty, fadeInAnimation);
+                    };
 
-                     // Iniciar la animación de desvanecimiento
-                     frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
-                 }
-             }
-         }
-
-
+                    // Iniciar la animación de desvanecimiento
+                    frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
+                }
+            }
+        }
 
 
-         // Arrastrar la ventana
-         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
-         {
-             if (e.ChangedButton == MouseButton.Left)
-             {
-                 this.DragMove();
-             }
-         }
 
-         private bool IsMaximized = false;
 
-         // Maximizar y restaurar ventana
-         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-         {
-             if (e.ClickCount == 2)
-             {
-                 if (!IsMaximized)
-                 {
-                     this.WindowState = WindowState.Maximized;
-                     IsMaximized = true;
-                 }
-                 else
-                 {
-                     this.WindowState = WindowState.Normal;
-                     this.Width = 1080;
-                     this.Height = 720;
-                     IsMaximized = false;
-                 }
-             }
-         }
+        // Arrastrar la ventana
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private bool IsMaximized = false;
+
+        // Maximizar y restaurar ventana
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                if (!IsMaximized)
+                {
+                    this.WindowState = WindowState.Maximized;
+                    IsMaximized = true;
+                }
+                else
+                {
+                    this.WindowState = WindowState.Normal;
+                    this.Width = 1080;
+                    this.Height = 720;
+                    IsMaximized = false;
+                }
+            }
+        }
 
         // Evento del DataGrid
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
-            private void MainFrame_Navigated(object sender, NavigationEventArgs e)
-         {
+        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
 
-         }
-         private void Button_Click_1(object sender, RoutedEventArgs e)
-         {
-             var ventana = Window.GetWindow(this);
-             if (ventana != null)
-             {
+        }
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var ventana = Window.GetWindow(this);
+            if (ventana != null)
+            {
 
-                 var frame = ventana.FindName("Frame2") as Frame;
-                 if (frame != null)
-                 {
-                     frame.Visibility = Visibility.Visible;
-                     frame.Navigate(new Page3());
+                var frame = ventana.FindName("Frame2") as Frame;
+                if (frame != null)
+                {
+                    frame.Visibility = Visibility.Visible;
+                    frame.Navigate(new Page3());
 
-                 }
-             }
-         }
-         private void Button_Click_2(object sender, RoutedEventArgs e)
-         {
-             var ventana = Window.GetWindow(this);
-             if (ventana != null)
-             {
-                 var frame = ventana.FindName("Frame2") as Frame;
-                 if (frame != null)
-                 {
-                     frame.Visibility = Visibility.Collapsed;
-                 }
-             }
-         }
-       
-
+                }
+            }
+        }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            var ventana = Window.GetWindow(this);
+            if (ventana != null)
+            {
+                var frame = ventana.FindName("Frame2") as Frame;
+                if (frame != null)
+                {
+                    frame.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
         private void Frame5_Navigated(object sender, NavigationEventArgs e)
         {
 
         }
+        private void Eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            {
+                {
+                    var button = sender as Button;
+                    var ContactoSeleccionado = ContactosDataGrid.SelectedItem as contacto;
+
+                    if (ContactoSeleccionado != null)
+                    {
+                        var result = MessageBox.Show(
+                            $"¿Estás seguro de que deseas eliminar el contacto con ID {ContactoSeleccionado.ID_contacto}?",
+                            "Confirmación de eliminación",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Warning);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            using (var context = new MiDbContext())
+                            {
+                                var ContactoAEliminar = context.contactos
+                                    .FirstOrDefault(c => c.ID_contacto == ContactoSeleccionado.ID_contacto);
+
+                                if (ContactoAEliminar != null)
+                                {
+                                    context.contactos.Remove(ContactoAEliminar);
+                                    context.SaveChanges();
+
+                                    cargarcontacto();
+
+                                    MessageBox.Show("Contacto eliminado correctamente.");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("El contacto no se encontró en la base de datos.");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se seleccionó ningún contacto para eliminar.");
+                    }
+                }
+            }
+        }
+        }
     }
-}

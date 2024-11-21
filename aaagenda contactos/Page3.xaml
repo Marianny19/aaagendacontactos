@@ -30,7 +30,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Botón Modificar -->
+          
                 <!-- Search bar -->
                 <Grid Width="300" HorizontalAlignment="Left"/>
 
@@ -47,19 +47,19 @@
                 </Button>
 
                 <Grid Width="300" HorizontalAlignment="Right" Grid.Row="3" Margin="0 20 0 0">
-                    <TextBlock Margin="150,63,-110,0" VerticalAlignment="Top" Foreground="#b0b9c6" IsHitTestVisible="False"
+                    <TextBox Margin="150,58,-95,0" VerticalAlignment="Top" Foreground="#b0b9c6" IsHitTestVisible="False" 
             Panel.ZIndex="1" Text="Buscar contactos ..."
            
-            Height="15" RenderTransformOrigin="0.992,0.772"/>
-                    <TextBox x:Name="txtSearch2" Style="{StaticResource textboxSearch}" VerticalAlignment="Top" Height="42" Margin="130,50,-130,0"/>
-                    <iconPacks:PackIconMaterial Kind="Magnify" Width="15" Height="14"
-            Margin="0,64,-110,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328"/>
+            Height="26" RenderTransformOrigin="0.992,0.772" TextChanged="TextBox_TextChanged"/>
+                    <TextBox x:Name="txtSearch2" Style="{StaticResource textboxSearch}" VerticalAlignment="Top" Height="40" Margin="130,50,-130,0"/>
+                    <iconPacks:PackIconMaterial Kind="Magnify" Width="21" 
+            Margin="0,58,-121,15" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328" VerticalAlignment="Stretch"/>
                 </Grid>
 
                 <!-- DataGrid -->
                 <DataGrid x:Name="CDataGrid" Grid.Row="4" 
                     AutoGenerateColumns="False"
-                    ItemsSource="{Binding Contactos}" 
+                    ItemsSource="{Binding Contactos, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                     SelectionChanged="DataGrid_SelectionChanged"
                     Style="{StaticResource CustomDataGridStyle}" 
                     CanUserAddRows="False" 
@@ -68,31 +68,33 @@
                     <!-- Definición de columnas -->
                     <DataGrid.Columns>
 
-                        <!-- Columna de Nombre (editable) -->
-                        <DataGridTextColumn Header="Id_agenda" Binding="{Binding ID_agenda}" IsReadOnly="False"/>
+                        <!-- Columna de ID (editable) -->
+                        <DataGridTextColumn Header="Id_agenda   " Binding="{Binding ID_agenda}" IsReadOnly="True"/>
 
                         <!-- Columna de Nombre (editable) -->
-                        <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre_agenda}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Nombre   " Binding="{Binding Nombre_agenda, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
 
                         <!-- Columna de Descriocion (editable) -->
-                        <DataGridTextColumn Header="Descripcion" Binding="{Binding Descripcion_agenda}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Descripción   " Binding="{Binding Descripcion_agenda, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+
 
                         <!-- Columna de Fecha (editable) -->
-                        <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha_agendada,StringFormat=dd/MM/yyyy}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Fecha   " Binding="{Binding Fecha_agendada,StringFormat=dd/MM/yyyy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+
 
                         <!-- Columna de Hora (editable) -->
-                        <DataGridTextColumn Header="Hora" Binding="{Binding Hora_agendada}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Hora    " Binding="{Binding Fecha_agendada, StringFormat='HH:mm', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
 
                         <!-- Columna de IdContacto (editable) -->
-                        <DataGridTextColumn Header="Id_contacto" Binding="{Binding ID_contacto}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Id_contacto   " Binding="{Binding ID_contacto}" IsReadOnly="False"/>
 
                         <!-- Columna de Botón Guardar -->
                         <DataGridTemplateColumn Header="Acciones">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="Modificar" Width="75" Height="30" 
-                                            Click="ModificarButton_Click"
+                                        <Button Content="Guardar" Width="75" Height="30" 
+                                            Click="GuardarButton_Click"
                                             CommandParameter="{Binding}"/>
                                         <Button Content="Guardar" Width="75" Height="30" 
                                             Click="GuardarButton_Click"
@@ -116,18 +118,12 @@
                 </Button>
 
                 <!-- Botón Eliminar -->
-                <Button Style="{StaticResource addButton}" Grid.Row="4" Margin="0,452,-119,83" Width="114">
+                <Button Style="{StaticResource addButton}" Grid.Row="4" Margin="0,452,-119,83" Width="114" Click="Button_Click_1">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Height="19"><Run Language="es-419" Text="Eliminar"/><LineBreak/><Run Language="es-419"/></TextBlock>
                     </StackPanel>
-
                 </Button>
             </Grid>
-
         </Border>
-        
-
-
     </Grid>
-
 </Page>

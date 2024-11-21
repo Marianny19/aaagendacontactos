@@ -27,6 +27,7 @@ namespace Contactos
         public Page2()
         {
             InitializeComponent();
+            cargarcontacto();
         }
 
        
@@ -82,23 +83,36 @@ namespace Contactos
             var ID_contacto = (int?)cmbcontactoaagendar.SelectedValue;
             var Descripcion_agenda = txtdescripcion.Text;
             var Fecha_agendada = txtfecha.SelectedDate;
-            var Hora_agendada = DateTime.Parse(txthoraagenda.Text).ToUniversalTime();
-            if (string.IsNullOrWhiteSpace(Nombre_agenda)||
-            string.IsNullOrWhiteSpace(txthoraagenda.Text)||
-            string.IsNullOrWhiteSpace(Descripcion_agenda)||
-            Fecha_agendada == null ||
-            ID_contacto == null)
+
+            // Validar selección de hora y minutos
+            var selectedHour = hourComboBox.SelectedItem as ComboBoxItem;
+            var selectedMinute = minuteComboBox.SelectedItem as ComboBoxItem;
+
+            if (string.IsNullOrWhiteSpace(Nombre_agenda) ||
+                string.IsNullOrWhiteSpace(Descripcion_agenda) ||
+                Fecha_agendada == null ||
+                ID_contacto == null ||
+                selectedHour == null ||
+                selectedMinute == null)
             {
-                MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Todos los campos deben estar completos, incluyendo la hora y los minutos.",
+                                "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            // Combinar fecha, hora y minutos en un solo DateTime
+            var hora = int.Parse((string)selectedHour.Content);
+            var minutos = int.Parse((string)selectedMinute.Content);
+            var fechaConHora = Fecha_agendada.Value.AddHours(hora).AddMinutes(minutos);
+            var fechaConHoraUtc = DateTime.SpecifyKind(fechaConHora, DateTimeKind.Local).ToUniversalTime();
 
             var nuevaAgenda = new agenda
             {
                 Nombre_agenda = Nombre_agenda,
                 ID_contacto = ID_contacto.Value,
                 Descripcion_agenda = Descripcion_agenda,
-                Fecha_agendada = Fecha_agendada.Value, 
+                Fecha_agendada = fechaConHoraUtc
+
             };
 
             using (var dbContext = new MiDbContext())
@@ -107,11 +121,14 @@ namespace Contactos
                 {
                     dbContext.agendas.Add(nuevaAgenda);
                     dbContext.SaveChanges();
+
+                    // Limpiar campos
                     txtnombre.Clear();
-                    txthoraagenda.Clear();
-                    txtfecha.SelectedDate = null; 
+                    txtfecha.SelectedDate = null;
                     txtdescripcion.Clear();
                     cmbcontactoaagendar.SelectedItem = null;
+                    hourComboBox.SelectedItem = null;
+                    minuteComboBox.SelectedItem = null;
 
                     MessageBox.Show("Agenda guardada exitosamente.");
                 }
