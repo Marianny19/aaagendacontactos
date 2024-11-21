@@ -99,7 +99,6 @@ namespace Contactos
                 ID_contacto = ID_contacto.Value,
                 Descripcion_agenda = Descripcion_agenda,
                 Fecha_agendada = Fecha_agendada.Value, 
-                Hora_agendada = Hora_agendada
             };
 
             using (var dbContext = new MiDbContext())

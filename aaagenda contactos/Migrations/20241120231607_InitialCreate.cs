@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace aaagenda_contactos.Migrations
 {
     /// <inheritdoc />
-    public partial class migracioninicial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -101,7 +101,6 @@ namespace aaagenda_contactos.Migrations
                     table.PrimaryKey("PK_tipos_red_social", x => x.Id_tipo_red_social);
                 });
         }
-
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)

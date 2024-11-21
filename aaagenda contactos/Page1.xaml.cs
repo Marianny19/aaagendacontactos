@@ -35,6 +35,7 @@ namespace Contactos
             DataContext = this;
             CargarTiposContacto();
             CargarRedesSociales();
+            CargarTipoTelefono();
 
 
 
@@ -372,25 +373,37 @@ namespace Contactos
                
             }
         }
+        private void CargarTipoTelefono()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_red_social = context.tipos_red_social.ToList();
+                cmbTipo_telefono.Items.Add(new ComboBoxItem { Content = "Móvil" });
+                cmbTipo_telefono.Items.Add(new ComboBoxItem { Content = "Casa" });
+                cmbTipo_telefono.Items.Add(new ComboBoxItem { Content = "Trabajo" });
 
-        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
+            }
+        }
+private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
             var Nombre = txtnombre.Text;
             var Apellido = txtapellido.Text;
             var Email = txtemail.Text;
             var Tipo_Contacto = (int?)cmbTipo_contacto.SelectedValue;
-            var numeroTelefono = numerotelefono.ToString();
-            var Tipo_telefono = (cmbTipo_telefono.SelectedItem as teléfono)?.Tipo_teléfono;
+            var numeroTelefono = numerotelefono.Text;
+            var tipoTelefono = (cmbTipo_telefono.SelectedItem as ComboBoxItem)?.Content.ToString();
             var Tipo_red_social = (cmbTipo_red_social.SelectedItem as tipo_red_social)?.Id_tipo_red_social;
             var Nombre_de_usuario = txtnombreusuario.Text;
             if (string.IsNullOrWhiteSpace(Nombre) ||
-                string.IsNullOrWhiteSpace(Apellido) ||
-                string.IsNullOrWhiteSpace(numeroTelefono) ||
-                string.IsNullOrWhiteSpace(Nombre_de_usuario)||
-                (string.IsNullOrWhiteSpace(Tipo_telefono))
-                )
+            string.IsNullOrWhiteSpace(Apellido) ||
+            string.IsNullOrWhiteSpace(numeroTelefono) ||
+            string.IsNullOrWhiteSpace(Nombre_de_usuario) ||
+            string.IsNullOrWhiteSpace(tipoTelefono)||
+            Tipo_Contacto == null ||
+            Tipo_red_social == null)
+
             {
-                MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -406,8 +419,8 @@ namespace Contactos
             var nuevotelefono = new teléfono
             {
                 Número_de_teléfono = numeroTelefono,
-                Tipo_teléfono = Tipo_telefono ?? throw new InvalidOperationException("Tipo_telefono no puede ser nulo"),
-                Id_contacto = nuevocontacto.ID_contacto
+                Tipo_teléfono = tipoTelefono,
+                Id_contacto = nuevocontacto.ID_contacto,
             };
             var nuevaRedsocial = new red_social
             {

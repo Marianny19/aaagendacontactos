@@ -39,7 +39,6 @@ public partial class MiDbContext : DbContext
         public string Nombre_agenda { get; set; }
         public string Descripcion_agenda { get; set; }
         public DateTime Fecha_agendada { get; set; }
-        public DateTime Hora_agendada { get; set; }
         public int ID_contacto { get; set; }
     }
 

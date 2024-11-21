@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using static MiDbContext;
 
 #nullable disable
 
@@ -38,11 +37,7 @@ namespace aaagenda_contactos.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("Hora_agendada")
-                        .HasColumnType("timestamp with time zone")
-                    .HasConversion(
-                v => v.ToUniversalTime(),  
-                v => DateTime.SpecifyKind(v, DateTimeKind.Utc) 
-            );
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("ID_contacto")
                         .HasColumnType("integer");
@@ -164,13 +159,6 @@ namespace aaagenda_contactos.Migrations
 
                     b.ToTable("tipos_red_social");
                 });
-            modelBuilder.Entity<agenda>()
-    .Property(e => e.Hora_agendada)
-    .HasConversion(
-        v => v.ToUniversalTime(),
-        v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
-    );
-
 #pragma warning restore 612, 618
         }
     }

@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace aaagenda_contactos.Migrations
 {
     [DbContext(typeof(MiDbContext))]
-    [Migration("20241101155004_migracioninicial")]
-    partial class migracioninicial
+    [Migration("20241120231607_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

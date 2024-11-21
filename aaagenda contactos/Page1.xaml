@@ -116,8 +116,8 @@
                     <Border Margin="-70,-44,-104,-79" Grid.RowSpan="7" Grid.ColumnSpan="2">
 
                         <Button Content="+" HorizontalAlignment="Left" 
-                VerticalAlignment="Top" Margin="301,329,0,0" 
-                Click="AddPhoneNumber_Click" Width="30" Height="36"/>
+                VerticalAlignment="Top" Margin="301,335,0,0" 
+                Click="AddPhoneNumber_Click" Width="30" Height="29"/>
 
                     </Border>
 
@@ -156,13 +156,10 @@
                     <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Width="200" Height="30" Margin="62,62,108,64" Grid.ColumnSpan="2"/>
                     <TextBlock Grid.Row="6" Text="Tipo de red social" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="91,31,137,85" VerticalAlignment="Stretch"/>
                     <ComboBox x:Name="cmbTipo_telefono" Grid.Row="5" Width="200" Height="30" Margin="62,10,108,134" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                        <ComboBoxItem Content="Móvil" />
-                        <ComboBoxItem Content="Casa" />
-                        <ComboBoxItem Content="Trabajo" />
                     </ComboBox>
                     <TextBlock Grid.Row="4" Text="Tipo de telefono" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="82,7,146,7" VerticalAlignment="Stretch"/>
                 </Grid>
-                <TextBox x:Name="txtnombreusuario" Width="200" Height="30" Margin="276,578,276,73"/>
+                <TextBox x:Name="txtnombreusuario" Width="200" Height="30" Margin="283,578,269,73"/>
                 <Button x:Name="Registrar_contacto" Content="Registrar contacto" HorizontalAlignment="Center" 
         Margin="0,614,0,10" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
         Click="Registrar_contacto_Click" RenderTransformOrigin="0.5,0.5" Foreground="White">
