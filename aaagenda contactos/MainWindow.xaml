@@ -4,8 +4,8 @@
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:aaagenda_contactos" xmlns:fa="http://schemas.fontawesome.io/icons/"
-        mc:Ignorable="d"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d" MinHeight="720" MaxHeight="720" MinWidth="1080" MaxWidth="1080"
                Height="720" Width="1080" WindowStartupLocation="CenterScreen" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
 
@@ -68,7 +68,7 @@
 
 
                 <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
-                    <Icon:PackIconMaterial Kind="EyeSettings" Width="15" Height="15"/>
+                    <Icon:PackIconMaterial Kind="EyeCheck" Width="15" Height="15"/>
                 </Button>
 
                 <Border x:Name="ContentBorder" Background="#623ed0" CornerRadius="0 30 0 30" Margin="0,80,0,0" Grid.RowSpan="2">
@@ -103,10 +103,16 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                
-                
-               
+                <!-- Search bar -->
+                <Grid Width="300" HorizontalAlignment="Left">
+                    <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
+                               Panel.ZIndex="1" Text="Buscar aquí ..." Visibility="{Binding Text, Converter={StaticResource BoolToVis}, ElementName=txtSearch}"/>
+                    <TextBox x:Name="txtSearch" Style="{StaticResource textboxSearch}"/>
+                    <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center"
+                                           Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
+                </Grid>
 
+                <!-- Main title -->
                 <TextBlock Text="Contactos" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
 

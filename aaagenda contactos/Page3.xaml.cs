@@ -17,9 +17,31 @@ namespace Contactos
         public Page3()
         {
             InitializeComponent();
+            //Cargarcontactosagendado();
 
             this.Resources.Add("BoolToVis", new BoolToVisConverter());
         }
+        /*private void Cargarcontactosagendado()
+        {
+            using (var context = new MiDbContext())
+            {
+                var agenda = context.agendas
+                    .Select(c => new
+                    
+                    {
+                        c.ID_agenda,
+                        c.Nombre_agenda,
+                        c.Descripcion_agenda,
+                        c.Fecha_agendada, 
+                        
+                        c.ID_contacto
+                    })
+                    .ToList();
+
+                CDataGrid.ItemsSource = agenda;
+            }
+        }*/
+
 
 
         private void Button_Click1(object sender, RoutedEventArgs e)

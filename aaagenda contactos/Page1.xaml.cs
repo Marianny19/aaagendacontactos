@@ -31,6 +31,8 @@ namespace Contactos
 
             RedSocialItems = new List<string> { "Facebook", "Twitter", "Instagram" };
             DataContext = this;
+            //CargarTiposContacto();
+            //CargarRedesSociales();
 
         }
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
@@ -307,8 +309,50 @@ namespace Contactos
 
             phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
         }
-    }
-}
+        /*private void CargarTiposContacto()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_contacto = context.tipos_contacto.ToList();
+
+                cmbTipo_contacto.ItemsSource = tipo_contacto;
+                cmbTipo_contacto.DisplayMemberPath = "Nombre_tipo_contacto";
+                cmbTipo_contacto.SelectedValuePath = "ID_tipo_contacto";
+            }
+        }
+
+        private void CargarRedesSociales()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_red_social = context.tipos_red_social.ToList();
+                cmbTipo_red_social.ItemsSource = tipo_red_social;
+                cmbTipo_red_social.DisplayMemberPath = "Nombre_red_social";
+                cmbTipo_red_social.SelectedValuePath = "ID_tipo_red_social";
+               
+            }
+        }*/
+
+        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
+        {
+            var Nombre = txtnombre.Text;
+            var Apellido = txtapellido.Text;
+            var Email = txtemail.Text;
+            var Tipo_Contacto = (int?)cmbTipo_contacto.SelectedValue;
+            var numeroTelefono = numerotelefono.ToString();
+            var Tipo_telefono = (cmbTipo_telefono.SelectedItem as teléfono)?.Tipo_teléfono;
+            var Tipo_red_social = (cmbTipo_red_social.SelectedItem as tipo_red_social)?.Id_tipo_red_social;
+            var Nombre_de_usuario = txtnombreusuario.Text;
+            if (string.IsNullOrWhiteSpace(Nombre) ||
+                string.IsNullOrWhiteSpace(Apellido) ||
+                string.IsNullOrWhiteSpace(numeroTelefono) ||
+                string.IsNullOrWhiteSpace(Nombre_de_usuario)||
+                (string.IsNullOrWhiteSpace(Tipo_telefono))
+                )
+            {
+                MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
 //        private void CargarTiposContacto()
 //        {

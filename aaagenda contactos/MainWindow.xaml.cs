@@ -27,6 +27,7 @@ namespace aaagenda_contactos
         public MainWindow()
         {
             InitializeComponent();
+            //cargarcontacto();
 
             Contactos = new ObservableCollection<contacto>
              {
