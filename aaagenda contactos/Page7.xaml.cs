@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace aaagenda_contactos
 {
     /// <summary>
-    /// Lógica de interacción para Page6.xaml
+    /// Lógica de interacción para Page7.xaml
     /// </summary>
-    public partial class Page6 : Page
+    public partial class Page7 : Page
     {
-        public Page6()
+        public Page7()
         {
             InitializeComponent();
         }
