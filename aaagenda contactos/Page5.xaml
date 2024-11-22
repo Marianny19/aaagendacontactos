@@ -102,7 +102,7 @@
                 </Button>
             </Grid>
         </Border>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=4}" Grid.ColumnSpan="2" Margin="25,0,0,260" Style="{StaticResource CustomDataGridStyle}" Grid.Column="2" />
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=4}" Grid.ColumnSpan="2" Margin="25,0,0,260" Style="{StaticResource CustomDataGridStyle}" Grid.Column="2" Name="Tipos_contacto" />
     </Grid>
 </Page>
     

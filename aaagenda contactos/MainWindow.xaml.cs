@@ -32,6 +32,7 @@ namespace aaagenda_contactos
         {
             InitializeComponent();
             cargarcontacto();
+            Cargartipocontactos();
 
             // Inicializar la lista de contactos
         }
@@ -40,7 +41,9 @@ namespace aaagenda_contactos
             using (var context = new MiDbContext())
             {
                 var contactos = context.contactos
-                    .ToList();
+                .Include(c => c.TipoContacto)
+                .Include(c => c.TipoRedSocial)
+                .ToList();
 
                 ContactosDataGrid.ItemsSource = contactos;
             }
@@ -121,10 +124,6 @@ namespace aaagenda_contactos
                 }
             }
         }
-
-
-
-
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close(); // Cierra la ventana
@@ -340,5 +339,32 @@ namespace aaagenda_contactos
                 }
             }
         }
+        private void Tipodecontacto_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Tipodecontacto.SelectedItem is tipo_contacto tipoSeleccionado)
+            {
+                using (var context = new MiDbContext())
+                {
+                    var contactosFiltrados = context.contactos
+                        .Where(c => c.Tipo_Contacto == tipoSeleccionado.ID_tipo_contacto)
+                        .Include(c => c.TipoContacto)
+                        .Include(c => c.TipoRedSocial)
+                        .ToList();
+
+                    ContactosDataGrid.ItemsSource = contactosFiltrados;
+                }
+            }
+        }
+        private void Cargartipocontactos()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_contacto = context.tipos_contacto.ToList();
+
+                Tipodecontacto.ItemsSource = tipo_contacto;
+                Tipodecontacto.DisplayMemberPath = "Nombre_tipo_contacto";
+                Tipodecontacto.SelectedValuePath = "ID_tipo_contacto";
+            }
         }
     }
+}

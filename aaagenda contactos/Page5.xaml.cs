@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,9 @@ namespace aaagenda_contactos
         public Page5()
         {
             InitializeComponent();
+            cargar_tiposcontacto();
         }
+        public ObservableCollection<tipo_contacto> tipos_contacto { get; set; }
 
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
@@ -50,7 +53,7 @@ namespace aaagenda_contactos
                     dbContext.tipos_contacto.Add(nuevotipo_contacto);
                     dbContext.SaveChanges();
                     txttipocontacto.Clear();
-                    
+
 
                     MessageBox.Show("Tipo de contacto guardado exitosamente.");
                 }
@@ -95,6 +98,17 @@ namespace aaagenda_contactos
                     // Iniciar la animación de desvanecimiento
                     frame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                 }
+            }
+        }
+        private void cargar_tiposcontacto()
+        {
+            using (var context = new MiDbContext())
+            {
+                var tipo_contactos = context.tipos_contacto.ToList();
+
+                tipos_contacto = new ObservableCollection<tipo_contacto>(tipo_contactos);
+
+                Tipos_contacto.ItemsSource = tipo_contactos;
             }
         }
     }

@@ -102,7 +102,7 @@
                 </Button>
             </Grid>
         </Border>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=4}" Grid.ColumnSpan="4" Margin="308,0,0,260" Style="{StaticResource CustomDataGridStyle}" />
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=4}" Name="redsocialDatagrid" Grid.ColumnSpan="4" Margin="308,0,0,260" Style="{StaticResource CustomDataGridStyle}" SelectionChanged="redsocialDatagrid_SelectionChanged" />
     </Grid>
 </Page>
     

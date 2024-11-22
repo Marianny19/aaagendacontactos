@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Emit;
 using static MiDbContext;
 
@@ -26,11 +27,16 @@ public partial class MiDbContext : DbContext
         public string Apellido { get; set; }
         public string Email { get; set; }
         public int Tipo_Contacto { get; set; }
+
+        [ForeignKey(nameof(Tipo_Contacto))]
+        public tipo_contacto TipoContacto { get; set; }
+
         public int Tipo_red_social { get; set; }
-        
-
-
+        [ForeignKey(nameof(Tipo_red_social))]
+        public tipo_red_social TipoRedSocial { get; set; }
     }
+
+}
 
 
     public class agenda
@@ -41,7 +47,9 @@ public partial class MiDbContext : DbContext
         public string Descripcion_agenda { get; set; }
         public DateTime Fecha_agendada { get; set; }
         public int ID_contacto { get; set; }
-    }
+        [ForeignKey(nameof(ID_contacto))]
+        public contacto IDContacto { get; set; }
+}
 
     // Entidad red_social
     public class red_social
@@ -82,7 +90,5 @@ public partial class MiDbContext : DbContext
         public string Nombre_red_social { get; set; }
     }
    
-
-}
 
 

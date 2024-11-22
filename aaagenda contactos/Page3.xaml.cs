@@ -8,6 +8,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media;
 using static MiDbContext;
 using System.Collections.ObjectModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contactos
 {
@@ -23,7 +24,8 @@ namespace Contactos
         {
             InitializeComponent();
             Cargarcontactosagendado();
-    
+            CargarContactos();
+
             // Registrar el convertidor como recurso de la página
             this.Resources.Add("BoolToVis", new BoolToVisConverter());
             
@@ -33,6 +35,7 @@ namespace Contactos
             using (var context = new MiDbContext())
             {
                 var Agendas = context.agendas
+             .Include(c => c.IDContacto)
                     .ToList();
 
                 CDataGrid.ItemsSource = Agendas;
@@ -149,6 +152,7 @@ namespace Contactos
         {
         }
 
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             {
@@ -191,6 +195,33 @@ namespace Contactos
                     MessageBox.Show("No se seleccionó ningúna agenda para eliminar.");
                 }
             }
+        }
+        private void CargarContactos()
+        {
+            using (var context = new MiDbContext())
+            {
+                var contactos = context.contactos.ToList();
+
+                Contactosagendados.ItemsSource = contactos;
+                Contactosagendados.DisplayMemberPath = "Nombre";
+                Contactosagendados.SelectedValuePath = "ID_contacto"; 
+            }
+        }
+
+        private void Contactosagendados_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Contactosagendados.SelectedItem is contacto contactoSeleccionado)
+            {
+                using (var context = new MiDbContext())
+                {
+                    var agendasFiltradas = context.agendas
+                        .Where(a => a.ID_contacto == contactoSeleccionado.ID_contacto)
+                        .Include(a => a.IDContacto)
+                        .ToList();
+                    CDataGrid.ItemsSource = agendasFiltradas;
+                }
+            }
+
         }
     }
 }
