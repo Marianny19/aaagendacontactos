@@ -91,15 +91,15 @@ ItemsSource="{Binding Path=RedSocialItems}" Grid.Column="0" Margin="484,375,188,
                     <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
                         <Button Content="+" HorizontalAlignment="Left" 
     VerticalAlignment="Top" 
-    Width="23" Height="30" Margin="728,435,0,0" Click="Agregar_tipo_red_social"/>
+    Width="23" Height="30" Margin="728,434,0,0" Click="Agregar_tipo_red_social"/>
                     </Grid>
                     <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
                         <Button Content="+" HorizontalAlignment="Left" 
 VerticalAlignment="Top" 
- Width="24" Height="30" Margin="729,260,0,0" Click="Agregar_tipo_contacto" />
+ Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto" />
                         <Button Content="+" HorizontalAlignment="Left" 
-                            VerticalAlignment="Center"  
-                            Click="AddPhoneNumber_Click" Width="24" Height="30" Margin="729,0,0,0"/>
+                            VerticalAlignment="Top"  
+                            Click="AddPhoneNumber_Click" Width="24" Height="30" Margin="729,317,0,0"/>
                     </Grid>
 
 
