@@ -81,11 +81,6 @@ namespace Contactos
 
         }
 
-        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
 
         private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
         {
@@ -225,7 +220,9 @@ namespace Contactos
             {
                 Width = 190,
                 Height = 30,
-                Margin = new Thickness(0, 0, 5, 0)
+                Margin = new Thickness(0, 0, 5, 0),
+        
+                VerticalContentAlignment = VerticalAlignment.Center
             };
 
             Button removeButton = new Button
@@ -309,6 +306,13 @@ namespace Contactos
 
             phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
         }
+
+        private void txtnombreusuario_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+    }
+}
         /*private void CargarTiposContacto()
         {
             using (var context = new MiDbContext())
@@ -331,7 +335,7 @@ namespace Contactos
                 cmbTipo_red_social.SelectedValuePath = "ID_tipo_red_social";
                
             }
-        }*/
+        }
 
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
@@ -346,13 +350,19 @@ namespace Contactos
             if (string.IsNullOrWhiteSpace(Nombre) ||
                 string.IsNullOrWhiteSpace(Apellido) ||
                 string.IsNullOrWhiteSpace(numeroTelefono) ||
-                string.IsNullOrWhiteSpace(Nombre_de_usuario)||
+                string.IsNullOrWhiteSpace(Nombre_de_usuario) ||
                 (string.IsNullOrWhiteSpace(Tipo_telefono))
                 )
             {
                 MessageBox.Show("Ninguno de los campos puede estar vacío. Por favor, complete todos los campos.", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+        }
+    }
+}
+        
+   
+        */
 
 //        private void CargarTiposContacto()
 //        {
