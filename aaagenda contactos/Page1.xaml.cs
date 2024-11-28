@@ -225,7 +225,6 @@ namespace Contactos
         }
 
 
-
         private void AddPhoneNumber_Click(object sender, RoutedEventArgs e)
         {
             // Verificar si ya se alcanzó el límite de 14 TextBox
@@ -384,7 +383,7 @@ namespace Contactos
 
             }
         }
-private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
+        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
             var Nombre = txtnombre.Text;
             var Apellido = txtapellido.Text;

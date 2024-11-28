@@ -24,7 +24,7 @@ namespace aaagenda_contactos
     public partial class MainWindow : Window
     {
         // ObservableCollection para almacenar los contactos
-        public ObservableCollection<contacto> Contactos { get; set; }
+        public ObservableCollection<contacto> Contactos { get; set; } = new ObservableCollection<contacto>();
         private bool _isEditing = false; // Variable para saber si se está editando un contacto
         private contacto _currentEditingContact; // Variable para almacenar el contacto que se está editando
 
@@ -33,6 +33,7 @@ namespace aaagenda_contactos
             InitializeComponent();
             cargarcontacto();
             Cargartipocontactos();
+
 
             // Inicializar la lista de contactos
         }

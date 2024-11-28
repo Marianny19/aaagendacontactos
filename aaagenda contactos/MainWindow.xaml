@@ -6,16 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:aaagenda_contactos" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d" MinHeight="720" MaxHeight="720" MinWidth="1080" MaxWidth="1080"
-               Height="720" Width="1080" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        Height="720" Width="1080" WindowStartupLocation="CenterScreen" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
 
     <Window.Clip>
         <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,1080,720"/>
 
     </Window.Clip>
-
-
-
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <!-- Estilo personalizado para DataGrid -->
@@ -56,9 +53,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
-
-
                 <!-- Menú lateral que se expande con animación -->
                 <Border x:Name="SideMenu" Background="White" CornerRadius="30" Width="200" Margin="0,0,0,-2" Grid.RowSpan="2" Visibility="Collapsed">
                     <Border.RenderTransform>
@@ -81,10 +75,6 @@
                         </StackPanel>
                     </DockPanel>
                 </Border>
-
-
-
-
                 <!-- Botón de menú que activa el despliegue -->
                 <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
                     <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
@@ -111,8 +101,6 @@
                     </DockPanel>
                 </Border>
             </Grid>
-
-
             <!-- Main content -->
             <Grid Grid.Column="1" Margin="30,20,20,10">
                 <Grid.RowDefinitions>
@@ -142,15 +130,14 @@
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition Width="271*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Margin="10,5,30,0" VerticalAlignment="Top" Foreground="#b0b9c6" IsHitTestVisible="False"
-                               Panel.ZIndex="1" Text="Buscar contactos ..."
-                               Visibility="{Binding Text.IsEmpty, Converter={StaticResource BoolToVis}, ElementName=txtSearch2}" Height="15" Grid.ColumnSpan="3"/>
+                    <TextBlock Margin="10,5,30,0" VerticalAlignment="Top" Foreground="#b0b9c6" 
+                     IsHitTestVisible="False" Panel.ZIndex="1" Text="Buscar contactos ..."
+                     Visibility="{Binding ElementName=txtSearch2, Path=Text.Length, Converter={StaticResource BoolToVis}}" 
+                     Height="15" Grid.ColumnSpan="3" />
                     <TextBox x:Name="txtSearch2" Style="{StaticResource textboxSearch}" VerticalAlignment="Top" Height="42" Margin="-10,-8,10,0" Grid.ColumnSpan="3"/>
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
                     Margin="0,6,30,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328" Grid.Column="2"/>
                 </Grid>
-
-
                 <DataGrid x:Name="ContactosDataGrid" Grid.Row="4" 
                 AutoGenerateColumns="False"
                 ItemsSource="{Binding Contactos, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -178,21 +165,12 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
-
                 <ComboBox Name="Tipodecontacto" HorizontalAlignment="Left" Margin="167,31,0,0" Grid.Row="1" VerticalAlignment="Top" Width="176" Height="28" SelectionChanged="Tipodecontacto_SelectionChanged" />
-
-
-
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 -5 -5 0">
                     <Button Click="CloseButton_Click" Width="45" Height="45" Background="Transparent" BorderThickness="0">
                         <fa:ImageAwesome Icon="Times" Width="30" Height="16" Foreground="Black"/>
                     </Button>
-
-
                 </StackPanel>
-
-
                 <!-- Botón Eliminar -->
                 <Button Style="{StaticResource addButton}" Grid.Row="4" Margin="0,460,20,10" Width="114" Click="Eliminar_Click">
                     <StackPanel Orientation="Horizontal">
