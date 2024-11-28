@@ -130,13 +130,24 @@ namespace aaagenda_contactos
 
         private void txtSearch2_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchTerm = txtSearch2.Text.ToLower();
+            // Obtener el texto de búsqueda y convertirlo a minúsculas
+            string searchTerm = txtSearch2.Text.ToLower().Trim();
+
+            // Obtener la vista por defecto del DataGrid
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(ContactosDataGrid.ItemsSource);
 
+            // Filtrar por nombre y apellido
             collectionView.Filter = item =>
             {
+                // Verificar si el item es del tipo Contacto
                 var contacto = item as contacto;
-                return contacto.Nombre.ToLower().Contains(searchTerm);
+                if (contacto == null) return false;
+
+                // Crear una cadena con el nombre completo (nombre + apellido)
+                string fullName = (contacto.Nombre + " " + contacto.Apellido).ToLower();
+
+                // Comprobar si el término de búsqueda está en el nombre completo (nombre + apellido)
+                return fullName.Contains(searchTerm);
             };
         }
 
