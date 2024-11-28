@@ -1,6 +1,7 @@
 ﻿using Contactos;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -115,6 +116,7 @@ namespace aaagenda_contactos
                         // Actualizar los datos en la base de datos
                         contactoExistente.Nombre = contactoEditado.Nombre;
                         contactoExistente.Apellido = contactoEditado.Apellido;
+                       
                         contactoExistente.Email = contactoEditado.Email;
                         contactoExistente.Tipo_Contacto = contactoEditado.Tipo_Contacto;
                         contactoExistente.Tipo_red_social = contactoEditado.Tipo_red_social;
@@ -125,6 +127,19 @@ namespace aaagenda_contactos
                 }
             }
         }
+
+        private void txtSearch2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = txtSearch2.Text.ToLower();
+            ICollectionView collectionView = CollectionViewSource.GetDefaultView(ContactosDataGrid.ItemsSource);
+
+            collectionView.Filter = item =>
+            {
+                var contacto = item as contacto;
+                return contacto.Nombre.ToLower().Contains(searchTerm);
+            };
+        }
+
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close(); // Cierra la ventana

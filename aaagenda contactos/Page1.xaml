@@ -121,7 +121,7 @@ VerticalAlignment="Top"
                 <TextBox x:Name="txtnombreusuario" Height="30" Margin="248,474,303,177" VerticalContentAlignment="Center"/>
                 <Button x:Name="Registrar_contacto" Content="Registrar contacto" HorizontalAlignment="Left" 
         Margin="191,557,0,73" Background="#6F50FF" FontSize="24" Width="230" FontWeight="SemiBold" 
-         RenderTransformOrigin="0.5,0.5" Foreground="White">
+         RenderTransformOrigin="0.5,0.5" Foreground="White" Click="Registrar_contacto_Click">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>

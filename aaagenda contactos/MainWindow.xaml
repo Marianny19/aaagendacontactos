@@ -119,7 +119,14 @@
                      IsHitTestVisible="False" Panel.ZIndex="1" Text="Buscar contactos ..."
                      Visibility="{Binding ElementName=txtSearch2, Path=Text.Length, Converter={StaticResource BoolToVis}}" 
                      Height="15" Grid.ColumnSpan="3" />
-                    <TextBox x:Name="txtSearch2" Style="{StaticResource textboxSearch}" VerticalAlignment="Top" Height="42" Margin="-10,-8,10,0" Grid.ColumnSpan="3"/>
+                    <TextBox x:Name="txtSearch2" 
+         Style="{StaticResource textboxSearch}" 
+         VerticalAlignment="Top" 
+         Height="42" 
+         Margin="-10,-8,10,0" 
+         Grid.ColumnSpan="3"
+         TextChanged="txtSearch2_TextChanged" />
+                    
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
                     Margin="0,6,30,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328" Grid.Column="2"/>
                 </Grid>
@@ -136,6 +143,7 @@
                         <DataGridTextColumn Header="ID Contacto " Binding="{Binding ID_contacto}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Nombre " Binding="{Binding Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Apellido " Binding="{Binding Apellido, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Telefono " Binding="{Binding Telefono, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Email " Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Tipo de Contacto " Binding="{Binding TipoContacto.Nombre_tipo_contacto}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Tipo Red Social " Binding="{Binding TipoRedSocial.Nombre_red_social}" IsReadOnly="True"/>
