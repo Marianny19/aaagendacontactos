@@ -58,7 +58,7 @@
                     <Border.RenderTransform>
                         <TranslateTransform x:Name="SideMenuTransform" X="-200"/>
                     </Border.RenderTransform>
-                    
+
                 </Border>
                 <!-- Botón de menú que activa el despliegue -->
                 <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
@@ -96,9 +96,14 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+
+
                 <!-- Main title -->
                 <TextBlock Text="Contactos" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
+
+                <Button Content="Refrescar" Click="RefreshButton_Click" Width="117" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-169,14,0,0"/>
+
 
                 <!-- Add Contact Button -->
                 <Button Style="{StaticResource addButton}" Grid.Row="1" Margin="0,20,10,54" Grid.RowSpan="3" Width="192" Click="Button_Click">
@@ -107,6 +112,9 @@
                         <TextBlock Text="Añadir Contacto"/>
                     </StackPanel>
                 </Button>
+
+
+
 
                 <!-- Segunda barra de búsqueda alineada a la derecha debajo del botón Añadir Contacto -->
                 <Grid Width="300" HorizontalAlignment="Right" Grid.Row="3" Margin="0 20 0 0">
@@ -126,7 +134,7 @@
          Margin="-10,-8,10,0" 
          Grid.ColumnSpan="3"
          TextChanged="txtSearch2_TextChanged" />
-                    
+
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
                     Margin="0,6,30,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328" Grid.Column="2"/>
                 </Grid>

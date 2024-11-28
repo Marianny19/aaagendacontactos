@@ -151,6 +151,53 @@ namespace aaagenda_contactos
             };
         }
 
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 1. Llamar a un método que obtenga los datos actualizados desde la base de datos
+                var updatedData = ObtenerDatosDeBaseDeDatos();
+
+                // 2. Asegúrate de que las propiedades 'TipoContacto' y 'TipoRedSocial' están correctamente actualizadas
+                foreach (var contacto in updatedData)
+                {
+                    // Asegúrate de que TipoContacto y TipoRedSocial no sean null
+                    if (contacto.TipoContacto == null)
+                        contacto.TipoContacto = new tipo_contacto(); // O asigna un valor por defecto
+
+                    if (contacto.TipoRedSocial == null)
+                        contacto.TipoRedSocial = new tipo_red_social(); // O asigna un valor por defecto
+                }
+
+                // 3. Actualizar la fuente de datos del DataGrid
+                ContactosDataGrid.ItemsSource = updatedData;
+
+                // 4. Redibujar la ventana si es necesario
+                this.InvalidateVisual();
+
+                MessageBox.Show("Datos refrescados correctamente.");
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                MessageBox.Show("Error al actualizar los datos: " + ex.Message);
+            }
+        }
+
+        // Método que obtiene los datos desde la base de datos
+        private List<contacto> ObtenerDatosDeBaseDeDatos()
+        {
+            using (var context = new MiDbContext()) // Usando Entity Framework como ejemplo
+            {
+                // Asegúrate de incluir las entidades relacionadas
+                return context.contactos
+                              .Include(c => c.TipoContacto) // Incluir tipo de contacto
+                              .Include(c => c.TipoRedSocial) // Incluir tipo de red social
+                              .ToList();
+            }
+        }
+
+
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close(); // Cierra la ventana

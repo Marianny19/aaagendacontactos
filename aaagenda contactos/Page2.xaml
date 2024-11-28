@@ -105,8 +105,8 @@
 
 
                 </Grid>
-                <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Left" 
-        Margin="332,608,0,16" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
+                <Button x:Name="Registrar_contacto" Content="Registrar agenda" HorizontalAlignment="Center" 
+        Margin="0,590,0,34" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
         Click="Registrar_contacto_Click" RenderTransformOrigin="-0.133,0.179" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>
