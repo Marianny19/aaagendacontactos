@@ -33,6 +33,7 @@ namespace aaagenda_contactos
             InitializeComponent();
             cargarcontacto();
             Cargartipocontactos();
+            cargartelefono();  
 
 
             // Inicializar la lista de contactos
@@ -49,6 +50,16 @@ namespace aaagenda_contactos
                 ContactosDataGrid.ItemsSource = contactos;
             }
         }
+        private void cargartelefono()
+        {
+                using (var context = new MiDbContext())
+                {
+ 
+                    var teléfonos = context.telefono.ToList();
+
+               
+                }
+            }
 
         public bool isMenuOpen = false;
 

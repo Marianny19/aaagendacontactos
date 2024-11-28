@@ -136,6 +136,7 @@
                         <DataGridTextColumn Header="ID Contacto " Binding="{Binding ID_contacto}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Nombre " Binding="{Binding Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Apellido " Binding="{Binding Apellido, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Numero de teléfono" Binding="{Binding Número_de_teléfono, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Email " Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Tipo de Contacto " Binding="{Binding TipoContacto.Nombre_tipo_contacto}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Tipo Red Social " Binding="{Binding TipoRedSocial.Nombre_red_social}" IsReadOnly="True"/>

@@ -508,5 +508,10 @@ namespace Contactos
                 }
             }
         }
+
+        private void EliminarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
