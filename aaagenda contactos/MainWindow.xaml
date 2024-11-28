@@ -58,26 +58,11 @@
                     <Border.RenderTransform>
                         <TranslateTransform x:Name="SideMenuTransform" X="-200"/>
                     </Border.RenderTransform>
-                    <DockPanel>
-                        <StackPanel Margin="20,70,20,20">
-                            <Button Style="{StaticResource menuButton2}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="Openid" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Opcion 1"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Style="{StaticResource menuButton2}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="Close" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Opcion 2"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </DockPanel>
+                    
                 </Border>
                 <!-- Botón de menú que activa el despliegue -->
                 <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
-                    <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
+                    <Icon:PackIconMaterial Kind="EyeCheck" Width="15" Height="15"/>
                 </Button>
 
                 <!-- Contenido principal que se contrae cuando el menú está desplegado -->
@@ -187,6 +172,7 @@
             <Frame x:Name="Frame3" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="0,-30,0,-40" />
             <Frame x:Name="Frame4" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" />
             <Frame x:Name="Frame5" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" Navigated="Frame5_Navigated" />
+            <Frame x:Name="Frame6" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" Margin="30,102,10,34" />
         </Grid>
     </Border>
 </Window>

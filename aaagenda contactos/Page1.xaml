@@ -57,112 +57,71 @@
                     </Grid.RowDefinitions>
 
                     <!-- Campos de entrada de datos -->
-                    <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre" Style="{StaticResource Text}" Margin="127,0,93,194" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="txtnombre" Grid.Row="0" Width="200" Height="30" Margin="62,21,108,164" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre" Style="{StaticResource Text}" Margin="-65,0,155,229" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="txtnombre" Grid.Row="0" Height="30" Margin="14,-4,10,225" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
 
-                    <TextBlock Text="Apellido" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="127,56,93,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtapellido" Width="200" Height="30" Margin="62,77,108,108" Grid.ColumnSpan="2"/>
+                    <TextBlock Text="Apellido" Style="{StaticResource Text}"  Margin="-65,55,153,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtapellido" Height="30" Margin="14,51,10,170" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
 
-                    <TextBlock Text="Email" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="127,112,93,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtemail" Width="200" Height="30" Margin="62,138,108,47" Grid.ColumnSpan="2"/>
+                    <TextBlock Text="Email" Style="{StaticResource Text}" Margin="-65,0,175,119" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="txtemail" Height="30" Margin="0,106,10,115" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
 
-                    <TextBlock Text="Tipo de contacto" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="100,184,120,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="cmbTipo_contacto" Grid.Row="1" Width="200" Height="30" Margin="62,10,108,30" Grid.ColumnSpan="2" Grid.RowSpan="2">
-
-                    </ComboBox>
-                    <Button Content="Agregar tipo de contacto" HorizontalAlignment="Right"
-        Grid.Column="1" Margin="0,127,-159,5" Grid.Row="6" Background="#6F50FF"
-        FontSize="12" FontWeight="SemiBold" Foreground="White" Width="156" Click="Agregar_tipo_contacto">
+                    <TextBlock Style="{StaticResource Text}" Margin="-65,155,119,0" VerticalAlignment="Top"><Run Text="Tipo de "/><LineBreak/><Run Text="contacto"/></TextBlock>
+                    <ComboBox x:Name="cmbTipo_contacto" Height="30" Margin="22,165,38,56" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
 
 
-                        <Button.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="0.000"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Button.RenderTransform>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="0" 
-                                CornerRadius="3">
-                                                <!-- Ajusta el CornerRadius según lo desees -->
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-
-
-                    <TextBlock Grid.Row="2" Text="Número de teléfono" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="95,18,125,0" VerticalAlignment="Top" Height="25" Grid.RowSpan="2"/>
-                    <TextBox x:Name="numerotelefono" Grid.Row="3" Width="200" Height="30" Margin="62,3,108,3" Grid.ColumnSpan="2"/>
+                    <TextBlock Style="{StaticResource Text}" Margin="-65,214,130,0" VerticalAlignment="Top" Height="42" Grid.RowSpan="7"><Run Text="Número de "/><LineBreak/><Run Text="teléfono"/></TextBlock>
+                    <TextBox x:Name="numerotelefono" Height="30" Margin="34,223,38,213" Grid.ColumnSpan="2" Grid.RowSpan="7" VerticalContentAlignment="Center"/>
 
                     <Grid Grid.ColumnSpan="2" Margin="0,0,-120,-18" Grid.RowSpan="7">
 
-                        <Canvas x:Name="PhoneNumbersCanvas" Margin="276,34,0,-132"/>
-                        <TextBlock x:Name="AdditionalNumbersLabel" Text="Otros números telefónicos:" Style="{StaticResource Text}" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="29" Visibility="Collapsed" Width="198"/>
-                        <Border Margin="0,-53,19,-53"/>
+                        <Canvas x:Name="PhoneNumbersCanvas" Margin="268,-4,-108,-141" />
+                        <TextBlock x:Name="AdditionalNumbersLabel" Text="Otros números telefónicos:" Style="{StaticResource Text}" Margin="0,-25,-108,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="21" Visibility="Collapsed" Width="198"/>
+                    </Grid>
+                    <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
+                        <Button Content="+" HorizontalAlignment="Left" 
+    VerticalAlignment="Top" 
+    Width="23" Height="30" Margin="728,434,0,0" Click="Agregar_tipo_red_social"/>
+                    </Grid>
+                    <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
+                        <Button Content="+" HorizontalAlignment="Left" 
+VerticalAlignment="Top" 
+ Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto" />
+                        <Button Content="+" HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"  
+                            Click="AddPhoneNumber_Click" Width="24" Height="30" Margin="729,317,0,0"/>
+                    </Grid>
+                    <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
+                        <Button Content="+" HorizontalAlignment="Left" 
+VerticalAlignment="Top" 
+ Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto" />
+                        <Button Content="+" HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"  
+                            Width="24" Height="30" Margin="729,373,0,0" Click="Agregar_tipo_telefono"/>
                     </Grid>
 
-                    <Border Margin="-70,-44,-104,-79" Grid.RowSpan="7" Grid.ColumnSpan="2">
 
-                        <Button Content="+" HorizontalAlignment="Left" 
-                VerticalAlignment="Top" Margin="301,335,0,0" 
-                Click="AddPhoneNumber_Click" Width="30" Height="29"/>
-
-                    </Border>
-
-                    <Button x:Name="agregar_tipo_red_social" Content="Agregar tipo de red social"
-        HorizontalAlignment="Right" Grid.Column="1" Margin="0,183,-161,-51" Grid.Row="6" Background="#6F50FF"
-        FontSize="12" FontWeight="SemiBold" Foreground="White" Width="158" Click="Agregar_tipo_red_social">
-                        <Button.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="0.000"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Button.RenderTransform>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="0" 
-                                CornerRadius="3">
-                                                <!-- Ajusta el CornerRadius según lo que desees -->
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                    <Border Margin="50,39,38,141" Grid.Row="6" Grid.Column="1" />
 
 
-                    <TextBlock Grid.Row="6" Text="Nombre de usuario" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="95,102,133,14" VerticalAlignment="Stretch"/>
-                    <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Width="200" Height="30" Margin="62,62,108,64" Grid.ColumnSpan="2"/>
-                    <TextBlock Grid.Row="6" Text="Tipo de red social" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="91,31,137,85" VerticalAlignment="Stretch"/>
-                    <ComboBox x:Name="cmbTipo_telefono" Grid.Row="5" Width="200" Height="30" Margin="62,10,108,134" Grid.ColumnSpan="2" Grid.RowSpan="2">
+
+
+
+
+                    <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-63,140,119,31" VerticalAlignment="Stretch"><Run Text="Nombre "/><LineBreak/><Run Text="de usuario"/></TextBlock>
+                    <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Height="30" Margin="22,89,38,96" Grid.ColumnSpan="2"/>
+                    <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,79,143,92" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="red social"/></TextBlock>
+                    <ComboBox x:Name="cmbTipo_telefono" Height="30" Grid.Row="6" Margin="22,27,38,158" Grid.ColumnSpan="2">
+                        <ComboBoxItem Content="Móvil" />
+                        <ComboBoxItem Content="Casa" />
+                        <ComboBoxItem Content="Trabajo" />
                     </ComboBox>
-                    <TextBlock Grid.Row="4" Text="Tipo de telefono" Style="{StaticResource Text}" Grid.ColumnSpan="2" Margin="82,7,146,7" VerticalAlignment="Stretch"/>
+                    <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,19,128,150" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="telefono"/></TextBlock>
                 </Grid>
-                <TextBox x:Name="txtnombreusuario" Width="200" Height="30" Margin="283,578,269,73"/>
+                <TextBox x:Name="txtnombreusuario" Height="30" Margin="248,474,303,177" VerticalContentAlignment="Center"/>
                 <Button x:Name="Registrar_contacto" Content="Registrar contacto" HorizontalAlignment="Left" 
-        Margin="309,624,0,0" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
-        Click="Registrar_contacto_Click" RenderTransformOrigin="0.5,0.5" Foreground="White">
+        Margin="191,557,0,73" Background="#6F50FF" FontSize="24" Width="230" FontWeight="SemiBold" 
+         RenderTransformOrigin="0.5,0.5" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>

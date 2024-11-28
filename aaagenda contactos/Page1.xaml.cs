@@ -99,6 +99,59 @@ namespace Contactos
 
         }
 
+        private void Agregar_tipo_telefono(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+
+                var mainFrame = mainWindow.MainFrame;
+                var frame4 = mainWindow.Frame6;
+
+                if (mainFrame != null && frame4 != null)
+                {
+
+                    mainWindow.ToggleMenu(sender, e);
+
+                    var fadeOutAnimation = new DoubleAnimation
+                    {
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                    };
+
+                    fadeOutAnimation.Completed += (s, args) =>
+                    {
+                        mainFrame.Visibility = Visibility.Collapsed;
+
+                        frame4.Navigate(new Page7());
+
+                        frame4.Opacity = 0;
+                        frame4.Visibility = Visibility.Visible;
+
+                        var fadeInAnimation = new DoubleAnimation
+                        {
+                            To = 1,
+                            Duration = TimeSpan.FromMilliseconds(300),
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                        };
+
+                        fadeInAnimation.Completed += (s, args) =>
+                        {
+                            frame4.Opacity = 1;
+
+
+                        };
+
+                        frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    };
+
+                    mainFrame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                }
+
+            }
+        } 
+
         private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;

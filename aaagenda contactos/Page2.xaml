@@ -31,7 +31,7 @@
         </Border>
 
         <Border Padding="20" Background="#E0E0E0" CornerRadius="0,30,30,0" Margin="278,-105,-101,-95" Grid.ColumnSpan="4">
-            <Grid Margin="-100,0,0,0">
+            <Grid Margin="-20,0,0,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0">
                     <Button Click="CerrarVentana_Click" Width="50" Height="50" Background="Transparent" BorderThickness="0">
                         <fa:ImageAwesome Icon="Times" Width="50" Height="20" Foreground="Black"/>
@@ -54,19 +54,19 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre agenda" Style="{StaticResource Text}" Margin="127,0,139,229" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="txtnombre" Grid.Row="0" Width="200" Height="30" Margin="108,26,107,177" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre agenda" Style="{StaticResource Text}" Margin="-56,0,86,113" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="txtnombre" Grid.Row="0" Height="30" Margin="75,49,24,108" Grid.ColumnSpan="2"/>
 
-                    <TextBlock Text="Descripción" Style="{StaticResource Text}" Margin="145,124,156,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="txtdescripcion" Width="200" Height="30" Margin="102,155,113,48" Grid.ColumnSpan="2"/>
+                    <TextBlock Text="Descripción" Style="{StaticResource Text}" Margin="-55,175,120,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
+                    <TextBox x:Name="txtdescripcion" Height="30" Margin="42,172,24,16" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                    <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Margin="145,202,127,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <Calendar x:Name="txtfecha" Grid.ColumnSpan="2" Margin="108,241,128,60" Grid.RowSpan="7"/>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="10"/>
-                    <ComboBox x:Name="cmbcontactoaagendar" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="102,87,0,0" VerticalAlignment="Top" Width="200" Height="32"/>
-                    <TextBlock Style="{StaticResource Text}" Margin="123,61,119,0" VerticalAlignment="Top" Grid.ColumnSpan="2"><Run Text="Contacto"/><Run Language="es-419" Text=" a agendar"/></TextBlock>
-                    <TextBlock Text="Hora:" Margin="108,181,176,39" Grid.Row="6" Grid.ColumnSpan="2" />
-                    <ComboBox x:Name="hourComboBox" VerticalAlignment="Top" Grid.Column="1" Margin="16,178,148,0" Grid.Row="6">
+                    <TextBlock Text="Fecha agenda" Style="{StaticResource Text}" Margin="-55,77,101,0" VerticalAlignment="Top" Grid.Row="6"/>
+                    <Calendar x:Name="txtfecha" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="77,4,0,0" Grid.ColumnSpan="2" Width="188" Grid.Row="6"/>
+                    <TextBlock Grid.Row="6" Text="Hora agenda" Style="{StaticResource Text}" Margin="-56,208,112,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cmbcontactoaagendar" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="100,109,0,0" VerticalAlignment="Top" Width="189" Height="32"/>
+                    <TextBlock Style="{StaticResource Text}" Margin="-55,114,61,0" VerticalAlignment="Top"><Run Text="Contacto"/><Run Language="es-419" Text=" a agendar"/></TextBlock>
+                    <TextBlock Text="Hora:" Margin="86,195,22,52" Grid.Row="6" />
+                    <ComboBox x:Name="hourComboBox" VerticalAlignment="Top" Margin="142,192,143,0" Grid.Row="6" Grid.ColumnSpan="2">
                         <!-- Horas de 0 a 23 -->
                         <ComboBoxItem Content="00" />
                         <ComboBoxItem Content="01" />
@@ -93,14 +93,14 @@
                         <ComboBoxItem Content="22" />
                         <ComboBoxItem Content="23" />
                     </ComboBox>
-                    <ComboBox x:Name="minuteComboBox" VerticalAlignment="Top" Grid.Column="1" Margin="24,215,141,0" Grid.Row="6">
+                    <ComboBox x:Name="minuteComboBox" VerticalAlignment="Top" Margin="142,235,143,0" Grid.Row="6" Grid.ColumnSpan="2">
                         <!-- Minutos de 00 a 59 -->
                         <ComboBoxItem Content="00" />
                         <ComboBoxItem Content="15" />
                         <ComboBoxItem Content="30" />
                         <ComboBoxItem Content="45" />
                     </ComboBox>
-                    <TextBlock Text="Minuto:" Margin="108,209,177,39" Grid.Row="6" Grid.ColumnSpan="2" />
+                    <TextBlock Text="Minuto:" Margin="86,238,23,10" Grid.Row="6" />
 
 
 
