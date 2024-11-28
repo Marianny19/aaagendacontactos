@@ -1,50 +1,46 @@
 ﻿<Page x:Class="aaagenda_contactos.Page7"
-       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Contactos"
-      xmlns:fa="http://schemas.fontawesome.io/icons/"
-      mc:Ignorable="d" Height="720" Width="1080" Background="Transparent">
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+       xmlns:local="clr-namespace:Contactos"
+       xmlns:fa="http://schemas.fontawesome.io/icons/"
+       mc:Ignorable="d" Height="720" Width="1080" Background="Transparent">
+
 
 
     <Grid Margin="100">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*" />
+            <ColumnDefinition Width="327.435"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <!-- Panel Izquierdo (Fondo turquesa) -->
-        <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-99,72,-102">
+        <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-91,10,141">
             <StackPanel VerticalAlignment="Center">
-                <fa:ImageAwesome Icon="UserCircle" Width="166" Height="166" Foreground="White"/>
-                <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White"><Run Text="Editar tipo "/><LineBreak/><Run Text="de red social"/></TextBlock>
-                <TextBlock TextWrapping="Wrap" FontSize="20" TextAlignment="Center" Foreground="White" Margin="0 20 0 20" Text="Aqui puedes editar los tipos de redes sociales."/>
-                <!-- Botón con ícono -->
+                <fa:ImageAwesome Icon="Users" Width="166" Height="166" Foreground="White"/>
+                <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White" Height="63"><Run Language="es-419" Text="Tipo de telefono"/></TextBlock>
+                <TextBlock TextWrapping="Wrap" FontSize="20" TextAlignment="Center" Foreground="White" Margin="0 20 0 20"><Run Language="es-419" Text="Puedes ver y agregar un tipo de telefono para enlazarlo con un contacto."/></TextBlock>
+
                 <Button Style="{StaticResource buttonBlack}" Width="79" Height="50" HorizontalAlignment="Center">
                     <fa:ImageAwesome Icon="AngleRight" Width="30" Height="16" Foreground="Black"/>
                 </Button>
             </StackPanel>
         </Border>
-        <!-- Panel Derecho (Formulario) -->
-        <Border Padding="20" Background="#E0E0E0" CornerRadius="0 30 30 0" Margin="278,-99,-99,-102" Grid.ColumnSpan="3" RenderTransformOrigin="0.502,0.498">
+
+
+
+        <Border Padding="20" Background="#EFEFEF" CornerRadius="0,30,30,0" Margin="340,-91,-34,141" Grid.ColumnSpan="4">
             <Grid Margin="-91,0,0,0">
-                <!-- Íconos de cerrar y minimizar -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0">
-                    <Button  Width="50" Height="50" Background="Transparent" BorderThickness="0">
+                    <Button Click="CerrarVentana_Click" Width="50" Height="50" Background="Transparent" BorderThickness="0">
                         <fa:ImageAwesome Icon="Times" Width="50" Height="20" Foreground="Black"/>
-                        <!--Aqui en los botones puedes ponerles iconos sin necesidad de importar imagenes, porque aqui mismo trae su paquete de iconos regular, es como html-->
                     </Button>
-
-
                 </StackPanel>
 
-                <!-- Formulario de contacto -->
-                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="288,0,0,0" Height="535" Width="265">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="206,0,0,0" Height="534" Width="418">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="2*"/>
@@ -60,54 +56,20 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Campos de entrada de datos -->
-                    <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre" Style="{StaticResource Text}" Margin="-146,0,236,230" VerticalAlignment="Bottom"/>
-                    <TextBox x:Name="txtnombre" Grid.Row="0" Height="30" Margin="-71,-4,90,225" Grid.ColumnSpan="2"/>
-
-                    <TextBlock Text="Apellido" Style="{StaticResource Text}"  Margin="-146,62,234,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtapellido" Height="30" Margin="-71,57,90,164" Grid.ColumnSpan="2"/>
-
-                    <TextBlock Text="Email" Style="{StaticResource Text}" Margin="-146,0,256,108" VerticalAlignment="Bottom"/>
-                    <TextBox x:Name="txtemail" Height="30" Margin="-71,118,90,103" Grid.ColumnSpan="2"/>
-
-                    <TextBlock Style="{StaticResource Text}" Margin="-146,173,200,0" VerticalAlignment="Top"><Run Text="Tipo de "/><LineBreak/><Run Text="contacto"/></TextBlock>
-                    <ComboBox x:Name="cmbTipo_contacto" Height="30" Margin="-70,181,90,40" Grid.ColumnSpan="2"/>
-
-
-                    <TextBlock Style="{StaticResource Text}" Margin="-146,236,211,0" VerticalAlignment="Top" Height="43" Grid.RowSpan="7"><Run Text="Número de "/><LineBreak/><Run Text="teléfono"/></TextBlock>
-                    <TextBox x:Name="numerotelefono" Height="30" Margin="-46,246,90,190" Grid.RowSpan="7" Grid.ColumnSpan="2"/>
-
-                    <Grid Grid.ColumnSpan="2" Margin="0,0,-120,-18" Grid.RowSpan="7">
-
-                        <Canvas x:Name="PhoneNumbersCanvas" Margin="276,21,0,-141"/>
-                        <TextBlock x:Name="AdditionalNumbersLabel" Text="Otros números telefónicos:" Style="{StaticResource Text}" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="39" Visibility="Collapsed" Width="198"/>
-                    </Grid>
-                    <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7"/>
-                    <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7"/>
 
 
 
-                    <Border Margin="50,39,38,141" Grid.Row="6" Grid.Column="1" />
+                    <TextBlock x:Name="Nombre" Grid.Row="6" Style="{StaticResource Text}" Margin="0,0,28,-430" VerticalAlignment="Bottom"><Run Text="T"/><Run Text="ipo de "/><Run Language="es-419" Text="telefono"/></TextBlock>
+                    <TextBox x:Name="txttipocontacto" Grid.Row="6" Height="30" Margin="0,435,225,-465"  Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="193"/>
 
 
 
 
-
-
-                    <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-142,194,150,-23" VerticalAlignment="Stretch"><Run Text="Nombre "/><LineBreak/><Run Text="de usuario"/></TextBlock>
-                    <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Height="30" Margin="-56,136,90,49" Grid.ColumnSpan="2"/>
-                    <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-143,130,221,42" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="red social"/></TextBlock>
-                    <ComboBox x:Name="cmbTipo_telefono" Height="30" Grid.Row="6" Margin="-70,70,89,115" Grid.ColumnSpan="2">
-                        <ComboBoxItem Content="Móvil" />
-                        <ComboBoxItem Content="Casa" />
-                        <ComboBoxItem Content="Trabajo" />
-                    </ComboBox>
-                    <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-146,61,209,107" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="telefono"/></TextBlock>
                 </Grid>
-                <TextBox x:Name="txtnombreusuario" Height="30" Margin="233,526,289,125"/>
-                <Button x:Name="Registrar_contacto" Content="Confirmar Cambios" HorizontalAlignment="Left" 
-        Margin="296,613,0,32" Background="#6F50FF" FontSize="16" Width="249" FontWeight="SemiBold" 
-         RenderTransformOrigin="0.5,0.5" Foreground="White" Click="Registrar_contacto_Click">
+                <Button x:Name="Registrar_contacto" Content="Registrar tipo &#xD;&#xA;de teléfono" HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+        Margin="415,357,0,17" Background="#6F50FF" FontSize="18" Width="192" FontWeight="SemiBold" 
+        Click="Registrar_contacto_Click" RenderTransformOrigin="-0.133,0.179" Foreground="White">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -124,7 +86,7 @@
                                         <Border Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="0" 
-                                CornerRadius="8">
+                                CornerRadius="10">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
                                     </ControlTemplate>
@@ -135,5 +97,7 @@
                 </Button>
             </Grid>
         </Border>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=4}" Grid.ColumnSpan="2" Margin="25,0,0,260" Style="{StaticResource CustomDataGridStyle}" Grid.Column="2" />
     </Grid>
 </Page>
+    

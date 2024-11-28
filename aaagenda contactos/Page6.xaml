@@ -22,7 +22,7 @@
         <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-99,72,-102">
             <StackPanel VerticalAlignment="Center">
                 <fa:ImageAwesome Icon="UserCircle" Width="166" Height="166" Foreground="White"/>
-                <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White"><Run Text="Editar tipo "/><LineBreak/><Run Text="de contacto"/></TextBlock>
+                <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="40" Foreground="White" Width="315"><Run Language="es-419" Text="Editar Contactos"/></TextBlock>
                 <TextBlock TextWrapping="Wrap" FontSize="20" TextAlignment="Center" Foreground="White" Margin="0 20 0 20" Text="Aqui puedes editar los tipos de contactos."/>
                 <!-- Botón con ícono -->
                 <Button Style="{StaticResource buttonBlack}" Width="79" Height="50" HorizontalAlignment="Center">

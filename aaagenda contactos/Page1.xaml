@@ -101,7 +101,14 @@ VerticalAlignment="Top"
                             VerticalAlignment="Top"  
                             Click="AddPhoneNumber_Click" Width="24" Height="30" Margin="729,317,0,0"/>
                     </Grid>
-
+                    <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
+                        <Button Content="+" HorizontalAlignment="Left" 
+VerticalAlignment="Top" 
+ Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto" />
+                        <Button Content="+" HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"  
+                            Width="24" Height="30" Margin="729,373,0,0" Click="Agregar_tipo_telefono"/>
+                    </Grid>
 
 
                     <Border Margin="50,39,38,141" Grid.Row="6" Grid.Column="1" />
@@ -114,7 +121,7 @@ VerticalAlignment="Top"
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-63,140,119,31" VerticalAlignment="Stretch"><Run Text="Nombre "/><LineBreak/><Run Text="de usuario"/></TextBlock>
                     <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Height="30" Margin="22,89,38,96" Grid.ColumnSpan="2"/>
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,79,143,92" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="red social"/></TextBlock>
-                    <ComboBox x:Name="cmbTipo_telefono" Height="30" Grid.Row="6" Margin="22,27,10,158" Grid.ColumnSpan="2">
+                    <ComboBox x:Name="cmbTipo_telefono" Height="30" Grid.Row="6" Margin="22,27,38,158" Grid.ColumnSpan="2">
                         <ComboBoxItem Content="Móvil" />
                         <ComboBoxItem Content="Casa" />
                         <ComboBoxItem Content="Trabajo" />
