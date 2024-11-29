@@ -102,7 +102,18 @@
                 <TextBlock Text="Contactos" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
 
-                <Button Content="Refrescar" Click="RefreshButton_Click" Width="117" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-169,14,0,0"/>
+                <Button x:Name="Refresh" VerticalAlignment="Top" Margin="-177,8,0,0" Style="{StaticResource topButton}" Click="RefreshButton_Click" Height="30" Width="31">
+                    <Icon:PackIconMaterial Kind="Refresh" Width="15" Height="15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Icon:PackIconMaterial.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="5.518"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Icon:PackIconMaterial.RenderTransform>
+                    </Icon:PackIconMaterial>
+                </Button>
 
 
                 <!-- Add Contact Button -->
