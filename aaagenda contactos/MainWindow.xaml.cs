@@ -46,10 +46,11 @@ namespace aaagenda_contactos
                 .Include(c => c.TipoContacto)
                 .Include(c => c.TipoRedSocial)
                 .ToList();
-
                 ContactosDataGrid.ItemsSource = contactos;
             }
         }
+       
+
 
         public bool isMenuOpen = false;
 
@@ -116,7 +117,6 @@ namespace aaagenda_contactos
                         // Actualizar los datos en la base de datos
                         contactoExistente.Nombre = contactoEditado.Nombre;
                         contactoExistente.Apellido = contactoEditado.Apellido;
-                       
                         contactoExistente.Email = contactoEditado.Email;
                         contactoExistente.Tipo_Contacto = contactoEditado.Tipo_Contacto;
                         contactoExistente.Tipo_red_social = contactoEditado.Tipo_red_social;
@@ -130,27 +130,20 @@ namespace aaagenda_contactos
 
         private void txtSearch2_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Obtener el texto de búsqueda y convertirlo a minúsculas
             string searchTerm = txtSearch2.Text.ToLower().Trim();
-
-            // Obtener la vista por defecto del DataGrid
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(ContactosDataGrid.ItemsSource);
 
-            // Filtrar por nombre y apellido
             collectionView.Filter = item =>
             {
-                // Verificar si el item es del tipo Contacto
                 var contacto = item as contacto;
                 if (contacto == null) return false;
 
-                // Crear una cadena con el nombre completo (nombre + apellido)
                 string fullName = (contacto.Nombre + " " + contacto.Apellido).ToLower();
 
-                // Comprobar si el término de búsqueda está en el nombre completo (nombre + apellido)
                 return fullName.Contains(searchTerm);
+
             };
         }
-
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -196,8 +189,6 @@ namespace aaagenda_contactos
                               .ToList();
             }
         }
-
-
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close(); // Cierra la ventana
@@ -223,7 +214,6 @@ namespace aaagenda_contactos
             }
             return null;
         }
-
         // Función para encontrar un TextBox en una celda
         private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
@@ -245,9 +235,6 @@ namespace aaagenda_contactos
             }
             return null;
         }
-
-
-
         // Evento para navegar a Page1
         private void Button_Click(object sender, RoutedEventArgs e)
         {

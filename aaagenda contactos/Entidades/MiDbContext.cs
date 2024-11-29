@@ -16,7 +16,7 @@ public partial class MiDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Database=contacto_agendaa;Username=user_crud;Password=miguelencristo01");
+        optionsBuilder.UseNpgsql("Host=localhost;Database=contacto_agendaa;Username=user_crud;Password=Marianny19");
     }
 
     public class contacto
@@ -34,6 +34,7 @@ public partial class MiDbContext : DbContext
         public int Tipo_red_social { get; set; }
         [ForeignKey(nameof(Tipo_red_social))]
         public tipo_red_social TipoRedSocial { get; set; }
+        public ICollection<teléfono> Teléfonos { get; set; }
     }
 
 }

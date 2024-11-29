@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace aaagenda_contactos.Migrations
 {
     [DbContext(typeof(MiDbContext))]
-    partial class MiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241101155004_migracioninicial")]
+    partial class migracioninicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,6 +23,36 @@ namespace aaagenda_contactos.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("MiDbContext+agenda", b =>
+                {
+                    b.Property<int>("ID_agenda")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID_agenda"));
+
+                    b.Property<string>("Descripcion_agenda")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Fecha_agendada")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Hora_agendada")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ID_contacto")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nombre_agenda")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID_agenda");
+
+                    b.ToTable("agendas");
+                });
 
             modelBuilder.Entity("MiDbContext+contacto", b =>
                 {
@@ -49,43 +82,10 @@ namespace aaagenda_contactos.Migrations
 
                     b.HasKey("ID_contacto");
 
-                    b.HasIndex("Tipo_Contacto");
-
-                    b.HasIndex("Tipo_red_social");
-
                     b.ToTable("contactos");
                 });
 
-            modelBuilder.Entity("agenda", b =>
-                {
-                    b.Property<int>("ID_agenda")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID_agenda"));
-
-                    b.Property<string>("Descripcion_agenda")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Fecha_agendada")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("ID_contacto")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Nombre_agenda")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("ID_agenda");
-
-                    b.HasIndex("ID_contacto");
-
-                    b.ToTable("agendas");
-                });
-
-            modelBuilder.Entity("red_social", b =>
+            modelBuilder.Entity("MiDbContext+red_social", b =>
                 {
                     b.Property<int>("Id_red_social")
                         .ValueGeneratedOnAdd()
@@ -105,7 +105,7 @@ namespace aaagenda_contactos.Migrations
                     b.ToTable("red_sociall");
                 });
 
-            modelBuilder.Entity("teléfono", b =>
+            modelBuilder.Entity("MiDbContext+teléfono", b =>
                 {
                     b.Property<int>("Id_telefono")
                         .ValueGeneratedOnAdd()
@@ -129,7 +129,7 @@ namespace aaagenda_contactos.Migrations
                     b.ToTable("telefono");
                 });
 
-            modelBuilder.Entity("tipo_contacto", b =>
+            modelBuilder.Entity("MiDbContext+tipo_contacto", b =>
                 {
                     b.Property<int>("ID_tipo_contacto")
                         .ValueGeneratedOnAdd()
@@ -146,7 +146,7 @@ namespace aaagenda_contactos.Migrations
                     b.ToTable("tipos_contacto");
                 });
 
-            modelBuilder.Entity("tipo_red_social", b =>
+            modelBuilder.Entity("MiDbContext+tipo_red_social", b =>
                 {
                     b.Property<int>("Id_tipo_red_social")
                         .ValueGeneratedOnAdd()
@@ -161,36 +161,6 @@ namespace aaagenda_contactos.Migrations
                     b.HasKey("Id_tipo_red_social");
 
                     b.ToTable("tipos_red_social");
-                });
-
-            modelBuilder.Entity("MiDbContext+contacto", b =>
-                {
-                    b.HasOne("tipo_contacto", "TipoContacto")
-                        .WithMany()
-                        .HasForeignKey("Tipo_Contacto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tipo_red_social", "TipoRedSocial")
-                        .WithMany()
-                        .HasForeignKey("Tipo_red_social")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TipoContacto");
-
-                    b.Navigation("TipoRedSocial");
-                });
-
-            modelBuilder.Entity("agenda", b =>
-                {
-                    b.HasOne("MiDbContext+contacto", "IDContacto")
-                        .WithMany()
-                        .HasForeignKey("ID_contacto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IDContacto");
                 });
 #pragma warning restore 612, 618
         }

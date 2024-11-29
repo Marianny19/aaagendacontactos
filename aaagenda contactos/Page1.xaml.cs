@@ -606,5 +606,22 @@ namespace Contactos
                 }
             }
         }
+
+        private void EliminarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Modificar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Eliminar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Actualizar_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
