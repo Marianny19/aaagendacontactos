@@ -26,7 +26,7 @@ namespace aaagenda_contactos
     public partial class Page6 : Page
     {
         public List<string> RedSocialItems { get; set; }
-        public Page6()
+        public Page6(contacto contactoSeleccionado)
         {
             InitializeComponent();
             RedSocialItems = new List<string> { "Facebook", "Twitter", "Instagram" };
@@ -103,7 +103,37 @@ namespace aaagenda_contactos
 
             }
         }
-        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
+
+        private void CargarDatosContacto(contacto contacto)
+        {
+            // Cargar los datos del contacto en los controles de Page6
+            txtnombre.Text = contacto.Nombre;
+            txtapellido.Text = contacto.Apellido;
+            txtemail.Text = contacto.Email;
+
+            // Cargar tipos de contacto en el ComboBox
+            using (var context = new MiDbContext())
+            {
+                var tiposContacto = context.tipos_contacto.ToList();
+                cmbTipo_contacto.ItemsSource = tiposContacto;
+                cmbTipo_contacto.DisplayMemberPath = "Nombre_tipo_contacto";
+                cmbTipo_contacto.SelectedValuePath = "ID_tipo_contacto";
+                cmbTipo_contacto.SelectedValue = contacto.Tipo_Contacto;
+
+                var tiposRedSocial = context.tipos_red_social.ToList();
+                cmbTipo_red_social.ItemsSource = tiposRedSocial;
+                cmbTipo_red_social.DisplayMemberPath = "Nombre_red_social";
+                cmbTipo_red_social.SelectedValuePath = "Id_tipo_red_social";
+                cmbTipo_red_social.SelectedValue = contacto.Tipo_red_social;
+            }
+
+            // Cargar números de teléfono si es necesario
+            // Aquí deberás implementar la lógica para cargar los teléfonos del contacto
+        }
+
+        
+    
+    private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
             var Nombre = txtnombre.Text;
             var Apellido = txtapellido.Text;

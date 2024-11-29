@@ -100,59 +100,6 @@ namespace Contactos
 
         }
 
-        private void Agregar_tipo_telefono(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            if (mainWindow != null)
-            {
-
-                var mainFrame = mainWindow.MainFrame;
-                var frame4 = mainWindow.Frame6;
-
-                if (mainFrame != null && frame4 != null)
-                {
-
-                    mainWindow.ToggleMenu(sender, e);
-
-                    var fadeOutAnimation = new DoubleAnimation
-                    {
-                        To = 0,
-                        Duration = TimeSpan.FromMilliseconds(300),
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-                    };
-
-                    fadeOutAnimation.Completed += (s, args) =>
-                    {
-                        mainFrame.Visibility = Visibility.Collapsed;
-
-                        frame4.Navigate(new Page7());
-
-                        frame4.Opacity = 0;
-                        frame4.Visibility = Visibility.Visible;
-
-                        var fadeInAnimation = new DoubleAnimation
-                        {
-                            To = 1,
-                            Duration = TimeSpan.FromMilliseconds(300),
-                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
-                        };
-
-                        fadeInAnimation.Completed += (s, args) =>
-                        {
-                            frame4.Opacity = 1;
-
-
-                        };
-
-                        frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-                    };
-
-                    mainFrame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
-                }
-
-            }
-        } 
-
         private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
@@ -278,6 +225,149 @@ namespace Contactos
             }
         }
 
+        private void ValidateForm()
+        {
+            bool isFormValid =
+                !string.IsNullOrWhiteSpace(txtnombre.Text) &&
+                !txtnombre.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)) &&
+                !string.IsNullOrWhiteSpace(txtapellido.Text) &&
+                !txtapellido.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)) &&
+                !string.IsNullOrWhiteSpace(txtemail.Text) &&
+                Regex.IsMatch(txtemail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$") &&
+                !string.IsNullOrWhiteSpace(numerotelefono.Text) &&
+                !numerotelefono.Text.Any(c => !char.IsDigit(c));
+
+            AddPhoneNumberButton.IsEnabled = isFormValid;
+        }
+
+
+        private void Txtnombre_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Solo permite letras y espacios
+            txtnombre.Text = new string(txtnombre.Text.Where(c => char.IsLetter(c) || char.IsWhiteSpace(c)).ToArray());
+            txtnombre.SelectionStart = txtnombre.Text.Length;
+            ValidateForm();
+        }
+
+        private void Txtapellido_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Solo permite letras y espacios
+            txtapellido.Text = new string(txtapellido.Text.Where(c => char.IsLetter(c) || char.IsWhiteSpace(c)).ToArray());
+            txtapellido.SelectionStart = txtapellido.Text.Length;
+            ValidateForm();
+        }
+
+        private void Txtemail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Verificar que tenga un formato de correo electrónico válido
+            if (!Regex.IsMatch(txtemail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                txtemail.Background = Brushes.LightPink; // Indicar error
+            }
+            else
+            {
+                txtemail.Background = Brushes.White; // Sin error
+            }
+            ValidateForm();
+        }
+
+
+        private void CmbTipo_contacto_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ValidateForm();
+        }
+        private void Numerotelefono_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Obtener el texto ingresado sin los guiones
+            string rawText = new string(numerotelefono.Text.Where(char.IsDigit).ToArray());
+
+            // Limitar el número de dígitos a 10 (máximo 10 caracteres)
+            if (rawText.Length > 10)
+            {
+                rawText = rawText.Substring(0, 10);
+            }
+
+            // Formatear el número con guiones, asegurándonos de que no tratemos de acceder a índices fuera de rango
+            string formattedText = "";
+
+            if (rawText.Length > 0)
+                formattedText += rawText.Substring(0, Math.Min(3, rawText.Length));
+            if (rawText.Length > 3)
+                formattedText += "-" + rawText.Substring(3, Math.Min(3, rawText.Length - 3));
+            if (rawText.Length > 6)
+                formattedText += "-" + rawText.Substring(6, Math.Min(4, rawText.Length - 6));
+
+            // Asignar el texto formateado al TextBox, pero mantener el cursor en la posición correcta
+            numerotelefono.Text = formattedText;
+
+            // Mantener la posición del cursor al final del texto
+            numerotelefono.SelectionStart = numerotelefono.Text.Length;
+
+            // Validar el campo (solo números, con 10 dígitos)
+            if (rawText.Length == 10)
+            {
+                numerotelefono.Background = Brushes.White; // Válido
+            }
+            else
+            {
+                numerotelefono.Background = Brushes.LightPink; // No válido
+            }
+
+            ValidateForm(); // Validar el formulario
+        }
+
+        private void Agregar_tipo_telefono(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+
+                var mainFrame = mainWindow.MainFrame;
+                var frame4 = mainWindow.Frame6;
+
+                if (mainFrame != null && frame4 != null)
+                {
+
+                    mainWindow.ToggleMenu(sender, e);
+
+                    var fadeOutAnimation = new DoubleAnimation
+                    {
+                        To = 0,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                    };
+
+                    fadeOutAnimation.Completed += (s, args) =>
+                    {
+                        mainFrame.Visibility = Visibility.Collapsed;
+
+                        frame4.Navigate(new Page7());
+
+                        frame4.Opacity = 0;
+                        frame4.Visibility = Visibility.Visible;
+
+                        var fadeInAnimation = new DoubleAnimation
+                        {
+                            To = 1,
+                            Duration = TimeSpan.FromMilliseconds(300),
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+                        };
+
+                        fadeInAnimation.Completed += (s, args) =>
+                        {
+                            frame4.Opacity = 1;
+
+
+                        };
+
+                        frame4.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    };
+
+                    mainFrame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                }
+
+            }
+        }
 
         private void AddPhoneNumber_Click(object sender, RoutedEventArgs e)
         {
@@ -352,103 +442,6 @@ namespace Contactos
             phoneNumberPanel.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
         }
 
-        private void ValidateForm()
-        {
-            bool isFormValid =
-                !string.IsNullOrWhiteSpace(txtnombre.Text) &&
-                !txtnombre.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)) &&
-                !string.IsNullOrWhiteSpace(txtapellido.Text) &&
-                !txtapellido.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)) &&
-                !string.IsNullOrWhiteSpace(txtemail.Text) &&
-                Regex.IsMatch(txtemail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$") &&
-                !string.IsNullOrWhiteSpace(numerotelefono.Text) &&
-                !numerotelefono.Text.Any(c => !char.IsDigit(c));
-
-            AddPhoneNumberButton.IsEnabled = isFormValid;
-        }
-
-
-        private void Txtnombre_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Solo permite letras y espacios
-            txtnombre.Text = new string(txtnombre.Text.Where(c => char.IsLetter(c) || char.IsWhiteSpace(c)).ToArray());
-            txtnombre.SelectionStart = txtnombre.Text.Length;
-            ValidateForm();
-        }
-
-        private void Txtapellido_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Solo permite letras y espacios
-            txtapellido.Text = new string(txtapellido.Text.Where(c => char.IsLetter(c) || char.IsWhiteSpace(c)).ToArray());
-            txtapellido.SelectionStart = txtapellido.Text.Length;
-            ValidateForm();
-        }
-
-        private void Txtemail_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Verificar que tenga un formato de correo electrónico válido
-            if (!Regex.IsMatch(txtemail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-            {
-                txtemail.Background = Brushes.LightPink; // Indicar error
-            }
-            else
-            {
-                txtemail.Background = Brushes.White; // Sin error
-            }
-            ValidateForm();
-        }
-
-       
-        private void CmbTipo_contacto_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ValidateForm();
-        }
-
-
-        private void Numerotelefono_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Obtener el texto ingresado sin los guiones
-            string rawText = new string(numerotelefono.Text.Where(char.IsDigit).ToArray());
-
-            // Limitar el número de dígitos a 10 (máximo 10 caracteres)
-            if (rawText.Length > 10)
-            {
-                rawText = rawText.Substring(0, 10);
-            }
-
-            // Formatear el número con guiones, asegurándonos de que no tratemos de acceder a índices fuera de rango
-            string formattedText = "";
-
-            if (rawText.Length > 0)
-                formattedText += rawText.Substring(0, Math.Min(3, rawText.Length));
-            if (rawText.Length > 3)
-                formattedText += "-" + rawText.Substring(3, Math.Min(3, rawText.Length - 3));
-            if (rawText.Length > 6)
-                formattedText += "-" + rawText.Substring(6, Math.Min(4, rawText.Length - 6));
-
-            // Asignar el texto formateado al TextBox, pero mantener el cursor en la posición correcta
-            numerotelefono.Text = formattedText;
-
-            // Mantener la posición del cursor al final del texto
-            numerotelefono.SelectionStart = numerotelefono.Text.Length;
-
-            // Validar el campo (solo números, con 10 dígitos)
-            if (rawText.Length == 10)
-            {
-                numerotelefono.Background = Brushes.White; // Válido
-            }
-            else
-            {
-                numerotelefono.Background = Brushes.LightPink; // No válido
-            }
-
-            ValidateForm(); // Validar el formulario
-        }
-
-
-
-
-
         private void RemovePhoneNumber(StackPanel phoneNumberPanel)
         {
             // Crear la animación de opacidad para desvanecer el StackPanel
@@ -520,7 +513,7 @@ namespace Contactos
                 cmbTipo_red_social.ItemsSource = tipo_red_social;
                 cmbTipo_red_social.DisplayMemberPath = "Nombre_red_social";
                 cmbTipo_red_social.SelectedValuePath = "ID_tipo_red_social";
-               
+
             }
         }
         private void CargarTipoTelefono()
@@ -548,7 +541,7 @@ namespace Contactos
             string.IsNullOrWhiteSpace(Apellido) ||
             string.IsNullOrWhiteSpace(numeroTelefono) ||
             string.IsNullOrWhiteSpace(Nombre_de_usuario) ||
-            string.IsNullOrWhiteSpace(tipoTelefono)||
+            string.IsNullOrWhiteSpace(tipoTelefono) ||
             Tipo_Contacto == null ||
             Tipo_red_social == null)
 
@@ -577,7 +570,7 @@ namespace Contactos
                 Nombre_de_usuario = Nombre_de_usuario,
                 ID_contacto = nuevocontacto.ID_contacto
             };
-            
+
             using (var dbContext = new MiDbContext())
             {
                 try
@@ -605,23 +598,6 @@ namespace Contactos
                     MessageBox.Show($"Error inesperado: {ex.Message}");
                 }
             }
-        }
-
-        private void EliminarButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void Modificar_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void Eliminar_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void Actualizar_Click(Object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

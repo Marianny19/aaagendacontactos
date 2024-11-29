@@ -35,6 +35,7 @@ namespace aaagenda_contactos
             cargarcontacto();
             Cargartipocontactos();
 
+            ContactosDataGrid.MouseDoubleClick += ContactosDataGrid_MouseDoubleClick;
 
             // Inicializar la lista de contactos
         }
@@ -49,8 +50,11 @@ namespace aaagenda_contactos
                 ContactosDataGrid.ItemsSource = contactos;
             }
         }
-       
 
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Este método se puede dejar vacío o usar para otras funcionalidades
+        }
 
         public bool isMenuOpen = false;
 
@@ -314,11 +318,7 @@ namespace aaagenda_contactos
             }
         }
 
-        // Evento del DataGrid
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
 
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
@@ -415,6 +415,49 @@ namespace aaagenda_contactos
                     ContactosDataGrid.ItemsSource = contactosFiltrados;
                 }
             }
+        }
+
+        private void ContactosDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Obtener la celda donde se hizo doble clic
+            var hit = VisualTreeHelper.HitTest(ContactosDataGrid, e.GetPosition(ContactosDataGrid));
+            var cell = FindParent<DataGridCell>(hit.VisualHit);
+
+            if (cell != null)
+            {
+                // Obtener la columna donde se hizo doble clic
+                var column = ContactosDataGrid.CurrentColumn;
+
+                // Verificar si la columna es de Tipo de Contacto o Tipo de Red Social
+                if (column != null &&
+                    (column.Header.ToString() == "Tipo de Contacto " ||
+                     column.Header.ToString() == "Tipo Red Social "))
+                {
+                    // Obtener el contacto seleccionado
+                    var contactoSeleccionado = ContactosDataGrid.SelectedItem as contacto;
+
+                    if (contactoSeleccionado != null)
+                    {
+                        // Navegar a Page6 y pasar el contacto seleccionado
+                        var page6 = new Page6(contactoSeleccionado);
+                        Frame7.Navigate(page6);
+                    }
+                }
+            }
+        }
+
+        // Método auxiliar para encontrar el padre de un elemento visual
+        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+
+            if (parentObject == null) return null;
+
+            T parent = parentObject as T;
+            if (parent != null)
+                return parent;
+            else
+                return FindParent<T>(parentObject);
         }
         private void Cargartipocontactos()
         {
