@@ -107,6 +107,20 @@
                         <TextBlock Text="Añadir Contacto"/>
                     </StackPanel>
                 </Button>
+                <Button x:Name="Refresh" VerticalAlignment="Top" Margin="-177,8,0,0" Style="{StaticResource topButton}" Click="RefreshButton_Click" Height="30" Width="31">
+                    <Icon:PackIconMaterial Kind="Refresh" Width="15" Height="15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Icon:PackIconMaterial.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="5.518"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Icon:PackIconMaterial.RenderTransform>
+                    </Icon:PackIconMaterial>
+                </Button>
+
+
 
                 <!-- Segunda barra de búsqueda alineada a la derecha debajo del botón Añadir Contacto -->
                 <Grid Width="300" HorizontalAlignment="Right" Grid.Row="3" Margin="0 20 0 0">
@@ -143,7 +157,7 @@
                         <DataGridTextColumn Header="ID Contacto " Binding="{Binding ID_contacto}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Nombre " Binding="{Binding Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Apellido " Binding="{Binding Apellido, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
-                        <DataGridTextColumn Header="Telefono " Binding="{Binding Telefono, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Teléfono" Binding="{Binding Número_de_teléfono, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Email " Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
                         <DataGridTextColumn Header="Tipo de Contacto " Binding="{Binding TipoContacto.Nombre_tipo_contacto}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Tipo Red Social " Binding="{Binding TipoRedSocial.Nombre_red_social}" IsReadOnly="True"/>
@@ -153,6 +167,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="Guardar" Click="GuardarButton_Click" />
+                                    
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

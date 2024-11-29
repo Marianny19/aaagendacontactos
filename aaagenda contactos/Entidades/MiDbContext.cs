@@ -34,6 +34,7 @@ public partial class MiDbContext : DbContext
         public int Tipo_red_social { get; set; }
         [ForeignKey(nameof(Tipo_red_social))]
         public tipo_red_social TipoRedSocial { get; set; }
+        public ICollection<teléfono> Teléfonos { get; set; }
     }
 
 }

@@ -80,6 +80,8 @@ namespace aaagenda_contactos.Migrations
 
                     b.HasKey("ID_agenda");
 
+                    b.HasIndex("ID_contacto");
+
                     b.ToTable("agendas");
                 });
 
@@ -178,6 +180,17 @@ namespace aaagenda_contactos.Migrations
                     b.Navigation("TipoContacto");
 
                     b.Navigation("TipoRedSocial");
+                });
+
+            modelBuilder.Entity("agenda", b =>
+                {
+                    b.HasOne("MiDbContext+contacto", "IDContacto")
+                        .WithMany()
+                        .HasForeignKey("ID_contacto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IDContacto");
                 });
 #pragma warning restore 612, 618
         }

@@ -34,7 +34,6 @@ namespace aaagenda_contactos
             InitializeComponent();
             cargarcontacto();
             Cargartipocontactos();
-            cargartelefono();  
 
 
             // Inicializar la lista de contactos
@@ -47,20 +46,11 @@ namespace aaagenda_contactos
                 .Include(c => c.TipoContacto)
                 .Include(c => c.TipoRedSocial)
                 .ToList();
-
                 ContactosDataGrid.ItemsSource = contactos;
             }
         }
-        private void cargartelefono()
-        {
-                using (var context = new MiDbContext())
-                {
- 
-                    var teléfonos = context.telefono.ToList();
+       
 
-               
-                }
-            }
 
         public bool isMenuOpen = false;
 
@@ -127,7 +117,6 @@ namespace aaagenda_contactos
                         // Actualizar los datos en la base de datos
                         contactoExistente.Nombre = contactoEditado.Nombre;
                         contactoExistente.Apellido = contactoEditado.Apellido;
-                       
                         contactoExistente.Email = contactoEditado.Email;
                         contactoExistente.Tipo_Contacto = contactoEditado.Tipo_Contacto;
                         contactoExistente.Tipo_red_social = contactoEditado.Tipo_red_social;
@@ -141,16 +130,65 @@ namespace aaagenda_contactos
 
         private void txtSearch2_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchTerm = txtSearch2.Text.ToLower();
+            string searchTerm = txtSearch2.Text.ToLower().Trim();
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(ContactosDataGrid.ItemsSource);
 
             collectionView.Filter = item =>
             {
                 var contacto = item as contacto;
-                return contacto.Nombre.ToLower().Contains(searchTerm);
+                if (contacto == null) return false;
+
+                string fullName = (contacto.Nombre + " " + contacto.Apellido).ToLower();
+
+                return fullName.Contains(searchTerm);
+
             };
         }
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 1. Llamar a un método que obtenga los datos actualizados desde la base de datos
+                var updatedData = ObtenerDatosDeBaseDeDatos();
 
+                // 2. Asegúrate de que las propiedades 'TipoContacto' y 'TipoRedSocial' están correctamente actualizadas
+                foreach (var contacto in updatedData)
+                {
+                    // Asegúrate de que TipoContacto y TipoRedSocial no sean null
+                    if (contacto.TipoContacto == null)
+                        contacto.TipoContacto = new tipo_contacto(); // O asigna un valor por defecto
+
+                    if (contacto.TipoRedSocial == null)
+                        contacto.TipoRedSocial = new tipo_red_social(); // O asigna un valor por defecto
+                }
+
+                // 3. Actualizar la fuente de datos del DataGrid
+                ContactosDataGrid.ItemsSource = updatedData;
+
+                // 4. Redibujar la ventana si es necesario
+                this.InvalidateVisual();
+
+                MessageBox.Show("Datos refrescados correctamente.");
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                MessageBox.Show("Error al actualizar los datos: " + ex.Message);
+            }
+        }
+
+        // Método que obtiene los datos desde la base de datos
+        private List<contacto> ObtenerDatosDeBaseDeDatos()
+        {
+            using (var context = new MiDbContext()) // Usando Entity Framework como ejemplo
+            {
+                // Asegúrate de incluir las entidades relacionadas
+                return context.contactos
+                              .Include(c => c.TipoContacto) // Incluir tipo de contacto
+                              .Include(c => c.TipoRedSocial) // Incluir tipo de red social
+                              .ToList();
+            }
+        }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close(); // Cierra la ventana
@@ -176,7 +214,6 @@ namespace aaagenda_contactos
             }
             return null;
         }
-
         // Función para encontrar un TextBox en una celda
         private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
@@ -198,9 +235,6 @@ namespace aaagenda_contactos
             }
             return null;
         }
-
-
-
         // Evento para navegar a Page1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
