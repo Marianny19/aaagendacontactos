@@ -58,7 +58,7 @@
                     <Border.RenderTransform>
                         <TranslateTransform x:Name="SideMenuTransform" X="-200"/>
                     </Border.RenderTransform>
-                    
+
                 </Border>
                 <!-- Botón de menú que activa el despliegue -->
                 <Button x:Name="MenuButton" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,29,0,69" Style="{StaticResource topButton}" Click="ToggleMenu">
@@ -96,9 +96,25 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+
+
                 <!-- Main title -->
                 <TextBlock Text="Contactos" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
+
+                <Button x:Name="Refresh" VerticalAlignment="Top" Margin="-177,8,0,0" Style="{StaticResource topButton}" Click="RefreshButton_Click" Height="30" Width="31">
+                    <Icon:PackIconMaterial Kind="Refresh" Width="15" Height="15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Icon:PackIconMaterial.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="5.518"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Icon:PackIconMaterial.RenderTransform>
+                    </Icon:PackIconMaterial>
+                </Button>
+
 
                 <!-- Add Contact Button -->
                 <Button Style="{StaticResource addButton}" Grid.Row="1" Margin="0,20,10,54" Grid.RowSpan="3" Width="192" Click="Button_Click">
@@ -122,6 +138,9 @@
 
 
 
+
+
+
                 <!-- Segunda barra de búsqueda alineada a la derecha debajo del botón Añadir Contacto -->
                 <Grid Width="300" HorizontalAlignment="Right" Grid.Row="3" Margin="0 20 0 0">
                     <Grid.ColumnDefinitions>
@@ -140,7 +159,7 @@
          Margin="-10,-8,10,0" 
          Grid.ColumnSpan="3"
          TextChanged="txtSearch2_TextChanged" />
-                    
+
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
                     Margin="0,6,30,0" Foreground="#b0b9c6" HorizontalAlignment="Right" RenderTransformOrigin="3.413,-0.328" Grid.Column="2"/>
                 </Grid>
