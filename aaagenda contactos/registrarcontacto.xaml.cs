@@ -656,6 +656,7 @@ namespace Contactos
                 var nuevoApellido = txtapellido.Text;
                 var nuevoEmail = txtemail.Text;
                 var nuevotipocontacto = (int)cmbTipo_contacto.SelectedValue;
+                var nuevaredsocial = cmbTipo_red_social.SelectedValue;
 
                 if (string.IsNullOrWhiteSpace(nuevoNombre))
                 {
@@ -672,7 +673,7 @@ namespace Contactos
                         contactoExistente.Apellido = nuevoApellido;
                         contactoExistente.Email = nuevoEmail;
                         contactoExistente.Tipo_Contacto = nuevotipocontacto;
-
+                        contactoExistente.Tipo_red_social = nuevaredsocial;
                          context.SaveChanges();
 
                         MessageBox.Show("Contacto actualizado correctamente.");
