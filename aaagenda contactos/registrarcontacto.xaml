@@ -115,9 +115,7 @@ VerticalAlignment="Top"
         Width="24" Height="30" Margin="729,317,0,0" IsEnabled="False"/>
                     </Grid>
                     <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
-                        <Button Content="+" HorizontalAlignment="Left" 
-VerticalAlignment="Top" 
- Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto" />
+                        <Button Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto"/>
                         <Button Content="+" HorizontalAlignment="Left" 
                             VerticalAlignment="Top"  
                             Width="24" Height="30" Margin="729,373,0,0" Click="Agregar_tipo_telefono"/>
@@ -125,12 +123,6 @@ VerticalAlignment="Top"
 
 
                     <Border Margin="50,39,38,141" Grid.Row="6" Grid.Column="1" />
-
-
-
-
-
-
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-63,140,119,31" VerticalAlignment="Stretch"><Run Text="Nombre "/><LineBreak/><Run Text="de usuario"/></TextBlock>
                     <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Height="30" Margin="22,89,38,96" Grid.ColumnSpan="2"/>
              

@@ -520,10 +520,10 @@ namespace Contactos
             var Nombre = txtnombre.Text;
             var Apellido = txtapellido.Text;
             var Email = txtemail.Text;
-            var Tipo_Contacto = (int?)cmbTipo_contacto.SelectedValue;
+            var Tipo_Contacto = cmbTipo_contacto.SelectedValue as int? ?? 0;
             var numeroTelefono = numerotelefono.Text;
             var tipoTelefono = (cmbTipo_telefono.SelectedItem as ComboBoxItem)?.Content.ToString();
-            var Tipo_red_social = (cmbTipo_red_social.SelectedItem as tipo_red_social)?.Id_tipo_red_social;
+            var Tipo_red_social = cmbTipo_red_social.SelectedValue as int? ?? 0;
             var Nombre_de_usuario = txtnombreusuario.Text;
 
             if (string.IsNullOrWhiteSpace(Nombre))
@@ -537,8 +537,8 @@ namespace Contactos
                 Nombre = Nombre,
                 Apellido = Apellido,
                 Email = Email,
-                Tipo_Contacto = Tipo_Contacto ?? throw new InvalidOperationException("Tipo_Contacto no puede ser nulo"),
-                Tipo_red_social = Tipo_red_social ?? throw new InvalidOperationException("Tipo_red_social no puede ser nulo")
+                Tipo_Contacto = Tipo_Contacto,
+                Tipo_red_social = Tipo_red_social
             };
 
             using (var dbContext = new MiDbContext())
@@ -643,8 +643,6 @@ namespace Contactos
                 txtnombreusuario.Text = "No definido";
             }
         }
-
-
         private void Modificar_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -656,32 +654,38 @@ namespace Contactos
                 var nuevoApellido = txtapellido.Text;
                 var nuevoEmail = txtemail.Text;
                 var nuevotipocontacto = (int)cmbTipo_contacto.SelectedValue;
-                var nuevaredsocial = cmbTipo_red_social.SelectedValue;
+                var nuevotiporedsocial = (int)cmbTipo_red_social.SelectedValue;
 
                 if (string.IsNullOrWhiteSpace(nuevoNombre))
                 {
-                    MessageBox.Show("Por favor, complete el nombre", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Por favor, complete todos los campos", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+
+                var contactoExistente = context.contactos
+                    .FirstOrDefault(c => c.ID_contacto == contactoEditado.ID_contacto);
+
+                if (contactoExistente != null)
                 {
-                    var contactoExistente = context.contactos
-                        .FirstOrDefault(c => c.ID_contacto == contactoEditado.ID_contacto);
+                    contactoExistente.Nombre = nuevoNombre;
+                    contactoExistente.Apellido = nuevoApellido;
+                    contactoExistente.Email = nuevoEmail;
+                    contactoExistente.Tipo_Contacto = nuevotipocontacto;
+                    contactoExistente.Tipo_red_social = nuevotiporedsocial;
 
-                    if (contactoExistente != null)
-                    {
-                        contactoExistente.Nombre = nuevoNombre;
-                        contactoExistente.Apellido = nuevoApellido;
-                        contactoExistente.Email = nuevoEmail;
-                        contactoExistente.Tipo_Contacto = nuevotipocontacto;
-                        contactoExistente.Tipo_red_social = nuevaredsocial;
-                         context.SaveChanges();
+                    context.SaveChanges();
 
-                        MessageBox.Show("Contacto actualizado correctamente.");
-                    }
+                    MessageBox.Show("Contacto actualizado correctamente.");
+
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el contacto a modificar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
-    private void Eliminar_Click(object sender, RoutedEventArgs e)
+
+        private void Eliminar_Click(object sender, RoutedEventArgs e)
             {
             }
         }
