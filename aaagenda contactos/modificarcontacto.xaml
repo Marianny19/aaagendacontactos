@@ -8,6 +8,7 @@
       mc:Ignorable="d" Height="720" Width="1080" Background="Transparent">
 
 
+
     <Grid Margin="100">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -30,6 +31,8 @@
                 </Button>
             </StackPanel>
         </Border>
+
+
         <!-- Panel Derecho (Formulario) -->
         <Border Padding="20" Background="#E0E0E0" CornerRadius="0 30 30 0" Margin="278,-99,-99,-102" Grid.ColumnSpan="3" RenderTransformOrigin="0.502,0.498">
             <Grid Margin="-91,0,0,0">
@@ -77,6 +80,8 @@
                     <TextBlock Style="{StaticResource Text}" Margin="-146,236,211,0" VerticalAlignment="Top" Height="43" Grid.RowSpan="7"><Run Text="Número de "/><LineBreak/><Run Text="teléfono"/></TextBlock>
                     <TextBox x:Name="numerotelefono" Height="30" Margin="-46,246,90,190" Grid.RowSpan="7" Grid.ColumnSpan="2"/>
 
+
+
                     <Grid Grid.ColumnSpan="2" Margin="0,0,-120,-18" Grid.RowSpan="7">
 
                         <Canvas x:Name="PhoneNumbersCanvas" Margin="276,21,0,-141"/>
@@ -85,6 +90,22 @@
                     <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7"/>
                     <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7"/>
 
+                    <Grid>
+                        <!-- Botón Modificar -->
+                        <Button  Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Modificar contacto" Margin="226,524,-176,-313">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Edit" Width="20" Height="20" Foreground="Black"/>
+                                <TextBlock Text="Modificar" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <!-- Botón Eliminar -->
+                        <Button  Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Eliminar contacto" Margin="331,524,-281,-313">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:ImageAwesome Icon="Trash" Width="20" Height="20" Foreground="Black"/>
+                                <TextBlock Text="Eliminar" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
 
 
                     <Border Margin="50,39,38,141" Grid.Row="6" Grid.Column="1" />
@@ -106,7 +127,7 @@
                 </Grid>
                 <TextBox x:Name="txtnombreusuario" Height="30" Margin="233,526,289,125"/>
                 <Button x:Name="Registrar_contacto" Content="Confirmar Cambios" HorizontalAlignment="Left" 
-        Margin="296,613,0,32" Background="#6F50FF" FontSize="16" Width="249" FontWeight="SemiBold" 
+        Margin="179,602,0,43" Background="#6F50FF" FontSize="16" Width="248" FontWeight="SemiBold" 
          RenderTransformOrigin="0.5,0.5" Foreground="White" Click="Registrar_contacto_Click">
                     <Button.RenderTransform>
                         <TransformGroup>
