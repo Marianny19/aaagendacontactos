@@ -115,11 +115,10 @@ namespace aaagenda_contactos
 
                     if (contactoExistente != null)
                     {
-                        // Actualizar los datos en la base de datos
                         contactoExistente.Nombre = contactoEditado.Nombre;
                         contactoExistente.Apellido = contactoEditado.Apellido;
                         contactoExistente.Email = contactoEditado.Email;
-             
+
 
                         context.SaveChanges();
                         MessageBox.Show("Contacto actualizado correctamente.");
@@ -153,10 +152,10 @@ namespace aaagenda_contactos
                 foreach (var contacto in updatedData)
                 {
                     if (contacto.TipoContacto == null)
-                        contacto.TipoContacto = new tipo_contacto(); 
+                        contacto.TipoContacto = new tipo_contacto();
 
                     if (contacto.TipoRedSocial == null)
-                        contacto.TipoRedSocial = new tipo_red_social(); 
+                        contacto.TipoRedSocial = new tipo_red_social();
                 }
 
                 ContactosDataGrid.ItemsSource = updatedData;
@@ -173,11 +172,11 @@ namespace aaagenda_contactos
 
         private List<contacto> ObtenerDatosDeBaseDeDatos()
         {
-            using (var context = new MiDbContext()) 
+            using (var context = new MiDbContext())
             {
                 return context.contactos
-                              .Include(c => c.TipoContacto) 
-                              .Include(c => c.TipoRedSocial) 
+                              .Include(c => c.TipoContacto)
+                              .Include(c => c.TipoRedSocial)
                               .Include(c => c.Teléfonos)
                               .ToList();
             }
@@ -340,45 +339,57 @@ namespace aaagenda_contactos
         private void Eliminar_Click(object sender, RoutedEventArgs e)
         {
             {
+                if (contactoSeleccionado != null)
                 {
-                    var button = sender as Button;
-                    var ContactoSeleccionado = ContactosDataGrid.SelectedItem as contacto;
+                    var resultado = MessageBox.Show(
+                        "¿Estás seguro de que deseas eliminar este contacto?",
+                        "Confirmar eliminación",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning
+                    );
 
-                    if (ContactoSeleccionado != null)
+                    if (resultado == MessageBoxResult.Yes)
                     {
-                        var result = MessageBox.Show(
-                            $"¿Estás seguro de que deseas eliminar el contacto con ID {ContactoSeleccionado.ID_contacto}?",
-                            "Confirmación de eliminación",
-                            MessageBoxButton.YesNo,
-                            MessageBoxImage.Warning);
-
-                        if (result == MessageBoxResult.Yes)
+                        using (var context = new MiDbContext())
                         {
-                            using (var context = new MiDbContext())
+                            try
                             {
-                                var ContactoAEliminar = context.contactos
-                                    .FirstOrDefault(c => c.ID_contacto == ContactoSeleccionado.ID_contacto);
+                                var contactoExistente = context.contactos
+                                    .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
 
-                                if (ContactoAEliminar != null)
+                                if (contactoExistente != null)
                                 {
-                                    context.contactos.Remove(ContactoAEliminar);
-                                    context.SaveChanges();
+                                    var telefonos = context.telefono
+                                        .Where(t => t.Id_contacto == contactoSeleccionado.ID_contacto)
+                                        .ToList();
+                                    context.telefono.RemoveRange(telefonos);
 
-                                    cargarcontacto();
+                                    var redesSociales = context.red_sociall
+                                        .Where(r => r.ID_contacto == contactoSeleccionado.ID_contacto)
+                                        .ToList();
+                                    context.red_sociall.RemoveRange(redesSociales);
+
+                                    context.contactos.Remove(contactoExistente);
+
+                                    context.SaveChanges();
 
                                     MessageBox.Show("Contacto eliminado correctamente.");
                                 }
                                 else
                                 {
-                                    MessageBox.Show("El contacto no se encontró en la base de datos.");
+                                    MessageBox.Show("No se encontró el contacto en la base de datos.");
                                 }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Ocurrió un error al intentar eliminar el contacto: {ex.Message}");
                             }
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("No se seleccionó ningún contacto para eliminar.");
-                    }
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, selecciona un contacto para eliminar.");
                 }
             }
         }
@@ -453,9 +464,10 @@ namespace aaagenda_contactos
             }
         }
         private contacto contactoSeleccionado;
-
         private void EditarButton_Click(object sender, RoutedEventArgs e)
         {
+            var contactoSeleccionado = ContactosDataGrid.SelectedItem as contacto;
+
             if (contactoSeleccionado != null)
             {
                 MainFrame.Navigate(new Page1(contactoSeleccionado));
@@ -464,7 +476,6 @@ namespace aaagenda_contactos
             {
                 MessageBox.Show("Por favor, selecciona un contacto para editar.");
             }
-
-        }
         }
     }
+}

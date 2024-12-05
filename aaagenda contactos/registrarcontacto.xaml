@@ -31,7 +31,7 @@
             <Grid Margin="-91,0,0,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,104,0">
                     <!-- Botón Modificar -->
-                    <Button Click="Modificar_Click" Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Modificar contacto">
+                    <Button IsEnabled="True" Click="ModificarButton_Click" Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Modificar contacto">
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Edit" Width="20" Height="20" Foreground="Black"/>
                             <TextBlock Text="Modificar" Margin="5,0,0,0" VerticalAlignment="Center"/>

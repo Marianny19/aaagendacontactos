@@ -614,7 +614,7 @@ namespace Contactos
             {
                 numerotelefono.Text = telefono.Número_de_teléfono;
 
-                // Aquí se asigna el tipo de teléfono al ComboBox
+           
                 foreach (var item in cmbTipo_telefono.Items)
                 {
                     if ((item as ComboBoxItem)?.Content.ToString() == telefono.Tipo_teléfono)
@@ -643,50 +643,105 @@ namespace Contactos
                 txtnombreusuario.Text = "No definido";
             }
         }
-        private void Modificar_Click(object sender, RoutedEventArgs e)
+        private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var contactoEditado = button?.DataContext as contacto;
-
-            if (contactoEditado != null)
+            using (var context = new MiDbContext())
             {
-                var nuevoNombre = txtnombre.Text;
-                var nuevoApellido = txtapellido.Text;
-                var nuevoEmail = txtemail.Text;
-                var nuevotipocontacto = (int)cmbTipo_contacto.SelectedValue;
-                var nuevotiporedsocial = (int)cmbTipo_red_social.SelectedValue;
-
-                if (string.IsNullOrWhiteSpace(nuevoNombre))
-                {
-                    MessageBox.Show("Por favor, complete todos los campos", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
                 var contactoExistente = context.contactos
-                    .FirstOrDefault(c => c.ID_contacto == contactoEditado.ID_contacto);
+                    .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
 
                 if (contactoExistente != null)
                 {
-                    contactoExistente.Nombre = nuevoNombre;
-                    contactoExistente.Apellido = nuevoApellido;
-                    contactoExistente.Email = nuevoEmail;
-                    contactoExistente.Tipo_Contacto = nuevotipocontacto;
-                    contactoExistente.Tipo_red_social = nuevotiporedsocial;
+                    contactoExistente.Nombre = txtnombre.Text;
+                    contactoExistente.Apellido = txtapellido.Text;
+                    contactoExistente.Email = txtemail.Text;
+                    contactoExistente.Tipo_Contacto = (int)cmbTipo_contacto.SelectedValue;
+                    contactoExistente.Tipo_red_social = (int)cmbTipo_red_social.SelectedValue;
 
-                    context.SaveChanges();
+                    var telefonoexistente = context.telefono
+                    .FirstOrDefault(c => c.Id_contacto == contactoSeleccionado.ID_contacto);
 
-                    MessageBox.Show("Contacto actualizado correctamente.");
+                    if (telefonoexistente != null)
+                    {
+                        telefonoexistente.Número_de_teléfono = numerotelefono.Text;
+                        telefonoexistente.Tipo_teléfono = (cmbTipo_telefono.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-                }
-                else
-                {
-                    MessageBox.Show("No se encontró el contacto a modificar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var redsocial_existente = context.red_sociall
+                    .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
+
+                        if (redsocial_existente != null)
+                        {
+                            redsocial_existente.Nombre_de_usuario = txtnombreusuario.Text;
+
+                            try
+                            {
+                                context.SaveChanges();
+                                MessageBox.Show("Contacto actualizado correctamente.");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Ocurrió un error al guardar los cambios: {ex.Message}");
+                            }
+                        }
+                    }
                 }
             }
         }
-
         private void Eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            if (contactoSeleccionado != null)
             {
+                var resultado = MessageBox.Show(
+                    "¿Estás seguro de que deseas eliminar este contacto?",
+                    "Confirmar eliminación",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
+
+                if (resultado == MessageBoxResult.Yes)
+                {
+                    using (var context = new MiDbContext())
+                    {
+                        try
+                        {
+                            var contactoExistente = context.contactos
+                                .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
+
+                            if (contactoExistente != null)
+                            {
+                                var telefonos = context.telefono
+                                    .Where(t => t.Id_contacto == contactoSeleccionado.ID_contacto)
+                                    .ToList();
+                                context.telefono.RemoveRange(telefonos);
+
+                                var redesSociales = context.red_sociall
+                                    .Where(r => r.ID_contacto == contactoSeleccionado.ID_contacto)
+                                    .ToList();
+                                context.red_sociall.RemoveRange(redesSociales);
+
+                                context.contactos.Remove(contactoExistente);
+
+                                context.SaveChanges();
+
+                                MessageBox.Show("Contacto eliminado correctamente.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("No se encontró el contacto en la base de datos.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ocurrió un error al intentar eliminar el contacto: {ex.Message}");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona un contacto para eliminar.");
             }
         }
+
     }
+}
