@@ -63,6 +63,14 @@ namespace Contactos
 
                     // Iniciar la animación de desvanecimiento
                     frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
+
+                    var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+                    if (currentWindow != null)
+                    {
+                        var newWindow = new MainWindow();
+                        newWindow.Show();
+                        currentWindow.Close();
+                    }
                 }
             }
         }

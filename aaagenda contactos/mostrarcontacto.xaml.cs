@@ -410,7 +410,6 @@ namespace aaagenda_contactos
                 }
             }
         }
-
         private void ContactosDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             /*// Obtener la celda donde se hizo doble clic
