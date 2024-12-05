@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Emit;
-using static MiDbContext;
-
 
 public partial class MiDbContext : DbContext
 {
@@ -19,6 +16,15 @@ public partial class MiDbContext : DbContext
         optionsBuilder.UseNpgsql("Host=localhost;Database=contacto_agendaa;Username=user_crud;Password=Marianny19");
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<contacto>()
+            .HasMany(c => c.Teléfonos)
+            .WithOne(t => t.Contacto)
+            .HasForeignKey(t => t.Id_contacto);
+
+    }
+
     public class contacto
     {
         [Key]
@@ -32,13 +38,23 @@ public partial class MiDbContext : DbContext
         public tipo_contacto TipoContacto { get; set; }
 
         public int Tipo_red_social { get; set; }
+
         [ForeignKey(nameof(Tipo_red_social))]
         public tipo_red_social TipoRedSocial { get; set; }
+
         public ICollection<teléfono> Teléfonos { get; set; }
+
+        [NotMapped]
+        public string NúmerosDeTeléfono
+        {
+            get
+            {
+                return Teléfonos != null && Teléfonos.Any()
+                    ? string.Join(", ", Teléfonos.Select(t => t.Número_de_teléfono))
+                    : "Sin teléfonos";
+            }
+        }
     }
-
-}
-
 
     public class agenda
     {
@@ -48,22 +64,19 @@ public partial class MiDbContext : DbContext
         public string Descripcion_agenda { get; set; }
         public DateTime Fecha_agendada { get; set; }
         public int ID_contacto { get; set; }
+
         [ForeignKey(nameof(ID_contacto))]
         public contacto IDContacto { get; set; }
-}
+    }
 
-    // Entidad red_social
     public class red_social
     {
         [Key]
         public int Id_red_social { get; set; }
         public string Nombre_de_usuario { get; set; }
         public int ID_contacto { get; set; }
-
-
     }
 
-    // Entidad tipo_contacto
     public class tipo_contacto
     {
         [Key]
@@ -71,7 +84,6 @@ public partial class MiDbContext : DbContext
         public string Nombre_tipo_contacto { get; set; }
     }
 
-    // Entidad teléfono
     public class teléfono
     {
         [Key]
@@ -80,16 +92,14 @@ public partial class MiDbContext : DbContext
         public string Tipo_teléfono { get; set; }
         public int Id_contacto { get; set; }
 
-
+        [ForeignKey(nameof(Id_contacto))]
+        public contacto Contacto { get; set; }
     }
 
-    // Entidad tipo_red_social
     public class tipo_red_social
     {
         [Key]
         public int Id_tipo_red_social { get; set; }
         public string Nombre_red_social { get; set; }
     }
-   
-
-
+}

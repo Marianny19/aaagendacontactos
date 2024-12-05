@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace aaagenda_contactos.Migrations
 {
     [DbContext(typeof(MiDbContext))]
-    [Migration("20241122125735_Actualizarrelaciones")]
-    partial class Actualizarrelaciones
+    [Migration("20241204234933_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,8 @@ namespace aaagenda_contactos.Migrations
 
                     b.HasKey("ID_agenda");
 
+                    b.HasIndex("ID_contacto");
+
                     b.ToTable("agendas");
                 });
 
@@ -125,7 +127,12 @@ namespace aaagenda_contactos.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("contactoID_contacto")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id_telefono");
+
+                    b.HasIndex("contactoID_contacto");
 
                     b.ToTable("telefono");
                 });
@@ -181,6 +188,29 @@ namespace aaagenda_contactos.Migrations
                     b.Navigation("TipoContacto");
 
                     b.Navigation("TipoRedSocial");
+                });
+
+            modelBuilder.Entity("agenda", b =>
+                {
+                    b.HasOne("MiDbContext+contacto", "IDContacto")
+                        .WithMany()
+                        .HasForeignKey("ID_contacto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IDContacto");
+                });
+
+            modelBuilder.Entity("teléfono", b =>
+                {
+                    b.HasOne("MiDbContext+contacto", null)
+                        .WithMany("Teléfonos")
+                        .HasForeignKey("contactoID_contacto");
+                });
+
+            modelBuilder.Entity("MiDbContext+contacto", b =>
+                {
+                    b.Navigation("Teléfonos");
                 });
 #pragma warning restore 612, 618
         }

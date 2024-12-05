@@ -45,11 +45,12 @@ namespace aaagenda_contactos
                 var contactos = context.contactos
                 .Include(c => c.TipoContacto)
                 .Include(c => c.TipoRedSocial)
+                .Include(c => c.Teléfonos)
                 .ToList();
                 ContactosDataGrid.ItemsSource = contactos;
             }
         }
-       
+
 
 
         public bool isMenuOpen = false;
@@ -269,20 +270,14 @@ namespace aaagenda_contactos
                             Duration = TimeSpan.FromMilliseconds(300),
                             EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
                         };
-
                         // Iniciar la animación de aparición
                         frame.BeginAnimation(OpacityProperty, fadeInAnimation);
                     };
-
                     // Iniciar la animación de desvanecimiento
                     frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
                 }
             }
         }
-
-
-
-
         // Arrastrar la ventana
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -291,7 +286,6 @@ namespace aaagenda_contactos
                 this.DragMove();
             }
         }
-
         private bool IsMaximized = false;
 
         // Maximizar y restaurar ventana
@@ -319,10 +313,8 @@ namespace aaagenda_contactos
         {
 
         }
-
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
-
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -353,7 +345,6 @@ namespace aaagenda_contactos
         }
         private void Frame5_Navigated(object sender, NavigationEventArgs e)
         {
-
         }
         private void Eliminar_Click(object sender, RoutedEventArgs e)
         {
@@ -410,6 +401,7 @@ namespace aaagenda_contactos
                         .Where(c => c.Tipo_Contacto == tipoSeleccionado.ID_tipo_contacto)
                         .Include(c => c.TipoContacto)
                         .Include(c => c.TipoRedSocial)
+                        .Include(c => c.Teléfonos)
                         .ToList();
 
                     ContactosDataGrid.ItemsSource = contactosFiltrados;
@@ -421,10 +413,23 @@ namespace aaagenda_contactos
             using (var context = new MiDbContext())
             {
                 var tipo_contacto = context.tipos_contacto.ToList();
-
                 Tipodecontacto.ItemsSource = tipo_contacto;
                 Tipodecontacto.DisplayMemberPath = "Nombre_tipo_contacto";
                 Tipodecontacto.SelectedValuePath = "ID_tipo_contacto";
+            }
+        }
+        private void EditarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            var selectedContact = (contacto)ContactosDataGrid.SelectedItem;
+            if (selectedContact != null)
+            {
+                Page1 registrarPage = new Page1();
+
+                registrarPage.DataContext = selectedContact;
+
+                MainFrame.NavigationService.Navigate(registrarPage);
+
             }
         }
     }

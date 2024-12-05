@@ -61,6 +61,9 @@
                     AutoGenerateColumns="False"
                     ItemsSource="{Binding Contactos, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                     SelectionChanged="DataGrid_SelectionChanged"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="0.6,0.6,0.6,0.6"
                     Style="{StaticResource CustomDataGridStyle}" 
                     CanUserAddRows="False" 
                     IsReadOnly="False" Margin="0,5,-133,152">

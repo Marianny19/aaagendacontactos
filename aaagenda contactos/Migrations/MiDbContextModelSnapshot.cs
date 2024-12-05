@@ -124,7 +124,12 @@ namespace aaagenda_contactos.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("contactoID_contacto")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id_telefono");
+
+                    b.HasIndex("contactoID_contacto");
 
                     b.ToTable("telefono");
                 });
@@ -191,6 +196,18 @@ namespace aaagenda_contactos.Migrations
                         .IsRequired();
 
                     b.Navigation("IDContacto");
+                });
+
+            modelBuilder.Entity("teléfono", b =>
+                {
+                    b.HasOne("MiDbContext+contacto", null)
+                        .WithMany("Teléfonos")
+                        .HasForeignKey("contactoID_contacto");
+                });
+
+            modelBuilder.Entity("MiDbContext+contacto", b =>
+                {
+                    b.Navigation("Teléfonos");
                 });
 #pragma warning restore 612, 618
         }
