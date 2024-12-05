@@ -253,7 +253,7 @@ namespace Contactos
         {
             ValidateForm();
         }
-        
+
         private void Numerotelefono_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Obtener el texto ingresado sin los guiones
