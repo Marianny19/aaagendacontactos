@@ -18,8 +18,8 @@
         <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-99,72,-102">
             <StackPanel VerticalAlignment="Center">
                 <fa:ImageAwesome Icon="UserCircle" Width="166" Height="166" Foreground="White"/>
-                <TextBlock x:Name="TituloTextBlock" Text="Bienvenido/a" TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White"/>
-                <TextBlock x:Name="DescripcionTextBlock" TextWrapping="Wrap" FontSize="20" TextAlignment="Center" Foreground="White" Margin="0 20 0 20" Text="Aquí puedes registrar un nuevo contacto."/>
+                <TextBlock Text="Bienvenido/a" TextAlignment="Center" FontWeight="SemiBold" FontSize="50" Foreground="White"/>
+                <TextBlock TextWrapping="Wrap" FontSize="20" TextAlignment="Center" Foreground="White" Margin="0 20 0 20" Text="Aquí puedes registrar un nuevo contacto."/>
                 <!-- Botón con ícono -->
                 <Button Style="{StaticResource buttonBlack}" Width="79" Height="50" HorizontalAlignment="Center">
                     <fa:ImageAwesome Icon="AngleRight" Width="30" Height="16" Foreground="Black"/>
@@ -31,7 +31,7 @@
             <Grid Margin="-91,0,0,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,104,0">
                     <!-- Botón Modificar -->
-                    <Button Click="Modificar_Click" Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Modificar contacto">
+                    <Button IsEnabled="True" Click="ModificarButton_Click" Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Modificar contacto">
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Edit" Width="20" Height="20" Foreground="Black"/>
                             <TextBlock Text="Modificar" Margin="5,0,0,0" VerticalAlignment="Center"/>
@@ -73,7 +73,6 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Campos de entrada de datos -->
                     <TextBlock x:Name="Nombre" Grid.Row="0" Text="Nombre" Style="{StaticResource Text}" Margin="-65,0,155,229" VerticalAlignment="Bottom"/>
                     <TextBox x:Name="txtnombre" Grid.Row="0" Height="30" Margin="14,-4,10,225" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
 
@@ -115,9 +114,7 @@ VerticalAlignment="Top"
         Width="24" Height="30" Margin="729,317,0,0" IsEnabled="False"/>
                     </Grid>
                     <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
-                        <Button Content="+" HorizontalAlignment="Left" 
-VerticalAlignment="Top" 
- Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto" />
+                        <Button Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto"/>
                         <Button Content="+" HorizontalAlignment="Left" 
                             VerticalAlignment="Top"  
                             Width="24" Height="30" Margin="729,373,0,0" Click="Agregar_tipo_telefono"/>
@@ -125,18 +122,12 @@ VerticalAlignment="Top"
 
 
                     <Border Margin="50,39,38,141" Grid.Row="6" Grid.Column="1" />
-
-
-
-
-
-
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-63,140,119,31" VerticalAlignment="Stretch"><Run Text="Nombre "/><LineBreak/><Run Text="de usuario"/></TextBlock>
                     <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Height="30" Margin="22,89,38,96" Grid.ColumnSpan="2"/>
-             
+
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,79,143,92" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="red social"/></TextBlock>
                     <ComboBox x:Name="cmbTipo_telefono" Height="30" Grid.Row="6" Margin="22,27,38,158" Grid.ColumnSpan="2">
-                       
+
                     </ComboBox>
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,19,128,150" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="telefono"/></TextBlock>
                 </Grid>
