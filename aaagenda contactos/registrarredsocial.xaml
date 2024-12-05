@@ -100,6 +100,14 @@
                         </Style>
                     </Button.Style>
                 </Button>
+
+                <Button x:Name="EliminarTipoRedSocial" HorizontalAlignment="Left" 
+Margin="103,18,0,378" FontSize="22" Width="35" FontWeight="SemiBold" 
+ Click="EliminarTipoRedSocial_Click" RenderTransformOrigin="-0.133,0.179" Foreground="Black">
+                    <Icon:PackIconMaterial Kind="Delete" Width="15" Height="15"/>
+                </Button>
+
+
             </Grid>
         </Border>
         <DataGrid d:ItemsSource="{d:SampleData ItemCount=4}" Name="redsocialDatagrid" Grid.ColumnSpan="4" Margin="308,0,0,260" Style="{StaticResource CustomDataGridStyle}" SelectionChanged="redsocialDatagrid_SelectionChanged" />

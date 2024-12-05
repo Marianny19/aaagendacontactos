@@ -29,14 +29,30 @@ namespace Contactos
         public List<string> RedSocialItems { get; set; }
 
         private const int MaxPhoneNumbers = 14;
-        public Page1()
+        public Page1(bool esModoEdicion)
         {
             InitializeComponent();
-            DataContext = this;
-            CargarTiposContacto();
-            CargarRedesSociales();
-            CargarTipoTelefono();
+
+
+            if (esModoEdicion)
+            {
+                TituloTextBlock.Text = "Modificar Contacto";
+                DescripcionTextBlock.Text = "Aquí puede modificar el contacto.";
+                Registrar_contacto.Content = "Confirmar Cambios";
+
+                
+
+                DataContext = this;
+                CargarTiposContacto();
+                CargarRedesSociales();
+                CargarTipoTelefono();
+            }
         }
+
+        public Page1() : this(false) { }
+
+       
+
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
             // Obtener la ventana principal
@@ -504,6 +520,7 @@ namespace Contactos
         }
 
 
+
         private void CargarTipoTelefono()
         {
             using (var context = new MiDbContext())
@@ -532,103 +549,189 @@ namespace Contactos
                 return;
             }
 
-            var nuevocontacto = new contacto
+            if (isEditMode)  // Verificamos si estamos en modo de edición
             {
-                Nombre = Nombre,
-                Apellido = Apellido,
-                Email = Email,
-                Tipo_Contacto = Tipo_Contacto ?? throw new InvalidOperationException("Tipo_Contacto no puede ser nulo"),
-                Tipo_red_social = Tipo_red_social ?? throw new InvalidOperationException("Tipo_red_social no puede ser nulo")
-            };
+                // Si estamos en modo edición, actualizamos el contacto y sus datos
+                var contactoExistente = context.contactos
+                    .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
 
-            using (var dbContext = new MiDbContext())
+                if (contactoExistente != null)
+                {
+                    // Actualizar los datos del contacto
+                    contactoExistente.Nombre = Nombre;
+                    contactoExistente.Apellido = Apellido;
+                    contactoExistente.Email = Email;
+                    contactoExistente.Tipo_Contacto = Tipo_Contacto ?? throw new InvalidOperationException("Tipo_Contacto no puede ser nulo");
+                    contactoExistente.Tipo_red_social = Tipo_red_social ?? throw new InvalidOperationException("Tipo_red_social no puede ser nulo");
+
+                    // Actualizar los datos del teléfono
+                    var telefonoExistente = context.telefono
+                        .FirstOrDefault(t => t.Id_contacto == contactoExistente.ID_contacto);
+                    if (telefonoExistente != null)
+                    {
+                        telefonoExistente.Número_de_teléfono = numeroTelefono;
+                        telefonoExistente.Tipo_teléfono = tipoTelefono;
+                    }
+                    else
+                    {
+                        // Si no existe teléfono, se crea uno nuevo
+                        var nuevoTelefono = new teléfono
+                        {
+                            Número_de_teléfono = numeroTelefono,
+                            Tipo_teléfono = tipoTelefono,
+                            Id_contacto = contactoExistente.ID_contacto
+                        };
+                        context.telefono.Add(nuevoTelefono);
+                    }
+
+                    // Actualizar los datos de la red social
+                    var redSocialExistente = context.red_sociall
+                        .FirstOrDefault(rs => rs.ID_contacto == contactoExistente.ID_contacto);
+                    if (redSocialExistente != null)
+                    {
+                        redSocialExistente.Nombre_de_usuario = Nombre_de_usuario;
+                    }
+                    else
+                    {
+                        // Si no existe red social, se crea una nueva
+                        var nuevaRedSocial = new red_social
+                        {
+                            Nombre_de_usuario = Nombre_de_usuario,
+                            ID_contacto = contactoExistente.ID_contacto
+                        };
+                        context.red_sociall.Add(nuevaRedSocial);
+                    }
+
+                    // Guardar los cambios
+                    context.SaveChanges();
+                    MessageBox.Show("Contacto modificado exitosamente.");
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el contacto para modificar.");
+                }
+            }
+            else
             {
-                try
+                // Si no estamos en modo de edición, se crea un nuevo contacto
+                var nuevoContacto = new contacto
                 {
-                    dbContext.contactos.Add(nuevocontacto);
-                    dbContext.SaveChanges();
+                    Nombre = Nombre,
+                    Apellido = Apellido,
+                    Email = Email,
+                    Tipo_Contacto = Tipo_Contacto ?? throw new InvalidOperationException("Tipo_Contacto no puede ser nulo"),
+                    Tipo_red_social = Tipo_red_social ?? throw new InvalidOperationException("Tipo_red_social no puede ser nulo")
+                };
 
-                    var nuevotelefono = new teléfono
+                using (var dbContext = new MiDbContext())
+                {
+                    try
                     {
-                        Número_de_teléfono = numeroTelefono,
-                        Tipo_teléfono = tipoTelefono,
-                        Id_contacto = nuevocontacto.ID_contacto
-                    };
+                        dbContext.contactos.Add(nuevoContacto);
+                        dbContext.SaveChanges();
 
-                    var nuevaRedsocial = new red_social
+                        var nuevoTelefono = new teléfono
+                        {
+                            Número_de_teléfono = numeroTelefono,
+                            Tipo_teléfono = tipoTelefono,
+                            Id_contacto = nuevoContacto.ID_contacto
+                        };
+
+                        var nuevaRedSocial = new red_social
+                        {
+                            Nombre_de_usuario = Nombre_de_usuario,
+                            ID_contacto = nuevoContacto.ID_contacto
+                        };
+
+                        dbContext.telefono.Add(nuevoTelefono);
+                        dbContext.red_sociall.Add(nuevaRedSocial);
+                        dbContext.SaveChanges();
+
+                        txtnombre.Clear();
+                        txtapellido.Clear();
+                        txtemail.Clear();
+                        cmbTipo_contacto.SelectedItem = null;
+                        numerotelefono.Clear();
+                        cmbTipo_telefono.SelectedItem = null;
+                        cmbTipo_red_social.SelectedItem = null;
+                        txtnombreusuario.Clear();
+                        MessageBox.Show("Contacto guardado exitosamente.");
+                    }
+                    catch (DbUpdateException dbEx)
                     {
-                        Nombre_de_usuario = Nombre_de_usuario,
-                        ID_contacto = nuevocontacto.ID_contacto
-                    };
-
-                    dbContext.telefono.Add(nuevotelefono);
-                    dbContext.red_sociall.Add(nuevaRedsocial);
-                    dbContext.SaveChanges();
-
-                    txtnombre.Clear();
-                    txtapellido.Clear();
-                    txtemail.Clear();
-                    cmbTipo_contacto.SelectedItem = null;
-                    numerotelefono.Clear();
-                    cmbTipo_telefono.SelectedItem = null;
-                    cmbTipo_red_social.SelectedItem = null;
-                    txtnombreusuario.Clear();
-                    MessageBox.Show("Contacto guardado exitosamente.");
-                }
-                catch (DbUpdateException dbEx)
-                {
-                    MessageBox.Show($"Error al guardar: {dbEx.InnerException?.Message ?? dbEx.Message}");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error inesperado: {ex.Message}");
+                        MessageBox.Show($"Error al guardar: {dbEx.InnerException?.Message ?? dbEx.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error inesperado: {ex.Message}");
+                    }
                 }
             }
         }
+
         private contacto contacto;
+        // Variable para determinar si estamos en modo edición
+        private bool isEditMode = false; // Variable para determinar si estamos en modo edición
 
         private readonly MiDbContext context;
         private contacto contactoSeleccionado;
 
-        public Page1(contacto contactoSeleccionado)
+        public Page1(contacto contactoSeleccionado, bool isEditMode)
         {
             InitializeComponent();
 
             context = new MiDbContext();
             this.contactoSeleccionado = contactoSeleccionado;
+            this.isEditMode = isEditMode;  // Agrega la variable isEditMode
 
+            // Cargar los datos y configuraciones necesarias
             CargarTiposContacto();
             CargarRedesSociales();
             CargarNombreUsuario();
             CargarTipoTelefono();
 
-            txtnombre.Text = contactoSeleccionado.Nombre;
-            txtapellido.Text = contactoSeleccionado.Apellido;
-            txtemail.Text = contactoSeleccionado.Email;
-            cmbTipo_contacto.SelectedValue = contactoSeleccionado.Tipo_Contacto;
-            cmbTipo_red_social.SelectedValue = contactoSeleccionado.Tipo_red_social;
-            var telefono = context.telefono
-           .FirstOrDefault(t => t.Id_contacto == contactoSeleccionado.ID_contacto);
-
-            if (telefono != null)
+            if (isEditMode)
             {
-                numerotelefono.Text = telefono.Número_de_teléfono;
+                // Si estamos en modo de edición, cargamos los datos del contacto
+                txtnombre.Text = contactoSeleccionado.Nombre;
+                txtapellido.Text = contactoSeleccionado.Apellido;
+                txtemail.Text = contactoSeleccionado.Email;
+                cmbTipo_contacto.SelectedValue = contactoSeleccionado.Tipo_Contacto;
+                cmbTipo_red_social.SelectedValue = contactoSeleccionado.Tipo_red_social;
 
-                // Aquí se asigna el tipo de teléfono al ComboBox
-                foreach (var item in cmbTipo_telefono.Items)
+                var telefono = context.telefono
+                    .FirstOrDefault(t => t.Id_contacto == contactoSeleccionado.ID_contacto);
+
+                if (telefono != null)
                 {
-                    if ((item as ComboBoxItem)?.Content.ToString() == telefono.Tipo_teléfono)
+                    numerotelefono.Text = telefono.Número_de_teléfono;
+                    // Aquí se asigna el tipo de teléfono al ComboBox
+                    foreach (var item in cmbTipo_telefono.Items)
                     {
-                        cmbTipo_telefono.SelectedItem = item;
-                        break;
+                        if ((item as ComboBoxItem)?.Content.ToString() == telefono.Tipo_teléfono)
+                        {
+                            cmbTipo_telefono.SelectedItem = item;
+                            break;
+                        }
                     }
                 }
+                else
+                {
+                    numerotelefono.Text = "No definido";
+                }
+
+                // Cambiar el texto del botón a "Modificar contacto"
+                Registrar_contacto.Content = "Modificar contacto";
             }
             else
             {
-                numerotelefono.Text = "No definido";
+                // Si no estamos en modo de edición, la lógica es la de registrar un nuevo contacto
+                Registrar_contacto.Content = "Registrar contacto";
             }
-    }
+        }
+
+
+
         private void CargarNombreUsuario()
         {
             var redSocial = context.red_sociall
@@ -663,25 +766,29 @@ namespace Contactos
                     MessageBox.Show("Por favor, complete el nombre", "Campos Vacíos", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+
+                var contactoExistente = context.contactos
+                    .FirstOrDefault(c => c.ID_contacto == contactoEditado.ID_contacto);
+
+                if (contactoExistente != null)
                 {
-                    var contactoExistente = context.contactos
-                        .FirstOrDefault(c => c.ID_contacto == contactoEditado.ID_contacto);
+                    contactoExistente.Nombre = nuevoNombre;
+                    contactoExistente.Apellido = nuevoApellido;
+                    contactoExistente.Email = nuevoEmail;
+                    contactoExistente.Tipo_Contacto = nuevotipocontacto;
+                    contactoExistente.Tipo_red_social = (int)nuevaredsocial;
 
-                    if (contactoExistente != null)
-                    {
-                        contactoExistente.Nombre = nuevoNombre;
-                        contactoExistente.Apellido = nuevoApellido;
-                        contactoExistente.Email = nuevoEmail;
-                        contactoExistente.Tipo_Contacto = nuevotipocontacto;
-                        contactoExistente.Tipo_red_social = nuevaredsocial;
-                         context.SaveChanges();
+                    context.SaveChanges();
 
-                        MessageBox.Show("Contacto actualizado correctamente.");
-                    }
+                    // Navegar de vuelta a la página principal (con el DataGrid)
+                    NavigationService.Navigate(new Page4());
+
+                    MessageBox.Show("Contacto actualizado correctamente.");
                 }
             }
         }
-    private void Eliminar_Click(object sender, RoutedEventArgs e)
+
+        private void Eliminar_Click(object sender, RoutedEventArgs e)
             {
             }
         }

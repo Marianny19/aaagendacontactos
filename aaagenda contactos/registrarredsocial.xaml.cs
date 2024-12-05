@@ -72,6 +72,58 @@ namespace aaagenda_contactos
         }
 
 
+        private tipo_red_social tipoRedSocialSeleccionada;
+
+        private void redsocialDatagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (redsocialDatagrid.SelectedItem is tipo_red_social selectedTipoRedSocial)
+            {
+                tipoRedSocialSeleccionada = selectedTipoRedSocial;
+            }
+            else
+            {
+                tipoRedSocialSeleccionada = null;
+            }
+        }
+
+        private void EliminarTipoRedSocial_Click(object sender, RoutedEventArgs e)
+        {
+            if (tipoRedSocialSeleccionada == null)
+            {
+                MessageBox.Show("Por favor, seleccione un registro para eliminar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            MessageBoxResult resultado = MessageBox.Show(
+                "¿Está seguro de que desea eliminar este registro?",
+                "Confirmar eliminación",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (resultado == MessageBoxResult.Yes)
+            {
+                using (var contexto = new MiDbContext()) // Asegúrate de usar el nombre de tu DbContext
+                {
+                    // Eliminar el registro de la base de datos
+                    contexto.tipos_red_social.Attach(tipoRedSocialSeleccionada);
+                    contexto.tipos_red_social.Remove(tipoRedSocialSeleccionada);
+
+                    try
+                    {
+                        contexto.SaveChanges();
+                        MessageBox.Show("Registro eliminado exitosamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ocurrió un error al intentar eliminar el registro: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+
+                // Actualizar el DataGrid después de eliminar el registro
+                cargar_redes_sociales();
+            }
+        }
+
 
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
@@ -106,10 +158,7 @@ namespace aaagenda_contactos
             }
         }
 
-        private void redsocialDatagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
         private void cargar_redes_sociales()
         {
                 using (var context = new MiDbContext())

@@ -119,7 +119,7 @@ namespace aaagenda_contactos
                         contactoExistente.Nombre = contactoEditado.Nombre;
                         contactoExistente.Apellido = contactoEditado.Apellido;
                         contactoExistente.Email = contactoEditado.Email;
-             
+
 
                         context.SaveChanges();
                         MessageBox.Show("Contacto actualizado correctamente.");
@@ -153,10 +153,10 @@ namespace aaagenda_contactos
                 foreach (var contacto in updatedData)
                 {
                     if (contacto.TipoContacto == null)
-                        contacto.TipoContacto = new tipo_contacto(); 
+                        contacto.TipoContacto = new tipo_contacto();
 
                     if (contacto.TipoRedSocial == null)
-                        contacto.TipoRedSocial = new tipo_red_social(); 
+                        contacto.TipoRedSocial = new tipo_red_social();
                 }
 
                 ContactosDataGrid.ItemsSource = updatedData;
@@ -173,11 +173,11 @@ namespace aaagenda_contactos
 
         private List<contacto> ObtenerDatosDeBaseDeDatos()
         {
-            using (var context = new MiDbContext()) 
+            using (var context = new MiDbContext())
             {
                 return context.contactos
-                              .Include(c => c.TipoContacto) 
-                              .Include(c => c.TipoRedSocial) 
+                              .Include(c => c.TipoContacto)
+                              .Include(c => c.TipoRedSocial)
                               .Include(c => c.Teléfonos)
                               .ToList();
             }
@@ -454,17 +454,24 @@ namespace aaagenda_contactos
         }
         private contacto contactoSeleccionado;
 
+        private void CerrarButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.GoBack(); // Vuelve a la página anterior en el Frame
+        }
+
+
         private void EditarButton_Click(object sender, RoutedEventArgs e)
         {
             if (contactoSeleccionado != null)
             {
-                MainFrame.Navigate(new Page1(contactoSeleccionado));
+                MainFrame.Content = null; // Esto elimina el contenido actual del Frame
+                MainFrame.Navigate(new Page1(contactoSeleccionado, true));  // Navega a la página de modificación
             }
             else
             {
                 MessageBox.Show("Por favor, selecciona un contacto para editar.");
             }
+        }
 
-        }
-        }
     }
+}

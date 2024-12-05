@@ -13,7 +13,7 @@ public partial class MiDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Database=contacto_agendaa;Username=user_crud;Password=Marianny19");
+        optionsBuilder.UseNpgsql("Host=localhost;Database=contacto_agendaa;Username=user_crud;Password=miguelencristo01");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -101,5 +101,10 @@ public partial class MiDbContext : DbContext
         [Key]
         public int Id_tipo_red_social { get; set; }
         public string Nombre_red_social { get; set; }
+
+        internal static object Find(int tipoRedSocialAEliminarID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
