@@ -24,13 +24,19 @@ namespace Contactos
     /// </summary>
     public partial class Page2 : Page
     {
+        private contacto contactoSeleccionado;
+
         public Page2()
         {
             InitializeComponent();
             cargarcontacto();
         }
 
-       
+        public Page2(contacto contactoSeleccionado)
+        {
+            this.contactoSeleccionado = contactoSeleccionado;
+        }
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 

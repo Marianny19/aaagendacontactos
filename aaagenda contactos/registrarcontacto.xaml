@@ -29,11 +29,28 @@
         <!-- Panel Derecho (Formulario) -->
         <Border Padding="20" Background="#E0E0E0" CornerRadius="0 30 30 0" Margin="278,-99,-99,-102" Grid.ColumnSpan="2">
             <Grid Margin="-91,0,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,104,0">
+                    <!-- Botón Modificar -->
+                    <Button Click="Modificar_Click" Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Modificar contacto">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Edit" Width="20" Height="20" Foreground="Black"/>
+                            <TextBlock Text="Modificar" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <!-- Botón Eliminar -->
+                    <Button Click="Eliminar_Click" Width="100" Height="40" Background="Transparent" BorderThickness="0" ToolTip="Eliminar contacto">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Trash" Width="20" Height="20" Foreground="Black"/>
+                            <TextBlock Text="Eliminar" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <!-- Botón Actualizar -->
+
+                </StackPanel>
                 <!-- Íconos de cerrar y minimizar -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0">
                     <Button Click="CerrarVentana_Click" Width="50" Height="50" Background="Transparent" BorderThickness="0">
                         <fa:ImageAwesome Icon="Times" Width="50" Height="20" Foreground="Black"/>
-                        <!--Aqui en los botones puedes ponerles iconos sin necesidad de importar imagenes, porque aqui mismo trae su paquete de iconos regular, es como html-->
                     </Button>
 
 
@@ -116,11 +133,10 @@ VerticalAlignment="Top"
 
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-63,140,119,31" VerticalAlignment="Stretch"><Run Text="Nombre "/><LineBreak/><Run Text="de usuario"/></TextBlock>
                     <ComboBox x:Name="cmbTipo_red_social" Grid.Row="6" Height="30" Margin="22,89,38,96" Grid.ColumnSpan="2"/>
+             
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,79,143,92" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="red social"/></TextBlock>
                     <ComboBox x:Name="cmbTipo_telefono" Height="30" Grid.Row="6" Margin="22,27,38,158" Grid.ColumnSpan="2">
-                        <ComboBoxItem Content="Móvil" />
-                        <ComboBoxItem Content="Casa" />
-                        <ComboBoxItem Content="Trabajo" />
+                       
                     </ComboBox>
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,19,128,150" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="telefono"/></TextBlock>
                 </Grid>

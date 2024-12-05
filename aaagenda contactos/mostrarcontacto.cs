@@ -119,8 +119,7 @@ namespace aaagenda_contactos
                         contactoExistente.Nombre = contactoEditado.Nombre;
                         contactoExistente.Apellido = contactoEditado.Apellido;
                         contactoExistente.Email = contactoEditado.Email;
-                        contactoExistente.Tipo_Contacto = contactoEditado.Tipo_Contacto;
-                        contactoExistente.Tipo_red_social = contactoEditado.Tipo_red_social;
+             
 
                         context.SaveChanges();
                         MessageBox.Show("Contacto actualizado correctamente.");
@@ -149,44 +148,37 @@ namespace aaagenda_contactos
         {
             try
             {
-                // 1. Llamar a un método que obtenga los datos actualizados desde la base de datos
                 var updatedData = ObtenerDatosDeBaseDeDatos();
 
-                // 2. Asegúrate de que las propiedades 'TipoContacto' y 'TipoRedSocial' están correctamente actualizadas
                 foreach (var contacto in updatedData)
                 {
-                    // Asegúrate de que TipoContacto y TipoRedSocial no sean null
                     if (contacto.TipoContacto == null)
-                        contacto.TipoContacto = new tipo_contacto(); // O asigna un valor por defecto
+                        contacto.TipoContacto = new tipo_contacto(); 
 
                     if (contacto.TipoRedSocial == null)
-                        contacto.TipoRedSocial = new tipo_red_social(); // O asigna un valor por defecto
+                        contacto.TipoRedSocial = new tipo_red_social(); 
                 }
 
-                // 3. Actualizar la fuente de datos del DataGrid
                 ContactosDataGrid.ItemsSource = updatedData;
 
-                // 4. Redibujar la ventana si es necesario
                 this.InvalidateVisual();
 
                 MessageBox.Show("Datos refrescados correctamente.");
             }
             catch (Exception ex)
             {
-                // Manejo de errores
                 MessageBox.Show("Error al actualizar los datos: " + ex.Message);
             }
         }
 
-        // Método que obtiene los datos desde la base de datos
         private List<contacto> ObtenerDatosDeBaseDeDatos()
         {
-            using (var context = new MiDbContext()) // Usando Entity Framework como ejemplo
+            using (var context = new MiDbContext()) 
             {
-                // Asegúrate de incluir las entidades relacionadas
                 return context.contactos
-                              .Include(c => c.TipoContacto) // Incluir tipo de contacto
-                              .Include(c => c.TipoRedSocial) // Incluir tipo de red social
+                              .Include(c => c.TipoContacto) 
+                              .Include(c => c.TipoRedSocial) 
+                              .Include(c => c.Teléfonos)
                               .ToList();
             }
         }
@@ -195,7 +187,6 @@ namespace aaagenda_contactos
             this.Close(); // Cierra la ventana
         }
 
-        // Función para obtener el hijo visual de un tipo específico
         private T GetVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
             if (parent == null) return null;
@@ -311,7 +302,7 @@ namespace aaagenda_contactos
         // Evento del DataGrid
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            contactoSeleccionado = (contacto)ContactosDataGrid.SelectedItem;
         }
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
@@ -411,7 +402,7 @@ namespace aaagenda_contactos
 
         private void ContactosDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // Obtener la celda donde se hizo doble clic
+            /*// Obtener la celda donde se hizo doble clic
             var hit = VisualTreeHelper.HitTest(ContactosDataGrid, e.GetPosition(ContactosDataGrid));
             var cell = FindParent<DataGridCell>(hit.VisualHit);
 
@@ -431,8 +422,8 @@ namespace aaagenda_contactos
                     if (contactoSeleccionado != null)
                     {
                         // Navegar a Page6 y pasar el contacto seleccionado
-                        var page6 = new Page6(contactoSeleccionado);
-                        Frame7.Navigate(page6);
+                        var page1 = new page1(contactoSeleccionado);
+                        Frame7.Navigate(page1);
                     }
                 }
             }
@@ -449,7 +440,7 @@ namespace aaagenda_contactos
             if (parent != null)
                 return parent;
             else
-                return FindParent<T>(parentObject);
+                return FindParent<T>(parentObject);*/
         }
         private void Cargartipocontactos()
         {
@@ -461,19 +452,19 @@ namespace aaagenda_contactos
                 Tipodecontacto.SelectedValuePath = "ID_tipo_contacto";
             }
         }
+        private contacto contactoSeleccionado;
+
         private void EditarButton_Click(object sender, RoutedEventArgs e)
         {
-
-            var selectedContact = (contacto)ContactosDataGrid.SelectedItem;
-            if (selectedContact != null)
+            if (contactoSeleccionado != null)
             {
-                Page1 registrarPage = new Page1();
-
-                registrarPage.DataContext = selectedContact;
-
-                MainFrame.NavigationService.Navigate(registrarPage);
-
+                MainFrame.Navigate(new Page1(contactoSeleccionado));
             }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona un contacto para editar.");
+            }
+
+        }
         }
     }
-}
