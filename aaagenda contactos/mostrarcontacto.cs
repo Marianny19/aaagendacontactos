@@ -117,6 +117,7 @@ namespace aaagenda_contactos
 
                     if (contactoExistente != null)
                     {
+                        // Actualizar los datos en la base de datos
                         contactoExistente.Nombre = contactoEditado.Nombre;
                         contactoExistente.Apellido = contactoEditado.Apellido;
                         contactoExistente.Email = contactoEditado.Email;
@@ -424,6 +425,7 @@ namespace aaagenda_contactos
                 }
             }
         }
+
         private void ContactosDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
         }
@@ -447,8 +449,6 @@ namespace aaagenda_contactos
 
         private void EditarButton_Click(object sender, RoutedEventArgs e)
         {
-            var contactoSeleccionado = ContactosDataGrid.SelectedItem as contacto;
-
             if (contactoSeleccionado != null)
             {
                 MainFrame.Content = null; // Esto elimina el contenido actual del Frame

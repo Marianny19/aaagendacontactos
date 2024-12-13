@@ -793,12 +793,6 @@ private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
             // Puedes agregarlo a cualquier contenedor que esté visible en tu interfaz, por ejemplo:
             ButtonPanel.Children.Add(guardarButton); // ButtonPanel es el contenedor donde se agregarán los botones.
         }
-        private void ModificarButton_Click(object sender, RoutedEventArgs e)
-        {
-            using (var context = new MiDbContext())
-            {
-                var contactoExistente = context.contactos
-                    .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
 
         private void EstablecerModoSoloLectura(bool modoSoloLectura)
         {
