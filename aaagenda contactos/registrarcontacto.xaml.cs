@@ -641,19 +641,7 @@ namespace Contactos
             // Hacer que los controles sean solo lectura
             EstablecerModoSoloLectura(true);
         }
-
-        private void EstablecerModoSoloLectura(bool soloLectura)
-        {
-            // Establecer los controles como solo lectura (no editables)
-            txtnombre.IsReadOnly = soloLectura;
-            txtapellido.IsReadOnly = soloLectura;
-            txtemail.IsReadOnly = soloLectura;
-            cmbTipo_contacto.IsEnabled = !soloLectura; // Habilitar/Deshabilitar ComboBox
-            cmbTipo_red_social.IsEnabled = !soloLectura;
-            numerotelefono.IsReadOnly = soloLectura;
-            cmbTipo_telefono.IsEnabled = !soloLectura;
-            txtnombreusuario.IsReadOnly = soloLectura;
-        }
+        
 
         private void CargarNombreUsuario()
         {
@@ -674,23 +662,59 @@ namespace Contactos
             // Habilitar los campos para ser editados
             EstablecerModoSoloLectura(false);
 
-            // Cuando el usuario haga clic en "Modificar", los datos se actualizarán en la base de datos
+            // Crear un botón de "Guardar" dinámicamente
+            var guardarButton = new Button
+            {
+                Content = "Guardar",
+                Width = 75,
+                Height = 30,
+                Margin = new Thickness(10)
+            };
+
+            // Asignar el manejador de eventos para el botón de "Guardar"
+            guardarButton.Click += GuardarButton_Click;
+
+            // Colocar el botón "Guardar" en la interfaz, al lado izquierdo de los campos
+            Panel.SetZIndex(guardarButton, 1);  // Opcional, para asegurarse de que se dibuje encima de otros controles
+
+            // Aquí asumo que tienes un contenedor de botones (puede ser un StackPanel, Grid, etc.)
+            // Puedes agregarlo a cualquier contenedor que esté visible en tu interfaz, por ejemplo:
+            ButtonPanel.Children.Add(guardarButton); // ButtonPanel es el contenedor donde se agregarán los botones.
+        }
+
+        private void EstablecerModoSoloLectura(bool modoSoloLectura)
+        {
+            // Hacer los campos solo lectura o habilitarlos para edición
+            txtnombre.IsReadOnly = modoSoloLectura;
+            txtapellido.IsReadOnly = modoSoloLectura;
+            txtemail.IsReadOnly = modoSoloLectura;
+            numerotelefono.IsReadOnly = modoSoloLectura;
+            txtnombreusuario.IsReadOnly = modoSoloLectura;
+
+            // Habilitar o deshabilitar los combo boxes
+            cmbTipo_contacto.IsEnabled = !modoSoloLectura;
+            cmbTipo_red_social.IsEnabled = !modoSoloLectura;
+            cmbTipo_telefono.IsEnabled = !modoSoloLectura;
+        }
+
+        private void GuardarButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Guardar los cambios aquí
             using (var context = new MiDbContext())
             {
-                // Se obtiene el contacto existente basado en el ID
+                // Buscar el contacto que estamos editando
                 var contactoExistente = context.contactos
                     .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
 
                 if (contactoExistente != null)
                 {
-                    // Actualizar los valores del contacto
+                    // Guardar los cambios en el contacto
                     contactoExistente.Nombre = txtnombre.Text;
                     contactoExistente.Apellido = txtapellido.Text;
                     contactoExistente.Email = txtemail.Text;
                     contactoExistente.Tipo_Contacto = (int)cmbTipo_contacto.SelectedValue;
                     contactoExistente.Tipo_red_social = (int)cmbTipo_red_social.SelectedValue;
 
-                    // Actualizar el teléfono
                     var telefonoExistente = context.telefono
                         .FirstOrDefault(t => t.Id_contacto == contactoSeleccionado.ID_contacto);
 
@@ -700,7 +724,6 @@ namespace Contactos
                         telefonoExistente.Tipo_teléfono = (cmbTipo_telefono.SelectedItem as ComboBoxItem)?.Content.ToString();
                     }
 
-                    // Actualizar la red social
                     var redSocialExistente = context.red_sociall
                         .FirstOrDefault(rs => rs.ID_contacto == contactoSeleccionado.ID_contacto);
 
@@ -709,7 +732,7 @@ namespace Contactos
                         redSocialExistente.Nombre_de_usuario = txtnombreusuario.Text;
                     }
 
-                    // Guardar los cambios en la base de datos
+                    // Guardar en la base de datos
                     try
                     {
                         context.SaveChanges();
@@ -720,18 +743,19 @@ namespace Contactos
                         MessageBox.Show($"Ocurrió un error al guardar los cambios: {ex.Message}");
                     }
                 }
-                else
-                {
-                    MessageBox.Show("No se encontró el contacto para actualizar.");
-                }
             }
 
-            // Después de guardar los cambios, si es necesario, puedes deshabilitar los campos nuevamente
+            // Deshabilitar los campos nuevamente después de guardar los cambios
             EstablecerModoSoloLectura(true);
+
+            // Eliminar el botón de guardar después de guardar
+            ButtonPanel.Children.Remove((Button)sender); // Elimina el botón "Guardar"
+        }
+
         
 
-    }
-    private void Eliminar_Click(object sender, RoutedEventArgs e)
+
+        private void Eliminar_Click(object sender, RoutedEventArgs e)
         {
             if (contactoSeleccionado != null)
             {
