@@ -9,6 +9,7 @@ using System.Windows.Media;
 using static MiDbContext;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace Contactos
 {
@@ -18,15 +19,15 @@ namespace Contactos
     public partial class Page3 : Page
     {
         public ObservableCollection<agenda> Agendas { get; set; }
-        private bool _isEditing = false; // Variable para saber si se está editando un contacto
-        private agenda _currentEditingAgenda;
+        private bool _isEditing = false; 
+        private agenda _currentEditingAgenda; 
+        private agenda agendaSeleccionada;
         public Page3()
         {
             InitializeComponent();
             Cargarcontactosagendado();
             CargarContactos();
 
-            // Registrar el convertidor como recurso de la página
             this.Resources.Add("BoolToVis", new BoolToVisConverter());
             
         }
@@ -42,47 +43,114 @@ namespace Contactos
             }
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = txtSearch.Text.ToLower().Trim();
+
+            ICollectionView collectionView = CollectionViewSource.GetDefaultView(CDataGrid.ItemsSource);
+
+            collectionView.Filter = item =>
+            {
+                var agenda = item as agenda;  
+                if (agenda == null) return false;
+
+                string agendaName = agenda.Nombre_agenda.ToLower();
+                string agendaDescription = agenda.Descripcion_agenda.ToLower();
+
+                return agendaName.Contains(searchTerm) || agendaDescription.Contains(searchTerm);
+            };
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            agendaSeleccionada = (agenda)CDataGrid.SelectedItem;
+
+        }
+
+
+
+        private void EditarButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Obtener el botón que fue presionado
+            var button = sender as Button;
+
+            // Obtener el registro seleccionado del DataGrid
+            var agendaSeleccionada = button?.DataContext as agenda; // Suponiendo que el DataContext es del tipo 'Agenda'
+
+            if (agendaSeleccionada != null)
+            {
+                // Obtener la ventana principal
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+
+                if (mainWindow != null)
+                {
+                    // Ocultar Page3 (suponiendo que tienes un Frame para Page3)
+                    mainWindow.Frame2.Visibility = Visibility.Collapsed;
+
+                    // Navegar a Page2 y pasar los datos del registro seleccionado
+                    mainWindow.MainFrame.Navigate(new Page2(agendaSeleccionada));
+                }
+            }
+        }
+
+
+        private void CerrarPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Obtener el Frame principal y ocultar el Frame de Page2
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+                mainWindow.Frame2.Visibility = Visibility.Collapsed;  // Ocultar Page2
+                mainWindow.Frame3.Visibility = Visibility.Visible;     // Mostrar Page3
+            }
+        }
+
+
+
+
+
+        private void AbrirPantallaRegistrarAgendas(agenda agendaSeleccionada)
+        {
+            // Crear y mostrar la ventana o página de registro
+            var registrarAgendasPage = new Page2(agendaSeleccionada); // Cambia Page2 si usas otro nombre
+            NavigationService.Navigate(registrarAgendasPage); // Si estás usando navegación de páginas
+        }
+
+
+
 
 
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
-            // Obtener la ventana principal
             var mainWindow = Application.Current.MainWindow as MainWindow;
             if (mainWindow != null)
             {
-                // Encontrar el Frame en la ventana principal
                 var frame = mainWindow.Frame3;
                 if (frame != null)
                 {
-                    // Crear animación de desvanecimiento para ocultar el Frame
                     var fadeOutAnimation = new DoubleAnimation
                     {
-                        To = 0, // Reducir la opacidad a 0 (invisible)
-                        Duration = TimeSpan.FromMilliseconds(0), // Duración de la animación
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                        To = 0, 
+                        Duration = TimeSpan.FromMilliseconds(0), 
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } 
                     };
 
                     fadeOutAnimation.Completed += (s, args) =>
                     {
-                        // Navegar a la nueva página al finalizar el desvanecimiento
                         frame.Navigate(new Page2());
 
-                        // Hacer que el Frame sea visible para la animación de aparición
                         frame.Visibility = Visibility.Visible;
 
-                        // Crear animación de aparición
                         var fadeInAnimation = new DoubleAnimation
                         {
-                            To = 1, // Aumentar la opacidad a 1 (completamente visible)
-                            Duration = TimeSpan.FromMilliseconds(300), // Duración de la animación
-                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de suavizado
+                            To = 1,
+                            Duration = TimeSpan.FromMilliseconds(300), 
+                            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } 
                         };
 
-                        // Iniciar la animación de aparición
                         frame.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                     };
 
-                    // Iniciar la animación de desvanecimiento
                     frame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
                     {
 
@@ -100,10 +168,7 @@ namespace Contactos
         {
             Window.GetWindow(this)?.Close();
         }
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+       
 
         public class BoolToVisConverter : IValueConverter
         {
@@ -135,7 +200,6 @@ namespace Contactos
 
                     if (AgendaExistente != null)
                     {
-                        // Actualizar los datos en la base de datos
                         AgendaExistente.Nombre_agenda = AgendaEditada.Nombre_agenda;
                         AgendaExistente.Descripcion_agenda = AgendaEditada.Descripcion_agenda;
                         AgendaExistente.Fecha_agendada = AgendaEditada.Fecha_agendada;
@@ -148,9 +212,7 @@ namespace Contactos
             }
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
+       
 
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

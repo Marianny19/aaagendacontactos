@@ -14,7 +14,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Panel Izquierdo (Fondo turquesa) -->
         <Border Background="#623ed0" Padding="30" CornerRadius="30 0 0 30" Margin="-101,-99,72,-102">
             <StackPanel VerticalAlignment="Center">
                 <fa:ImageAwesome Icon="UserCircle" Width="166" Height="166" Foreground="White"/>

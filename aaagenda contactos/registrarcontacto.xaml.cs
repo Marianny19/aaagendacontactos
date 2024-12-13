@@ -564,6 +564,7 @@ namespace Contactos
 
             }
         }
+
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
             var Nombre = txtnombre.Text;
@@ -698,6 +699,7 @@ namespace Contactos
                 txtnombreusuario.Text = "No definido";
             }
         }
+        
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
             // Habilitar los campos para ser editados

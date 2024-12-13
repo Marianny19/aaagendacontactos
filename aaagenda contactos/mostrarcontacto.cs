@@ -289,6 +289,7 @@ namespace aaagenda_contactos
                 if (!IsMaximized)
                 {
                     this.WindowState = WindowState.Maximized;
+                    this.WindowState = WindowState.Maximized;
                     IsMaximized = true;
                 }
                 else
@@ -300,6 +301,8 @@ namespace aaagenda_contactos
                 }
             }
         }
+
+
 
 
 

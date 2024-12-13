@@ -24,23 +24,48 @@ namespace Contactos
     /// </summary>
     public partial class Page2 : Page
     {
-        private contacto contactoSeleccionado;
+        private agenda agendaSeleccionada;
 
-        public Page2()
+        public Page2(agenda agendaSeleccionada = null)
         {
             InitializeComponent();
-            cargarcontacto();
+            cargarcontacto();  // Cargar los contactos en el ComboBox (esto se hará con la función que usas para obtener los contactos)
+
+            if (agendaSeleccionada != null)
+            {
+                this.agendaSeleccionada = agendaSeleccionada;
+
+                // Asignar los valores a los controles
+                txtnombre.Text = agendaSeleccionada.Nombre_agenda;
+                cmbcontactoaagendar.SelectedItem = agendaSeleccionada.IDContacto;  // Seleccionar el contacto en el ComboBox
+                txtdescripcion.Text = agendaSeleccionada.Descripcion_agenda;
+                txtfecha.SelectedDate = agendaSeleccionada.Fecha_agendada;
+
+                // Asignar las horas y minutos
+                hourComboBox.SelectedItem = hourComboBox.Items.Cast<ComboBoxItem>().FirstOrDefault(item => item.Content.ToString() == agendaSeleccionada.Fecha_agendada.Hour.ToString("00"));
+                minuteComboBox.SelectedItem = minuteComboBox.Items.Cast<ComboBoxItem>().FirstOrDefault(item => item.Content.ToString() == agendaSeleccionada.Fecha_agendada.Minute.ToString("00"));
+            }
+            else
+            {
+                this.agendaSeleccionada = new agenda();  // Crear una nueva agenda si no se pasa una existente
+            }
+
+            // Asignar el DataContext al final para evitar conflictos
+            this.DataContext = this.agendaSeleccionada;
+            this.Visibility = Visibility.Visible;
         }
 
-        public Page2(contacto contactoSeleccionado)
+
+
+        private void Eliminar_Click(object sender, RoutedEventArgs e)
         {
-            this.contactoSeleccionado = contactoSeleccionado;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
-        }
+
+
+
+
 
 
 
@@ -49,41 +74,37 @@ namespace Contactos
             var ventana = Window.GetWindow(this);
             if (ventana != null)
             {
-                var frame = ventana.FindName("Frame3") as Frame;
+                // Obtener Frame2
+                var frame = ventana.FindName("Frame2") as Frame;
+
                 if (frame != null)
                 {
-                    var fadeOutAnimation = new DoubleAnimation
-                    {
-                        To = 0, 
-                        Duration = TimeSpan.FromMilliseconds(300), 
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } 
-                    };
-
-                    fadeOutAnimation.Completed += (s, args) =>
-                    {
-                        frame.Visibility = Visibility.Collapsed;
-                    };
-
-                    frame.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                    // Ocultar el Frame directamente
+                    frame.Visibility = Visibility.Collapsed;
                 }
             }
         }
 
-      
+
+
+
+
+
 
         private void cargarcontacto()
         {
 
             using (var context = new MiDbContext())
-            {
-                var contacto = context.contactos.ToList();
 
-                cmbcontactoaagendar.ItemsSource = contacto;
-                cmbcontactoaagendar.DisplayMemberPath = "Nombre";
-                cmbcontactoaagendar.SelectedValuePath = "ID_contacto";
+
+            {
+                
+                cmbcontactoaagendar.DisplayMemberPath = "Nombre"; // Asegúrate de que se muestre el nombre del contacto en el ComboBox
+                cmbcontactoaagendar.SelectedValuePath = "ID"; // Usa el ID del contacto como valor seleccionado
             }
         }
-        private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
+
+                private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
             var Nombre_agenda = txtnombre.Text;
             var ID_contacto = (int?)cmbcontactoaagendar.SelectedValue;
