@@ -170,6 +170,5 @@ namespace aaagenda_contactos
                     redsocialDatagrid.ItemsSource = tipo_red_social;
                 }
             }
-
         }
     }

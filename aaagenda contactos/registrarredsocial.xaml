@@ -31,9 +31,6 @@
                 </Button>
             </StackPanel>
         </Border>
-
-
-
         <!-- Panel Derecho (Formulario) -->
         <Border Padding="20" Background="#EFEFEF" CornerRadius="0,30,30,0" Margin="278,-91,-34,141" Grid.ColumnSpan="4">
             <Grid Margin="-91,0,0,0">
@@ -61,16 +58,9 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-
-
-
                     <!-- Campos de entrada de datos -->
                     <TextBlock x:Name="Nombre" Grid.Row="6" Style="{StaticResource Text}" Margin="28,0,241,-438" VerticalAlignment="Bottom" Grid.ColumnSpan="2"><Run Language="es-419" Text="Nombre de la red social"/></TextBlock>
                     <TextBox x:Name="txtnombre" Grid.Row="6" Height="30" Margin="28,438,221,-468" TextChanged="TextBox_TextChanged" Grid.ColumnSpan="2"/>
-
-
-
-
                 </Grid>
                 <Button x:Name="Registrar_contacto" Content="Registrar red social" HorizontalAlignment="Left" 
         Margin="465,362,0,14" Background="#6F50FF" FontSize="22" Width="207" FontWeight="SemiBold" 
