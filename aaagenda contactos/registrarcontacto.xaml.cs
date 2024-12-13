@@ -210,20 +210,61 @@ namespace Contactos
             }
         }
 
-        private void ValidateForm()
+        private bool ValidateForm()
         {
-            bool isFormValid =
-                !string.IsNullOrWhiteSpace(txtnombre.Text) &&
-                !txtnombre.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)) &&
-                !string.IsNullOrWhiteSpace(txtapellido.Text) &&
-                !txtapellido.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)) &&
-                !string.IsNullOrWhiteSpace(txtemail.Text) &&
-                Regex.IsMatch(txtemail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$") &&
-                !string.IsNullOrWhiteSpace(numerotelefono.Text) &&
-                !numerotelefono.Text.Any(c => !char.IsDigit(c));
+            bool isValid = true;
 
-            AddPhoneNumberButton.IsEnabled = isFormValid;
+            // Validación de nombre
+            if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
+                txtnombre.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)))
+            {
+                isValid = false;
+                txtnombre.Background = Brushes.Pink;  // Cambiar color de fondo si hay error
+            }
+            else
+            {
+                txtnombre.Background = Brushes.White;
+            }
+
+            // Validación de apellido
+            if (string.IsNullOrWhiteSpace(txtapellido.Text) ||
+                txtapellido.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)))
+            {
+                isValid = false;
+                txtapellido.Background = Brushes.Pink;
+            }
+            else
+            {
+                txtapellido.Background = Brushes.White;
+            }
+
+            // Validación de correo electrónico
+            if (string.IsNullOrWhiteSpace(txtemail.Text) ||
+                !Regex.IsMatch(txtemail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                isValid = false;
+                txtemail.Background = Brushes.Pink;
+            }
+            else
+            {
+                txtemail.Background = Brushes.White;
+            }
+
+            // Validación de teléfono (permitir guiones)
+            if (string.IsNullOrWhiteSpace(numerotelefono.Text) ||
+                !Regex.IsMatch(numerotelefono.Text, @"^\d{3}-\d{3}-\d{4}$"))
+            {
+                isValid = false;
+                numerotelefono.Background = Brushes.Pink;
+            }
+            else
+            {
+                numerotelefono.Background = Brushes.White;
+            }
+
+            return isValid;
         }
+
 
 
         private void Txtnombre_TextChanged(object sender, TextChangedEventArgs e)
@@ -247,7 +288,7 @@ namespace Contactos
             // Verificar que tenga un formato de correo electrónico válido
             if (!Regex.IsMatch(txtemail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                txtemail.Background = Brushes.LightPink; // Indicar error
+                txtemail.Background = Brushes.Pink; // Indicar error
             }
             else
             {
@@ -296,7 +337,7 @@ namespace Contactos
             }
             else
             {
-                numerotelefono.Background = Brushes.LightPink; // No válido
+                numerotelefono.Background = Brushes.Pink; // No válido
             }
 
             ValidateForm(); // Validar el formulario
@@ -697,12 +738,44 @@ namespace Contactos
             cmbTipo_telefono.IsEnabled = !modoSoloLectura;
         }
 
+        private void DataGrid_ModificarButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var contactoSeleccionado = button?.DataContext as contacto;
+
+            if (contactoSeleccionado != null)
+            {
+                // Obtener la ventana principal
+                var ventanaPrincipal = Application.Current.MainWindow as MainWindow;
+                if (ventanaPrincipal != null)
+                {
+                    // Usar el Frame específico para mostrar la página de edición
+                    ventanaPrincipal.Frame2.Navigate(new Page1(contactoSeleccionado, true));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un contacto válido para modificar.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+
         private void GuardarButton_Click(object sender, RoutedEventArgs e)
         {
-            // Guardar los cambios aquí
+            // Verificar si el formulario es válido
+            if (!ValidateForm())
+            {
+                MessageBox.Show("Por favor, corrige los errores antes de guardar.");
+                return;  // No guardar si los datos son incorrectos
+            }
+
+            // Eliminar los guiones del número de teléfono antes de guardarlo
+            string telefonoSinGuiones = numerotelefono.Text.Replace("-", "");
+
+            // Guardar los cambios
             using (var context = new MiDbContext())
             {
-                // Buscar el contacto que estamos editando
                 var contactoExistente = context.contactos
                     .FirstOrDefault(c => c.ID_contacto == contactoSeleccionado.ID_contacto);
 
@@ -720,7 +793,7 @@ namespace Contactos
 
                     if (telefonoExistente != null)
                     {
-                        telefonoExistente.Número_de_teléfono = numerotelefono.Text;
+                        telefonoExistente.Número_de_teléfono = telefonoSinGuiones;  // Guardar sin los guiones
                         telefonoExistente.Tipo_teléfono = (cmbTipo_telefono.SelectedItem as ComboBoxItem)?.Content.ToString();
                     }
 
@@ -732,7 +805,6 @@ namespace Contactos
                         redSocialExistente.Nombre_de_usuario = txtnombreusuario.Text;
                     }
 
-                    // Guardar en la base de datos
                     try
                     {
                         context.SaveChanges();
@@ -752,7 +824,9 @@ namespace Contactos
             ButtonPanel.Children.Remove((Button)sender); // Elimina el botón "Guardar"
         }
 
-        
+
+
+
 
 
         private void Eliminar_Click(object sender, RoutedEventArgs e)

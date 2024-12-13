@@ -53,6 +53,8 @@ namespace aaagenda_contactos
         }
 
 
+
+
         public bool isMenuOpen = false;
 
         public void ToggleMenu(object sender, RoutedEventArgs e)
@@ -299,10 +301,13 @@ namespace aaagenda_contactos
             }
         }
 
+
+
         // Evento del DataGrid
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             contactoSeleccionado = (contacto)ContactosDataGrid.SelectedItem;
+
         }
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
@@ -339,49 +344,70 @@ namespace aaagenda_contactos
         }
         private void Eliminar_Click(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
+            var ContactoSeleccionado = ContactosDataGrid.SelectedItem as contacto;
+
+            if (ContactoSeleccionado != null)
             {
+                var result = MessageBox.Show(
+                    $"¿Estás seguro de que deseas eliminar el contacto con ID {ContactoSeleccionado.ID_contacto}?",
+                    "Confirmación de eliminación",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
                 {
-                    var button = sender as Button;
-                    var ContactoSeleccionado = ContactosDataGrid.SelectedItem as contacto;
-
-                    if (ContactoSeleccionado != null)
+                    using (var context = new MiDbContext())
                     {
-                        var result = MessageBox.Show(
-                            $"¿Estás seguro de que deseas eliminar el contacto con ID {ContactoSeleccionado.ID_contacto}?",
-                            "Confirmación de eliminación",
-                            MessageBoxButton.YesNo,
-                            MessageBoxImage.Warning);
-
-                        if (result == MessageBoxResult.Yes)
+                        try
                         {
-                            using (var context = new MiDbContext())
+                            // Buscar el contacto a eliminar
+                            var ContactoAEliminar = context.contactos
+                                .FirstOrDefault(c => c.ID_contacto == ContactoSeleccionado.ID_contacto);
+
+                            if (ContactoAEliminar != null)
                             {
-                                var ContactoAEliminar = context.contactos
-                                    .FirstOrDefault(c => c.ID_contacto == ContactoSeleccionado.ID_contacto);
+                                // Eliminar las relaciones (teléfonos y redes sociales) primero
+                                var telefonos = context.telefono
+                                    .Where(t => t.Id_contacto == ContactoSeleccionado.ID_contacto)
+                                    .ToList();
+                                context.telefono.RemoveRange(telefonos);
 
-                                if (ContactoAEliminar != null)
-                                {
-                                    context.contactos.Remove(ContactoAEliminar);
-                                    context.SaveChanges();
+                                var redesSociales = context.red_sociall
+                                    .Where(r => r.ID_contacto == ContactoSeleccionado.ID_contacto)
+                                    .ToList();
+                                context.red_sociall.RemoveRange(redesSociales);
 
-                                    cargarcontacto();
+                                // Eliminar el contacto después de las relaciones
+                                context.contactos.Remove(ContactoAEliminar);
 
-                                    MessageBox.Show("Contacto eliminado correctamente.");
-                                }
-                                else
-                                {
-                                    MessageBox.Show("El contacto no se encontró en la base de datos.");
-                                }
+                                // Guardar los cambios
+                                context.SaveChanges();
+
+                                // Recargar la lista de contactos y mostrar el mensaje
+                                cargarcontacto();
+                                MessageBox.Show("Contacto eliminado correctamente.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("El contacto no se encontró en la base de datos.");
                             }
                         }
-                    }
-                    else
-                    {
-                        MessageBox.Show("No se seleccionó ningún contacto para eliminar.");
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al eliminar contacto: {ex.Message}");
+                        }
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("No se seleccionó ningún contacto para eliminar.");
+            }
         }
+
+
+
         private void Tipodecontacto_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Tipodecontacto.SelectedItem is tipo_contacto tipoSeleccionado)
