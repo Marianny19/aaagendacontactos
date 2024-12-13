@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,30 +18,86 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Xml.Linq;
 using static MiDbContext;
+
+using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 
 namespace Contactos
 {
-    /// <summary>
-    /// Lógica de interacción para Page1.xaml
-    /// </summary>
     public partial class Page1 : Page
     {
-        public List<string> RedSocialItems { get; set; }
-
+        private MiDbContext _dbContext;
         private const int MaxPhoneNumbers = 14;
+        public ObservableCollection<teléfono> Teléfonos { get; set; }
+
+
         public Page1()
         {
             InitializeComponent();
             DataContext = this;
+
+            _dbContext = new MiDbContext(); 
+
+            Teléfonos = new ObservableCollection<teléfono>(_dbContext.telefono.ToList());
+            ContactosDataGrid.ItemsSource = Teléfonos;
+
+            // Cargar otros datos si es necesario
             CargarTiposContacto();
             CargarRedesSociales();
             CargarTipoTelefono();
         }
+
+
+        private void AgregarFila_Click(object sender, RoutedEventArgs e)
+        {
+            if (Teléfonos.Count >= MaxPhoneNumbers)
+            {
+                MessageBox.Show($"No se pueden agregar más de {MaxPhoneNumbers} números de teléfono.", "Límite alcanzado", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var nuevoTelefono = new teléfono
+            {
+                Número_de_teléfono = string.Empty, // Inicialmente vacío
+                Tipo_teléfono = "Móvil", // Tipo por defecto
+                Id_contacto = 1 // ID de contacto predeterminado (cambiar si necesario)
+            };
+
+            Teléfonos.Add(nuevoTelefono);
+        }
+
+
+        private void EliminarFila_Click(object sender, RoutedEventArgs e)
+        {
+            if (ContactosDataGrid.SelectedItem is teléfono telefonoSeleccionado)
+            {
+                _dbContext.telefono.Remove(telefonoSeleccionado);
+                _dbContext.SaveChanges();
+                Teléfonos.Remove(telefonoSeleccionado);
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona una fila para eliminar.");
+            }
+        }
+    
+private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
         private void CerrarVentana_Click(object sender, RoutedEventArgs e)
         {
-            // Obtener la ventana principal
-            var ventana = Window.GetWindow(this);
+        // Obtener la ventana principal
+        var ventana = Window.GetWindow(this);
             if (ventana != null)
             {
                 // Encontrar el Frame en la ventana principal
@@ -55,34 +112,24 @@ namespace Contactos
                         EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // Función de easing
                     };
 
-                    fadeOutAnimation.Completed += (s, args) =>
+        fadeOutAnimation.Completed += (s, args) =>
                     {
                         // Cambiar la visibilidad del Frame a Collapsed después de que la animación se complete
                         frame.Visibility = Visibility.Collapsed;
                     };
 
-                    // Iniciar la animación de desvanecimiento
-                    frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
+    // Iniciar la animación de desvanecimiento
+    frame.BeginAnimation(OpacityProperty, fadeOutAnimation);
 
                     var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
                     if (currentWindow != null)
                     {
                         var newWindow = new MainWindow();
-                        newWindow.Show();
+    newWindow.Show();
                         currentWindow.Close();
                     }
                 }
             }
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
         }
 
         private void Agregar_tipo_contacto(object sender, RoutedEventArgs e)
@@ -542,12 +589,12 @@ namespace Contactos
                 if (tiposRedSocial != null && tiposRedSocial.Any())
                 {
                     cmbTipo_red_social.ItemsSource = tiposRedSocial;
-                    cmbTipo_red_social.DisplayMemberPath = "Nombre_red_social"; // Asegúrate de que "Nombre" sea la propiedad que deseas mostrar
-                    cmbTipo_red_social.SelectedValuePath = "Id_tipo_red_social"; // Asegúrate de que "ID" sea la propiedad que estás usando como valor interno
+                    cmbTipo_red_social.DisplayMemberPath = "Nombre_red_social"; 
+                    cmbTipo_red_social.SelectedValuePath = "Id_tipo_red_social"; 
                 }
                 else
                 {
-                    cmbTipo_red_social.ItemsSource = null; // Esto asegurará que el ComboBox esté vacío si no hay datos
+                    cmbTipo_red_social.ItemsSource = null; 
                 }
             }
         }
@@ -571,7 +618,7 @@ namespace Contactos
             var Email = txtemail.Text;
             var Tipo_Contacto = cmbTipo_contacto.SelectedValue as int? ?? 0;
             var numeroTelefono = numerotelefono.Text;
-            var tipoTelefono = (cmbTipo_telefono.SelectedItem as ComboBoxItem)?.Content.ToString();
+            var tipoTelefono = (cmbTipo_telefono.SelectedItem as ComboBoxItem)?.Content?.ToString();
             var Tipo_red_social = cmbTipo_red_social.SelectedValue as int? ?? 0;
             var Nombre_de_usuario = txtnombreusuario.Text;
 
@@ -595,22 +642,45 @@ namespace Contactos
                 try
                 {
                     dbContext.contactos.Add(nuevocontacto);
-                    dbContext.SaveChanges();
+                    dbContext.SaveChanges();  
 
-                    var nuevotelefono = new teléfono
+                    int idContacto = nuevocontacto.ID_contacto;
+
+                    bool telefonoExistente = Teléfonos.Any(t => t.Número_de_teléfono == numeroTelefono);
+
+                    if (!telefonoExistente)
                     {
-                        Número_de_teléfono = numeroTelefono,
-                        Tipo_teléfono = tipoTelefono,
-                        Id_contacto = nuevocontacto.ID_contacto
-                    };
+                        var nuevotelefono = new teléfono
+                        {
+                            Número_de_teléfono = numeroTelefono,
+                            Tipo_teléfono = tipoTelefono,
+                            Id_contacto = idContacto  
+                        };
+                        dbContext.telefono.Add(nuevotelefono);
+                    }
+
+                    foreach (var telefono in Teléfonos) 
+                    {
+                        if (telefono.Número_de_teléfono != numeroTelefono)  
+                        {
+                            var nuevoTelefonoGrid = new teléfono
+                            {
+                                Número_de_teléfono = telefono.Número_de_teléfono,
+                                Tipo_teléfono = telefono.Tipo_teléfono,
+                                Id_contacto = idContacto  
+                            };
+
+                            dbContext.telefono.Add(nuevoTelefonoGrid);
+                        }
+                    }
+
+                    dbContext.SaveChanges();  
 
                     var nuevaRedsocial = new red_social
                     {
                         Nombre_de_usuario = Nombre_de_usuario,
-                        ID_contacto = nuevocontacto.ID_contacto
+                        ID_contacto = idContacto  
                     };
-
-                    dbContext.telefono.Add(nuevotelefono);
                     dbContext.red_sociall.Add(nuevaRedsocial);
                     dbContext.SaveChanges();
 
@@ -622,6 +692,7 @@ namespace Contactos
                     cmbTipo_telefono.SelectedItem = null;
                     cmbTipo_red_social.SelectedItem = null;
                     txtnombreusuario.Clear();
+
                     MessageBox.Show("Contacto guardado exitosamente.");
                 }
                 catch (DbUpdateException dbEx)
@@ -823,12 +894,7 @@ namespace Contactos
             // Eliminar el botón de guardar después de guardar
             ButtonPanel.Children.Remove((Button)sender); // Elimina el botón "Guardar"
         }
-
-
-
-
-
-
+       
         private void Eliminar_Click(object sender, RoutedEventArgs e)
         {
             if (contactoSeleccionado != null)

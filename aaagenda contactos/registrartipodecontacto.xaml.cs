@@ -28,9 +28,9 @@ namespace aaagenda_contactos
         {
             InitializeComponent();
             cargar_tiposcontacto();
+
         }
         public ObservableCollection<tipo_contacto> tipos_contacto { get; set; }
-
         private void Registrar_contacto_Click(object sender, RoutedEventArgs e)
         {
             var tipocontacto = txttipocontacto.Text;

@@ -111,17 +111,17 @@ namespace aaagenda_contactos.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Número_de_teléfono = table.Column<string>(type: "text", nullable: false),
                     Tipo_teléfono = table.Column<string>(type: "text", nullable: false),
-                    Id_contacto = table.Column<int>(type: "integer", nullable: false),
-                    contactoID_contacto = table.Column<int>(type: "integer", nullable: true)
+                    Id_contacto = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_telefono", x => x.Id_telefono);
                     table.ForeignKey(
-                        name: "FK_telefono_contactos_contactoID_contacto",
-                        column: x => x.contactoID_contacto,
+                        name: "FK_telefono_contactos_Id_contacto",
+                        column: x => x.Id_contacto,
                         principalTable: "contactos",
-                        principalColumn: "ID_contacto");
+                        principalColumn: "ID_contacto",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -140,9 +140,9 @@ namespace aaagenda_contactos.Migrations
                 column: "Tipo_red_social");
 
             migrationBuilder.CreateIndex(
-                name: "IX_telefono_contactoID_contacto",
+                name: "IX_telefono_Id_contacto",
                 table: "telefono",
-                column: "contactoID_contacto");
+                column: "Id_contacto");
         }
 
         /// <inheritdoc />

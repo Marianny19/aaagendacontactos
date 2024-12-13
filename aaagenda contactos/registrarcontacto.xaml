@@ -11,7 +11,8 @@
     <Grid Margin="100">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="46*" />
+            <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Panel Izquierdo (Fondo turquesa) -->
@@ -27,7 +28,7 @@
             </StackPanel>
         </Border>
         <!-- Panel Derecho (Formulario) -->
-        <Border Padding="20" Background="#E0E0E0" CornerRadius="0 30 30 0" Margin="278,-99,-99,-102" Grid.ColumnSpan="2">
+        <Border Padding="20" Background="#E0E0E0" CornerRadius="0 30 30 0" Margin="278,-99,-99,-102" Grid.ColumnSpan="3">
             <Grid Margin="-91,0,0,0">
                 <StackPanel x:Name="ButtonPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,104,0">
                     <!-- Botón Modificar -->
@@ -120,10 +121,18 @@ VerticalAlignment="Top"
         Width="24" Height="30" Margin="729,317,0,0" IsEnabled="False"/>
                     </Grid>
                     <Grid Grid.ColumnSpan="2" Margin="-526,-94,-189,-99" Grid.RowSpan="7">
+                        <!-- Botón para agregar un tipo de contacto -->
                         <Button Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="24" Height="30" Margin="729,259,0,0" Click="Agregar_tipo_contacto"/>
-                        <Button Content="+" HorizontalAlignment="Left" 
-                            VerticalAlignment="Top"  
-                            Width="24" Height="30" Margin="729,373,0,0" Click="Agregar_tipo_telefono"/>
+
+                        <!-- Botón para agregar un tipo de teléfono -->
+                        <Button Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="24" Height="30" Margin="729,373,0,0" Click="Agregar_tipo_telefono"/>
+
+                        <!-- ScrollViewer contenedor del DataGrid -->
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,610,10"/>
+
+                        <!-- Botones para agregar y eliminar filas -->
+                        <Button Content="Agregar" Click="AgregarFila_Click" Margin="791,540,62,99"/>
+                        <Button Content="Eliminar" Click="EliminarFila_Click" Margin="791,582,62,53"/>
                     </Grid>
 
 
@@ -138,8 +147,8 @@ VerticalAlignment="Top"
                     <TextBlock Grid.Row="6" Style="{StaticResource Text}" Margin="-65,19,128,150" VerticalAlignment="Stretch"><Run Text="Tipo de "/><LineBreak/><Run Text="telefono"/></TextBlock>
                 </Grid>
                 <TextBox x:Name="txtnombreusuario" Height="30" Margin="248,474,303,177" VerticalContentAlignment="Center"/>
-                <Button x:Name="Registrar_contacto" Content="Registrar Contacto" HorizontalAlignment="Center" 
-        Margin="0,590,0,34" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
+                <Button x:Name="Registrar_contacto" Content="Registrar Contacto" HorizontalAlignment="Left" 
+        Margin="320,624,0,0" Background="#6F50FF" FontSize="22" Width="200" FontWeight="SemiBold" 
          RenderTransformOrigin="0.5,0.5" Foreground="White" Click="Registrar_contacto_Click">
                     <Button.RenderTransform>
                         <TransformGroup>
@@ -166,6 +175,26 @@ VerticalAlignment="Top"
                         </Style>
                     </Button.Style>
                 </Button>
+                <DataGrid x:Name="ContactosDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="163,513,276,73">
+                    <DataGrid.Columns>
+                        <!-- Columna de número de teléfono -->
+                        <DataGridTextColumn Header="Número de Teléfono" Binding="{Binding Númerodeteléfono, Mode=TwoWay}" IsReadOnly="False"/>
+
+                        <!-- Columna de tipo de teléfono -->
+                        <DataGridTemplateColumn Header="Tipo de Teléfono">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox SelectedItem="{Binding Tipo_teléfon, Mode=TwoWay}" Width="150">
+                                        <ComboBoxItem Content="Móvil"/>
+                                        <ComboBoxItem Content="Fijo"/>
+                                        <ComboBoxItem Content="Trabajo"/>
+                                        <ComboBoxItem Content="Casa"/>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Border>
     </Grid>
